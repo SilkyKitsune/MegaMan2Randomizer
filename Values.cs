@@ -30,6 +30,7 @@ internal enum StageIndex : byte
     CrashStage = 0x07,
 
     WilyStage1 = 0x08,
+    //not sure where wily 2 is
     WilyStage3 = 0x0A,
     WilyStage4 = 0x0B,
     WilyStage5 = 0x0C,//rematches

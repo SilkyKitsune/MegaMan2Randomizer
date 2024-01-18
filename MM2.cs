@@ -5,6 +5,8 @@ namespace MM2Randomizer;
 
 public static class MM2
 {
+    public const int RomSize = 0x40010;
+
     public static void ChangeBooBeamCrashWalls(byte[] data)
     {
         data[(int)Address.BoomBeamCrashWall0] = (byte)Pickups.BigWeapon;

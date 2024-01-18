@@ -10,12 +10,7 @@ public static class Program
 {
     //Never item 2 on heat man
     //add ips option
-
-    private const byte FillSpeed = 0x01, MenuTime = 0x01;
-
-    private const int RomSize = 262160;
-
-    private const string FileName = "MM2R_", FileExt = ".nes", SpoilerName = "_Spoiler.txt", SpoilerHeader = "--- MM2R Spoiler Log ---\n";
+    //change to winforms?
 
     private static void Main()
     {
@@ -32,9 +27,9 @@ public static class Program
             case 1:
                 {
                     MM2.ChangeBooBeamCrashWalls(data);
-                    MM2.SetBarFillSpeed(data, FillSpeed);
+                    MM2.SetBarFillSpeed(data, 0x01);
                     data[(int)Address.MaxETanks] = 0x08;
-                    MM2.SetMenuSpeed(data, MenuTime);
+                    MM2.SetMenuSpeed(data, 0x01);
                     data[(int)Address.LevelCheckRoutine2MemAddress] = 0x99;//will this work?
                     
                     C.WriteLine("Enter seed (leave blank for auto)");
@@ -47,7 +42,7 @@ public static class Program
                     }
 
                     Random r = new(seed);
-                    string spoiler = SpoilerHeader + $"Seed: {seed}\n-\n" + MM2.ShuffleWeapons(data, r) + MM2.ShuffleItems(data, r);
+                    string spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n-\n" + MM2.ShuffleWeapons(data, r) + MM2.ShuffleItems(data, r);
 
                     C.WriteLine("Shuffle levels? 'y' or 'n'");
                     if (C.ReadLine() == "y") spoiler += MM2.ShuffleStages(data, r);
@@ -67,55 +62,13 @@ public static class Program
         }
     }
 
-    [Obsolete] private static void old()
-    {
-        C.WriteLine("Specify rom path...");
-        string path = C.ReadLine();
-        if (!string.IsNullOrEmpty(path) && F.Exists(path))
-        {
-            byte[] data = F.ReadAllBytes(path);
-            C.WriteLine($"Size of file: {data.Length}");
-            if (data.Length != RomSize)
-            {
-                C.WriteLine("Invalid ROM!");
-                return;
-            }
-
-            MM2.ChangeBooBeamCrashWalls(data);
-            MM2.SetBarFillSpeed(data, FillSpeed);
-            data[(int)Address.MaxETanks] = 0x08;
-            MM2.SetMenuSpeed(data, MenuTime);
-            data[(int)Address.LevelCheckRoutine2MemAddress] = 0x99;//will this work?
-
-            int seed = E.TickCount;
-            Random r = new(seed);
-            string spoiler = $"Seed: {seed}\n-\n";
-
-            spoiler += MM2.ShuffleWeapons(data, r);
-            spoiler += MM2.ShuffleItems(data, r);
-
-            C.WriteLine("Shuffle levels? 'y' or 'n'");
-            string s = C.ReadLine();
-            if (s == "y") spoiler += MM2.ShuffleStages(data, r);
-
-            string outPath = P.Combine(P.GetDirectoryName(path), FileName + seed);
-            F.WriteAllBytes(outPath + FileExt, data);
-            F.WriteAllText(outPath + SpoilerName, spoiler);
-
-            C.WriteLine("--- Spoiler ---\n");
-            C.WriteLine(spoiler);
-            C.WriteLine("-----\n");
-        }
-        else C.WriteLine("Invalid path!");
-    }
-
     private static int ReadROMFile(out byte[] data, string filePath)
     {
         data = null;
         if (string.IsNullOrEmpty(filePath) || !F.Exists(filePath)) return 0;
 
         data = F.ReadAllBytes(filePath);
-        if (data.Length != RomSize) return -1;
+        if (data.Length != MM2.RomSize) return -1;
 
         //other validation?
 
@@ -129,9 +82,9 @@ public static class Program
         string dir = P.GetDirectoryName(directory);
         if (string.IsNullOrEmpty(dir)) return 0;
 
-        string outPath = P.Combine(dir, FileName + seed);
-        F.WriteAllBytes(outPath + FileExt, data);
-        if (!string.IsNullOrEmpty(spoiler)) F.WriteAllText(outPath + SpoilerName, spoiler);
+        string outPath = P.Combine(dir, "MM2R_" + seed);
+        F.WriteAllBytes(outPath + ".nes", data);
+        if (!string.IsNullOrEmpty(spoiler)) F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
 
         return 1;
     }
