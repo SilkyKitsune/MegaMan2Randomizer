@@ -1,115 +1,136 @@
 ﻿using System;
-using System.Collections.Generic;
+using ProjectFox.CoreEngine.Collections;
+using IPSLib;
 
 namespace MM2Randomizer;
 
 public static class MM2
 {
-    public const int RomSize = 0x40010;
-
-    public static void ChangeBooBeamCrashWalls(byte[] data)
+    private static readonly Equipment[]
+        weapons =
     {
-        data[(int)Address.BoomBeamCrashWall0] = (byte)Pickups.BigWeapon;
-        data[(int)Address.BoomBeamCrashWall1] = (byte)Pickups.BigWeapon;
-        data[(int)Address.BoomBeamCrashWall2] = (byte)Pickups.BigWeapon;
-        data[(int)Address.BoomBeamCrashWall3] = (byte)Pickups.ETank;
-        data[(int)Address.BoomBeamCrashWall4] = (byte)Pickups.OneUp;
+        Equipment.AtomicFire,
+        Equipment.AirShooter,
+        Equipment.LeafShield,
+        Equipment.BubbleLead,
+        Equipment.QuickBoomerang,
+        Equipment.FlashStopper,
+        Equipment.MetalBlade,
+        Equipment.CrashBomber
+    },
+        items =
+    {
+        Equipment.Item1,
+        Equipment.Item2,
+        Equipment.Item3,
+        Equipment.None,
+        Equipment.None,
+        Equipment.None,
+        Equipment.None,
+        Equipment.None
+    };
+
+    private static readonly StageIndex[] stages =
+    {
+        StageIndex.HeatStage,
+        StageIndex.AirStage,
+        StageIndex.WoodStage,
+        StageIndex.BubbleStage,
+        StageIndex.QuickStage,
+        StageIndex.FlashStage,
+        StageIndex.MetalStage,
+        StageIndex.CrashStage
+    };
+    
+    private static int GetSeed()
+    {
+        int ms = Environment.TickCount;
+        DateTime now = DateTime.Now;
+        return ms ^ ((now.Year * 10000) + (now.Month * 100) + now.Day);
     }
 
-    public static void SetBarFillSpeed(byte[] data, byte fillSpeed)
+    private static IPS ShuffleWeaponsPatch(ref string spoiler, Random r = null)
     {
-        data[(int)Address.RobotHealthFillSpeed] = fillSpeed;
-        data[(int)Address.CastleHealthFillSpeed] = fillSpeed;
-        data[(int)Address.PlayerHealthFillSpeedPaused] = fillSpeed;
-        data[(int)Address.PlayerHealthFillSpeed] = fillSpeed;
-        data[(int)Address.PlayerWeaponFillSpeed] = fillSpeed;
-    }
+        r ??= new(GetSeed());
 
-    public static void SetMenuSpeed(byte[] data, byte menuTime)
-    {
-        data[(int)Address.WilyMapTime] = menuTime;
-        data[(int)Address.WeaponGetTime] = menuTime;
-        data[(int)Address.MenuFlashTime] = menuTime;
-        data[(int)Address.ItemGetTime] = menuTime;
-        data[(int)Address.TextPrintSpeed] = 0x03;//change this one?
-        data[(int)Address.PausePrintTime] = menuTime;
-    }
+        AutoSizedArray<Equipment> equips = new(weapons);
 
-    public static string ShuffleWeapons(byte[] data, Random r)
-    {
-        string spoiler = "";
-        List<Equipment> equips = new(new Equipment[]
-                {
-                    Equipment.AtomicFire,
-                    Equipment.AirShooter,
-                    Equipment.LeafShield,
-                    Equipment.BubbleLead,
-                    Equipment.QuickBoomerang,
-                    Equipment.FlashStopper,
-                    Equipment.MetalBlade,
-                    Equipment.CrashBomber,
-                });
-        int address = (int)Address.HeatStageWeapon;
-        while (equips.Count > 0)
+        byte[] data = new byte[equips.Length];
+
+        Address address = Address.HeatStageWeapon;
+        for (int i = 0; equips.Length > 0; i++, address++)
         {
-            int i = r.Next(equips.Count);
-            Equipment e = equips[i];
-            spoiler += $"{(Address)address} => {e}\n";
-            data[address++] = (byte)e;
-            equips.RemoveAt(i);
+            int n = r.Next(equips.Length);
+            Equipment e = equips[n];
+            spoiler += $"{address} => {e}\n";
+            data[i] = (byte)e;
+            equips.RemoveAt(n);
         }
-        return spoiler;
+
+        IPS ips = new();
+        ips.Add(false, (int)Address.HeatStageWeapon, data);
+        return ips;
     }
 
-    public static string ShuffleItems(byte[] data, Random r)
+    private static IPS ShuffleItemsPatch(ref string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
-        string spoiler = "\n";
-        List<Equipment> equips = new(new Equipment[]
-                {
-                    Equipment.Item1,
-                    Equipment.Item2,
-                    Equipment.Item3,
-                    Equipment.None,
-                    Equipment.None,
-                    Equipment.None,
-                    Equipment.None,
-                    Equipment.None,
-                });
-        int address = (int)Address.HeatStageItem;
-        while (equips.Count > 0)
+        r ??= new(GetSeed());
+
+        spoiler += "\n";
+        //add item 2 logic
+        AutoSizedArray<Equipment> equips = new(items);
+
+        byte[] data = new byte[equips.Length];
+
+        Address address = Address.HeatStageItem;
+        for (int i = 0; equips.Length > 0; i++, address++)
         {
-            int i = r.Next(equips.Count);
-            Equipment e = equips[i];
-            spoiler += $"{(Address)address} => {e}\n";
-            data[address++] = (byte)e;
-            equips.RemoveAt(i);
+            int n = r.Next(equips.Length);
+            Equipment e = equips[n];
+            spoiler += $"{address} => {e}\n";
+            data[i] = (byte)e;
+            equips.RemoveAt(n);
         }
-        return spoiler;
+
+        IPS ips = new();
+        ips.Add(false, (int)Address.HeatStageItem, data);
+        return ips;
+    }
+    
+    private static IPS ShuffleStagesPatch(ref string spoiler, Random r = null)
+    {
+        r ??= new(GetSeed());
+
+        spoiler += "\n";
+
+        AutoSizedArray<StageIndex> stages = new(MM2.stages);
+
+        byte[] data = new byte[stages.Length];
+
+        Address address = Address.BubbleStagePtr;
+        for (int i = 0; stages.Length > 0; i++, address++)
+        {
+            int n = r.Next(stages.Length);
+            StageIndex si = stages[n];
+            spoiler += $"{address} => {si}\n";
+            data[i] = (byte)si;
+            stages.RemoveAt(n);
+        }
+
+        IPS ips = new();
+        ips.Add(false, (int)Address.HeatStagePtr, data);
+        return ips;
     }
 
-    public static string ShuffleStages(byte[] data, Random r)
+    public static void Generate(ref IPS ips, ref int seed, out string spoiler, bool heatManNoItem2 = false, bool shuffleLevels = false)
     {
-        string spoiler = "\n";
-        List<StageIndex> stages = new(new StageIndex[]
-                {
-                    StageIndex.HeatStage,
-                    StageIndex.AirStage,
-                    StageIndex.WoodStage,
-                    StageIndex.BubbleStage,
-                    StageIndex.QuickStage,
-                    StageIndex.FlashStage,
-                    StageIndex.MetalStage,
-                    StageIndex.CrashStage
-                });
-        int address = (int)Address.BubbleStagePtr;
-        while (stages.Count > 0)
-        {
-            int i = r.Next(stages.Count);
-            StageIndex si = stages[i];
-            spoiler += $"{(Address)address} => {si}\n";
-            data[address++] = (byte)si;
-            stages.RemoveAt(i);
-        }
-        return spoiler;
+        if (seed == 0) seed = GetSeed();
+        ips ??= new();
+        spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
+        Random r = new(seed);
+
+        ips.Add(ShuffleWeaponsPatch(ref spoiler, r), false);
+        ips.Add(ShuffleItemsPatch(ref spoiler, r, heatManNoItem2), false);
+        if (shuffleLevels) ips.Add(ShuffleStagesPatch(ref spoiler, r), false);
     }
 }
