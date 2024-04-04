@@ -21,7 +21,7 @@ public static class MM2
         items =
     {
         Equipment.Item1,
-        Equipment.Item2,
+        //Equipment.Item2,
         Equipment.Item3,
         Equipment.None,
         Equipment.None,
@@ -49,27 +49,19 @@ public static class MM2
         return ms ^ ((now.Year * 10000) + (now.Month * 100) + now.Day);
     }
 
-    private static IPS ShuffleWeaponsPatch(ref string spoiler, Random r = null)
+    [Obsolete] private static T[] PlaceValues<T>(IPS ips, ref string spoiler, Random r, Address location, params T[] values)
     {
-        r ??= new(GetSeed());
+        AutoSizedArray<T> values2 = new(values);//rename
 
-        AutoSizedArray<Equipment> equips = new(weapons);
-
-        byte[] data = new byte[equips.Length];
-
-        Address address = Address.HeatStageWeapon;
-        for (int i = 0; equips.Length > 0; i++, address++)
+        for (int i = 0; values.Length > 0; i++, location++)
         {
-            int n = r.Next(equips.Length);
-            Equipment e = equips[n];
-            spoiler += $"{address} => {e}\n";
-            data[i] = (byte)e;
-            equips.RemoveAt(n);
+            int n = r.Next(values.Length);
+            T t = values2[n];
+            spoiler += $"{location} => {t}\n";
+            values[i] = t;
+            values2.RemoveAt(n);
         }
-
-        IPS ips = new();
-        ips.Add(false, (int)Address.HeatStageWeapon, data);
-        return ips;
+        return values;
     }
 
     private static IPS ShuffleItemsPatch(ref string spoiler, Random r = null, bool heatManNoItem2 = false)
@@ -77,13 +69,25 @@ public static class MM2
         r ??= new(GetSeed());
 
         spoiler += "\n";
-        //add item 2 logic
+        
         AutoSizedArray<Equipment> equips = new(items);
 
         byte[] data = new byte[equips.Length];
 
         Address address = Address.HeatStageItem;
-        for (int i = 0; equips.Length > 0; i++, address++)
+
+        if (heatManNoItem2)
+        {
+            int n = r.Next(equips.Length);
+            Equipment e = equips[n];
+            spoiler += $"{address} => {e}\n";
+            data[0] = (byte)e;
+            equips.RemoveAt(n);
+            address++;
+        }
+        equips.Add(Equipment.Item2);
+
+        for (int i = heatManNoItem2 ? 1 : 0; equips.Length > 0; i++, address++)
         {
             int n = r.Next(equips.Length);
             Equipment e = equips[n];
@@ -119,6 +123,29 @@ public static class MM2
 
         IPS ips = new();
         ips.Add(false, (int)Address.HeatStagePtr, data);
+        return ips;
+    }
+
+    private static IPS ShuffleWeaponsPatch(ref string spoiler, Random r = null)
+    {
+        r ??= new(GetSeed());
+
+        AutoSizedArray<Equipment> equips = new(weapons);
+
+        byte[] data = new byte[equips.Length];
+
+        Address address = Address.HeatStageWeapon;
+        for (int i = 0; equips.Length > 0; i++, address++)
+        {
+            int n = r.Next(equips.Length);
+            Equipment e = equips[n];
+            spoiler += $"{address} => {e}\n";
+            data[i] = (byte)e;
+            equips.RemoveAt(n);
+        }
+
+        IPS ips = new();
+        ips.Add(false, (int)Address.HeatStageWeapon, data);
         return ips;
     }
 
