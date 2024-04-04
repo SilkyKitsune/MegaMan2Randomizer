@@ -1,11 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <LangVersion>10.0</LangVersion>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <LangVersion>11.0</LangVersion>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Authors>SilkyKitsune</Authors>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IPS\IPSLib\IPSLib.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)\FixLevelRoutine.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\IncreaseBarSpeed.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\IncreaseETanks.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\IncreaseMenuSpeed.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\ReplaceBooBeamWalls.ips&quot; &quot;$(TargetDir)&quot; /Y" />
+  </Target>
 
 </Project>
