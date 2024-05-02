@@ -57,9 +57,9 @@
             romPathLabel.AutoSize = true;
             romPathLabel.Location = new System.Drawing.Point(12, 9);
             romPathLabel.Name = "romPathLabel";
-            romPathLabel.Size = new System.Drawing.Size(184, 15);
+            romPathLabel.Size = new System.Drawing.Size(223, 15);
             romPathLabel.TabIndex = 1;
-            romPathLabel.Text = "ROM Path (Optional if Export IPS)";
+            romPathLabel.Text = "Mega Man 2 Path (Optional if Export IPS)";
             // 
             // romPathButton
             // 
