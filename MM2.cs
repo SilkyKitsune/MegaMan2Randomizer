@@ -107,7 +107,7 @@ public static class MM2
         }
 
         IPS ips = new();
-        ips.Add(false, (int)Address.HeatStagePtr, data);
+        ips.Add(false, (int)Address.BubbleStagePtr, data);
         return ips;
     }
 
