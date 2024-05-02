@@ -49,21 +49,6 @@ public static class MM2
         return ms ^ ((now.Year * 10000) + (now.Month * 100) + now.Day);
     }
 
-    [Obsolete] private static T[] PlaceValues<T>(IPS ips, ref string spoiler, Random r, Address location, params T[] values)
-    {
-        AutoSizedArray<T> values2 = new(values);//rename
-
-        for (int i = 0; values.Length > 0; i++, location++)
-        {
-            int n = r.Next(values.Length);
-            T t = values2[n];
-            spoiler += $"{location} => {t}\n";
-            values[i] = t;
-            values2.RemoveAt(n);
-        }
-        return values;
-    }
-
     private static IPS ShuffleItemsPatch(ref string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(GetSeed());
