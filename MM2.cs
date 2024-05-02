@@ -21,13 +21,13 @@ public static class MM2
         items =
     {
         Equipment.Item1,
-        //Equipment.Item2,
         Equipment.Item3,
         Equipment.None,
         Equipment.None,
         Equipment.None,
         Equipment.None,
-        Equipment.None
+        Equipment.None,
+        Equipment.Item2,
     };
 
     private static readonly StageIndex[] stages =
@@ -58,23 +58,12 @@ public static class MM2
         AutoSizedArray<Equipment> equips = new(items);
 
         byte[] data = new byte[equips.Length];
-
+        
         Address address = Address.HeatStageItem;
 
-        if (heatManNoItem2)
+        for (int i = 0; equips.Length > 0; i++, address++)
         {
-            int n = r.Next(equips.Length);
-            Equipment e = equips[n];
-            spoiler += $"{address} => {e}\n";
-            data[0] = (byte)e;
-            equips.RemoveAt(n);
-            address++;
-        }
-        equips.Add(Equipment.Item2);
-
-        for (int i = heatManNoItem2 ? 1 : 0; equips.Length > 0; i++, address++)
-        {
-            int n = r.Next(equips.Length);
+            int n = r.Next(equips.Length - (heatManNoItem2 && i == 0 ? 1 : 0));
             Equipment e = equips[n];
             spoiler += $"{address} => {e}\n";
             data[i] = (byte)e;
