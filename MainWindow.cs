@@ -12,7 +12,11 @@ public partial class MainWindow : Form
     private const int RomSize = 0x40010;
 
     private const string InvalidFile = "INVALID FILE", InvalidPath = "INVALID PATH", Ext = ".nes", FileName = "MM2R_",
-        RoutinePatch = "FixLevelRoutine.ips", BarSpeedPatch = "IncreaseBarSpeed.ips", MenuSpeedPatch = "IncreaseMenuSpeed.ips", WallPatch = "ReplaceBooBeamWalls.ips";
+        IncreaseBarSpeed = "IncreaseBarSpeed.ips",
+        IncreaseMenuSpeed = "IncreaseMenuSpeed.ips",
+        KeepETanks = "KeepETanks.ips",
+        LevelRoutineFix = "LevelRoutineFix.ips",
+        ReplaceBooBeamWalls = "ReplaceBooBeamWalls.ips";
     
     public MainWindow() => InitializeComponent();
 
@@ -26,7 +30,11 @@ public partial class MainWindow : Form
 
     private void GenerateButton()
     {
-        if (!F.Exists(RoutinePatch) || !F.Exists(BarSpeedPatch) || !F.Exists(MenuSpeedPatch) || !F.Exists(WallPatch))
+        if (!F.Exists(IncreaseBarSpeed) ||
+            !F.Exists(IncreaseMenuSpeed) ||
+            !F.Exists(KeepETanks) ||
+            !F.Exists(LevelRoutineFix) ||
+            !F.Exists(ReplaceBooBeamWalls))
         {
             Close();
             return;
@@ -61,10 +69,11 @@ public partial class MainWindow : Form
         generateButton.Enabled = false;
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
-        IPS patch = new(RoutinePatch);
-        patch.Add(new(BarSpeedPatch), false);
-        patch.Add(new(MenuSpeedPatch), false);
-        if (replaceBooBeamWalls) patch.Add(new(WallPatch), false);
+        IPS patch = new(LevelRoutineFix);
+        patch.Add(new(IncreaseBarSpeed), false);
+        patch.Add(new(IncreaseMenuSpeed), false);
+        patch.Add(new(KeepETanks), false);
+        if (replaceBooBeamWalls) patch.Add(new(ReplaceBooBeamWalls), false);
         MM2.Generate(ref patch, ref seed, out string spoiler, heatManNoItem2, shuffleLevels);
 
         string outPath = P.Combine(folderPath, FileName + seed);
