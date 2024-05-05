@@ -17,9 +17,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\IPS\IPSLib\IPSLib.csproj" />
   </ItemGroup>
-
+  
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(ProjectDir)\FixLevelRoutine.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\IncreaseBarSpeed.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\IncreaseETanks.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\IncreaseMenuSpeed.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\ReplaceBooBeamWalls.ips&quot; &quot;$(TargetDir)&quot; /Y" />
+    <Exec Command="xcopy &quot;$(ProjectDir)\Patches\IncreaseBarSpeed.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\Patches\IncreaseMenuSpeed.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\Patches\KeepETanks.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\Patches\LevelRoutineFix.ips&quot; &quot;$(TargetDir)&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)\Patches\ReplaceBooBeamWalls.ips&quot; &quot;$(TargetDir)&quot; /Y" />
   </Target>
 
 </Project>
