@@ -7,6 +7,7 @@
 ### Quality of Life changes
 - Energy bars fill faster
 - Weapon get screen is faster
+- Game over no longer resets E-Tanks
 - *Optionally:* Replace Boo Beam's (Wily 4 boss) Crash Walls with big weapon energy pickups
 
 ### Aditional Info
