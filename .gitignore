@@ -3,10 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+Patches/IncreaseETanks.ips
 Test/
-
-IncreaseETanks.ips
-MegaManDisassemblyStuff.txt
+MM2R Notes.txt
 
 # User-specific files
 *.rsuser
