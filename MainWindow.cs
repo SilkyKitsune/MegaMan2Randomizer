@@ -11,13 +11,21 @@ public partial class MainWindow : Form
 {
     private const int RomSize = 0x40010;
 
-    private const string InvalidFile = "INVALID FILE", InvalidPath = "INVALID PATH", Ext = ".nes", FileName = "MM2R_",
-        IncreaseBarSpeed = "IncreaseBarSpeed.ips",
-        IncreaseMenuSpeed = "IncreaseMenuSpeed.ips",
-        KeepETanks = "KeepETanks.ips",
-        LevelRoutineFix = "LevelRoutineFix.ips",
-        ReplaceBooBeamWalls = "ReplaceBooBeamWalls.ips";
-    
+    private const string InvalidFile = "INVALID FILE", InvalidPath = "INVALID PATH", Ext = ".nes", FileName = "MM2R_";
+
+    private static readonly string[] Paths =
+    {
+        "BooBeamNerf.ips",
+        "FastCrashBomber.ips",
+        "IncreaseBarSpeed.ips",
+        "IncreaseMenuSpeed.ips",
+        "KeepETanks.ips",
+        "MetalBladeNerf.ips",
+        "QuickBoomerangNerf.ips",
+        "ReEnterLevels.ips",
+        "SplitWeaponFlags.ips",//rename?
+    };
+
     public MainWindow() => InitializeComponent();
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
@@ -30,17 +38,17 @@ public partial class MainWindow : Form
 
     private void GenerateButton()
     {
-        if (!F.Exists(IncreaseBarSpeed) ||
-            !F.Exists(IncreaseMenuSpeed) ||
-            !F.Exists(KeepETanks) ||
-            !F.Exists(LevelRoutineFix) ||
-            !F.Exists(ReplaceBooBeamWalls))
-        {
-            Close();
-            return;
-        }
+        IPS patch = new();
 
-        bool ips = ipsCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, replaceBooBeamWalls = wallCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
+        foreach (string path in Paths)
+            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patch.Add(patch_, false);
+            else
+            {
+                Close();
+                return;
+            }
+
+        bool ips = ipsCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
         string romPath = romPathTextBox.Text, folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
         byte[] rom = null;
 
@@ -69,11 +77,7 @@ public partial class MainWindow : Form
         generateButton.Enabled = false;
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
-        IPS patch = new(LevelRoutineFix);
-        patch.Add(new(IncreaseBarSpeed), false);
-        patch.Add(new(IncreaseMenuSpeed), false);
-        patch.Add(new(KeepETanks), false);
-        if (replaceBooBeamWalls) patch.Add(new(ReplaceBooBeamWalls), false);
+
         MM2.Generate(ref patch, ref seed, out string spoiler, heatManNoItem2, shuffleLevels);
 
         string outPath = P.Combine(folderPath, FileName + seed);
