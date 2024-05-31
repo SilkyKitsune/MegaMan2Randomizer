@@ -119,7 +119,7 @@ public static class MM2
         }
 
         IPS ips = new();
-        ips.Add(false, (int)Address.HeatStageWeapon, data);
+        ips.Add(false, (int)Address.WeaponBitMasks, data);
         return ips;
     }
 
