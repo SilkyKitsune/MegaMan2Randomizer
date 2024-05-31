@@ -157,11 +157,12 @@
             // wallCheckBox
             // 
             wallCheckBox.AutoSize = true;
+            wallCheckBox.Enabled = false;
             wallCheckBox.Location = new System.Drawing.Point(12, 169);
             wallCheckBox.Name = "wallCheckBox";
-            wallCheckBox.Size = new System.Drawing.Size(188, 19);
+            wallCheckBox.Size = new System.Drawing.Size(85, 19);
             wallCheckBox.TabIndex = 12;
-            wallCheckBox.Text = "Replace Boo Beam Crash Walls";
+            wallCheckBox.Text = "deprecated";
             wallCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainWindow
