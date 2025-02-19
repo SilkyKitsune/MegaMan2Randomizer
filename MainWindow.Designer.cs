@@ -47,6 +47,7 @@
             // 
             // romPathTextBox
             // 
+            romPathTextBox.Enabled = false;
             romPathTextBox.Location = new System.Drawing.Point(12, 27);
             romPathTextBox.Name = "romPathTextBox";
             romPathTextBox.Size = new System.Drawing.Size(267, 23);
@@ -63,6 +64,7 @@
             // 
             // romPathButton
             // 
+            romPathButton.Enabled = false;
             romPathButton.Location = new System.Drawing.Point(285, 27);
             romPathButton.Name = "romPathButton";
             romPathButton.Size = new System.Drawing.Size(25, 23);
@@ -126,6 +128,9 @@
             // ipsCheckBox
             // 
             ipsCheckBox.AutoSize = true;
+            ipsCheckBox.Checked = true;
+            ipsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            ipsCheckBox.Enabled = false;
             ipsCheckBox.Location = new System.Drawing.Point(150, 194);
             ipsCheckBox.Name = "ipsCheckBox";
             ipsCheckBox.Size = new System.Drawing.Size(79, 19);

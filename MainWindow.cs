@@ -31,7 +31,7 @@ public partial class MainWindow : Form
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
 
-    private void ipsCheckBox_CheckedChanged(object sender, EventArgs e) => IPSCheckBox();
+    private void ipsCheckBox_CheckedChanged(object sender, EventArgs e) { }//=> IPSCheckBox();
 
     private void outputButton_Click(object sender, EventArgs e) => OutputFolderButton();
 
