@@ -48,7 +48,7 @@ public partial class MainWindow : Form
                 return;
             }
 
-        bool ips = ipsCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
+        bool ips = ipsCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
         string romPath = romPathTextBox.Text, folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
         byte[] rom = null;
 

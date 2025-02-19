@@ -42,7 +42,7 @@
             openFileDialog = new System.Windows.Forms.OpenFileDialog();
             shuffleLevelsCheckBox = new System.Windows.Forms.CheckBox();
             heatManCheckBox = new System.Windows.Forms.CheckBox();
-            wallCheckBox = new System.Windows.Forms.CheckBox();
+            shuffleEquipmentCheckBox = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // romPathTextBox
@@ -154,23 +154,23 @@
             heatManCheckBox.Text = "Never place Item 2 on Heat Man";
             heatManCheckBox.UseVisualStyleBackColor = true;
             // 
-            // wallCheckBox
+            // shuffleEquipmentCheckBox
             // 
-            wallCheckBox.AutoSize = true;
-            wallCheckBox.Enabled = false;
-            wallCheckBox.Location = new System.Drawing.Point(12, 169);
-            wallCheckBox.Name = "wallCheckBox";
-            wallCheckBox.Size = new System.Drawing.Size(85, 19);
-            wallCheckBox.TabIndex = 12;
-            wallCheckBox.Text = "deprecated";
-            wallCheckBox.UseVisualStyleBackColor = true;
+            shuffleEquipmentCheckBox.AutoSize = true;
+            shuffleEquipmentCheckBox.Enabled = false;
+            shuffleEquipmentCheckBox.Location = new System.Drawing.Point(12, 169);
+            shuffleEquipmentCheckBox.Name = "shuffleEquipmentCheckBox";
+            shuffleEquipmentCheckBox.Size = new System.Drawing.Size(218, 19);
+            shuffleEquipmentCheckBox.TabIndex = 12;
+            shuffleEquipmentCheckBox.Text = "Shuffle Weapons and Items together";
+            shuffleEquipmentCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(324, 226);
-            Controls.Add(wallCheckBox);
+            Controls.Add(shuffleEquipmentCheckBox);
             Controls.Add(heatManCheckBox);
             Controls.Add(shuffleLevelsCheckBox);
             Controls.Add(ipsCheckBox);
@@ -205,6 +205,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.CheckBox shuffleLevelsCheckBox;
         private System.Windows.Forms.CheckBox heatManCheckBox;
-        private System.Windows.Forms.CheckBox wallCheckBox;
+        private System.Windows.Forms.CheckBox shuffleEquipmentCheckBox;
     }
 }
