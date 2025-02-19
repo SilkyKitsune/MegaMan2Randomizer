@@ -14,15 +14,16 @@ public partial class MainWindow : Form
     private const string InvalidFile = "INVALID FILE", InvalidPath = "INVALID PATH", Ext = ".nes", FileName = "MM2R_",
         MysteryStageSelectPath = "MysteryStageSelect.ips";
 
-    private static readonly string[] Paths =
+    private static readonly string[]
+        Paths =
     {
-        "BooBeamNerf.ips",
-        "FastCrashBomber.ips",
+        //"BooBeamNerf.ips",
+        "FastCrashBomber_NA.ips",
         "IncreaseBarSpeed.ips",
-        "IncreaseMenuSpeed.ips",
+        "IncreaseMenuSpeed_NA.ips",
         "KeepETanks.ips",
-        "MetalBladeNerf.ips",
-        "QuickBoomerangNerf.ips",
+        "MetalBladeNerf_NA.ips",
+        "QuickBoomerangNerf_NA.ips",
         "ReEnterLevels.ips",
         "SplitWeaponFlags.ips",//rename?
     };
