@@ -5,6 +5,12 @@
 
 Patches/IncreaseETanks.ips
 Patches/Input.asm
+Patches/MysteryStageSelect_AttributeTableEdit.ips
+Patches/MysteryStageSelect_AttributeTableEdit.nes
+Patches/MysteryStageSelect_CHREdit.ips
+Patches/MysteryStageSelect_NameTableEdit.ips
+Patches/MysteryStageSelect_NameTableEdit.nes
+Patches/MysteryStageSelect_OAMEdit.ips
 Patches/QuickSwap.asm
 Patches/ReplaceBooBeamWalls.ips
 Test/
