@@ -10,11 +10,11 @@ WeaponBitMasks = $F2E8          ; 0x03_F2_F8 ; new bitmasks used for shuffled we
 
 SetWeaponBitField = $F2F0
 
-LDA WeaponBitMasks,X ; BD F0 F2 ; 0x03_F3_00 ; subroutine for setting the new bitfield (SplitWeaponFlags.ips)
+LDA WeaponBitMasks,X ; BD E8 F2 ; 0x03_F3_00 ; subroutine for setting the new bitfield (SplitWeaponFlags.ips)
 ORA WeaponBitField   ; 05 99    ;
 STA WeaponBitField   ; 85 99    ;
 LDA RobotBitMasks,X  ; BD 79 C2 ;
-RTS                  ; 60       ;
+JMP $C23C            ; 4C 3C C2 ;
 
 
 ; This includes all the times a LDA/STA opcode is called for the address $009A
@@ -148,7 +148,7 @@ BNE $06              ; D0 06    ;            ;                       ;          
 LDA #$08             ; A9 08    ;            ;                       ;          ;
 STA $2A              ; 85 2A    ;            ;                       ;          ;
 .................................................................................
-LDA RobotBitMasks,X  ; BD 79 C2 ; 0x03_C2_49 ; JSR SetWeaponBitField ; 20 F8 F2 ; called just before the weapon get screen (SplitWeaponFlags.ips)
+LDA RobotBitMasks,X  ; BD 79 C2 ; 0x03_C2_49 ; JMP SetWeaponBitField ; 4C F0 F2 ; called just before the weapon get screen (SplitWeaponFlags.ips)
 ORA RobotBitField    ; 05 9A    ;            ;                       ;          ;
 STA RobotBitField    ; 85 9A    ; 0x03_C2_4E ;                       ;          ;
 LDA ItemBitMasks,X   ; BD 81 C2 ;            ;                       ;          ;
