@@ -11,7 +11,8 @@ public partial class MainWindow : Form
 {
     private const int RomSize = 0x40010;
 
-    private const string InvalidFile = "INVALID FILE", InvalidPath = "INVALID PATH", Ext = ".nes", FileName = "MM2R_";
+    private const string InvalidFile = "INVALID FILE", InvalidPath = "INVALID PATH", Ext = ".nes", FileName = "MM2R_",
+        MysteryStageSelectPath = "MysteryStageSelect.ips";
 
     private static readonly string[] Paths =
     {
@@ -51,6 +52,16 @@ public partial class MainWindow : Form
         bool ips = ipsCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
         string romPath = romPathTextBox.Text, folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
         byte[] rom = null;
+
+        if (shuffleLevels)
+        {
+            if (F.Exists(MysteryStageSelectPath) && IPS.TryRead(out IPS patch_, MysteryStageSelectPath)) patch.Add(patch_, IPS.MergeMode.Combine);
+            else
+            {
+                Close();
+                return;
+            }
+        }
 
         if (!ips)
         {
