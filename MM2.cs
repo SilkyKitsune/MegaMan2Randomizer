@@ -49,6 +49,14 @@ public static class MM2
         return ms ^ ((now.Year * 10000) + (now.Month * 100) + now.Day);
     }
 
+    private static string GetName(Equipment equip, bool item) => equip switch
+    {
+        Equipment.Item1 => item ? nameof(Equipment.Item1) : nameof(Equipment.AtomicFire),
+        Equipment.Item2 => item ? nameof(Equipment.Item2) : nameof(Equipment.AirShooter),
+        Equipment.Item3 => item ? nameof(Equipment.Item3) : nameof(Equipment.LeafShield),
+        _ => equip.ToString()
+    };
+
     private static IPS ShuffleItemsPatch(ref string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(GetSeed());
@@ -65,7 +73,7 @@ public static class MM2
         {
             int n = r.Next(equips.Length - (heatManNoItem2 && i == 0 ? 1 : 0));
             Equipment e = equips[n];
-            spoiler += $"{address} => {e}\n";
+            spoiler += $"{address} => {GetName(e, true)}\n";
             data[i] = (byte)e;
             equips.RemoveAt(n);
         }
@@ -113,7 +121,7 @@ public static class MM2
         {
             int n = r.Next(equips.Length);
             Equipment e = equips[n];
-            spoiler += $"{address} => {e}\n";
+            spoiler += $"{address} => {GetName(e, false)}\n";
             data[i] = (byte)e;
             equips.RemoveAt(n);
         }
