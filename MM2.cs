@@ -57,6 +57,48 @@ public static class MM2
         _ => equip.ToString()
     };
 
+    private static IPS ShuffleEquipmentPatch(ref string spoiler, Random r = null, bool heatManNoItem2 = false)
+    {//this patch is writing over split weapon code
+        r ??= new(GetSeed());
+
+        AutoSizedArray<Equipment> equips = new(weapons);
+        foreach (Equipment item in items) equips.Add(item == Equipment.None ? item : item | Equipment.CrashBomber);
+
+        byte[] data = new byte[equips.Length];
+        
+        Address weaponAddress = Address.HeatStageWeapon, itemAddress = Address.HeatStageItem;
+        for (int i = 0; equips.Length > 0; i++, weaponAddress++, itemAddress++)
+        {
+            int n = r.Next(equips.Length);////heat man no item 2
+            Equipment weapon = equips[n];
+            equips.RemoveAt(n);
+
+            n = r.Next(equips.Length);////
+            Equipment item = equips[n];
+            equips.RemoveAt(n);
+
+            bool weaponIsItem = weapon > Equipment.CrashBomber, itemIsItem = item > Equipment.CrashBomber;
+
+            spoiler += $"{weaponAddress} => {GetName(weaponIsItem ? weapon ^ Equipment.CrashBomber : weapon, weaponIsItem)}\n{itemAddress} => {GetName(itemIsItem ? item ^ Equipment.CrashBomber : item, itemIsItem)}\n";
+
+            Equipment weaponByte = Equipment.None, itemByte = Equipment.None;
+            
+            if (weaponIsItem) itemByte |= weapon ^ Equipment.CrashBomber;
+            else weaponByte |= weapon;
+
+            if (itemIsItem) itemByte |= item ^ Equipment.CrashBomber;
+            else weaponByte |= item;
+
+            data[i] = (byte)weaponByte;
+            data[i + weapons.Length] = (byte)itemByte;
+        }
+        //weapon/item bytes need to be split into two patches
+        IPS ips = new();
+        ips.Add(false, (int)Address.WeaponBitMasks, data);
+        //ips.Add(false, (int)Address., data);
+        return ips;
+    }
+
     private static IPS ShuffleItemsPatch(ref string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(GetSeed());
@@ -131,15 +173,19 @@ public static class MM2
         return ips;
     }
 
-    public static void Generate(ref IPS ips, ref int seed, out string spoiler, bool heatManNoItem2 = false, bool shuffleLevels = false)
+    public static void Generate(ref IPS ips, ref int seed, out string spoiler, bool heatManNoItem2 = false, bool shuffleAllEquipment = false, bool shuffleLevels = false)
     {
         if (seed == 0) seed = GetSeed();
         ips ??= new();
         spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
         Random r = new(seed);
 
-        ips.Add(ShuffleWeaponsPatch(ref spoiler, r), false);
-        ips.Add(ShuffleItemsPatch(ref spoiler, r, heatManNoItem2), false);
-        if (shuffleLevels) ips.Add(ShuffleStagesPatch(ref spoiler, r), false);
+        if (shuffleAllEquipment) ips.Add(ShuffleEquipmentPatch(ref spoiler, r, heatManNoItem2), IPS.MergeMode.Combine);
+        else
+        {
+            ips.Add(ShuffleWeaponsPatch(ref spoiler, r), IPS.MergeMode.Combine);
+            ips.Add(ShuffleItemsPatch(ref spoiler, r, heatManNoItem2), IPS.MergeMode.Combine);
+        }
+        if (shuffleLevels) ips.Add(ShuffleStagesPatch(ref spoiler, r), IPS.MergeMode.Combine);
     }
 }
