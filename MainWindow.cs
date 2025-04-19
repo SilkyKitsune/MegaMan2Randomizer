@@ -32,11 +32,7 @@ public partial class MainWindow : Form
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
 
-    private void ipsCheckBox_CheckedChanged(object sender, EventArgs e) { }//=> IPSCheckBox();
-
     private void outputButton_Click(object sender, EventArgs e) => OutputFolderButton();
-
-    private void romPathButton_Click(object sender, EventArgs e) => RomPathButton();
 
     private void GenerateButton()
     {
@@ -105,7 +101,7 @@ public partial class MainWindow : Form
         generateButton.Enabled = true;
     }
 
-    private void IPSCheckBox()
+    [Obsolete] private void IPSCheckBox()
     {
         bool ips = ipsCheckBox.Checked;
         romPathTextBox.Enabled = !ips;
@@ -118,7 +114,7 @@ public partial class MainWindow : Form
         outputTextBox.Text = folderBrowserDialog.SelectedPath;
     }
 
-    private void RomPathButton()
+    [Obsolete] private void RomPathButton()
     {
         openFileDialog.ShowDialog();
         romPathTextBox.Text = openFileDialog.FileName;

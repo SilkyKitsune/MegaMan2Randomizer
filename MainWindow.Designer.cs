@@ -71,7 +71,6 @@
             romPathButton.TabIndex = 2;
             romPathButton.Text = "...";
             romPathButton.UseVisualStyleBackColor = true;
-            romPathButton.Click += romPathButton_Click;
             // 
             // outputButton
             // 
@@ -137,7 +136,6 @@
             ipsCheckBox.TabIndex = 9;
             ipsCheckBox.Text = "Export IPS";
             ipsCheckBox.UseVisualStyleBackColor = true;
-            ipsCheckBox.CheckedChanged += ipsCheckBox_CheckedChanged;
             // 
             // shuffleLevelsCheckBox
             // 
