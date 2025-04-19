@@ -9,10 +9,7 @@ namespace MM2Randomizer;
 
 public partial class MainWindow : Form
 {
-    private const int RomSize = 0x40010;
-
-    private const string InvalidFile = "INVALID FILE", InvalidPath = "INVALID PATH", Ext = ".nes", FileName = "MM2R_",
-        MysteryStageSelectPath = "MysteryStageSelect.ips";
+    private const string InvalidPath = "INVALID PATH", FileName = "MM2R_", MysteryStageSelectPath = "MysteryStageSelect.ips";
 
     private static readonly string[]
         Paths =
@@ -46,9 +43,8 @@ public partial class MainWindow : Form
                 return;
             }
 
-        bool ips = ipsCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
-        string romPath = romPathTextBox.Text, folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
-        byte[] rom = null;
+        bool heatManNoItem2 = heatManCheckBox.Checked, shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
+        string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
 
         if (shuffleLevels)
         {
@@ -56,22 +52,6 @@ public partial class MainWindow : Form
             else
             {
                 Close();
-                return;
-            }
-        }
-
-        if (!ips)
-        {
-            if (!F.Exists(romPath))
-            {
-                romPathTextBox.Text = InvalidPath;
-                return;
-            }
-
-            rom = F.ReadAllBytes(romPath);
-            if (rom.Length != RomSize)
-            {
-                romPathTextBox.Text = InvalidFile;
                 return;
             }
         }
@@ -90,12 +70,7 @@ public partial class MainWindow : Form
 
         string outPath = P.Combine(folderPath, FileName + seed);
         F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
-        if (ips) patch.WritePatch(outPath);
-        else
-        {
-            patch.Apply(rom);
-            F.WriteAllBytes(P.Combine(folderPath, outPath + Ext), rom);
-        }
+        patch.WritePatch(outPath);
 
         seedTextBox.Text = seed.ToString();
         generateButton.Enabled = true;
