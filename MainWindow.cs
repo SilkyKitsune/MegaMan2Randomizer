@@ -15,14 +15,24 @@ public partial class MainWindow : Form
         Paths =
     {
         //"BooBeamNerf.ips",
-        "FastCrashBomber_NA.ips",
         "IncreaseBarSpeed.ips",
-        "IncreaseMenuSpeed_NA.ips",
         "KeepETanks.ips",
-        "MetalBladeNerf_NA.ips",
-        "QuickBoomerangNerf_NA.ips",
         "ReEnterLevels.ips",
         "SplitWeaponFlags.ips",//rename?
+    },
+        PathsJP =
+    {
+        "FastCrashBomber_JP.ips",
+        "IncreaseMenuSpeed_JP.ips",
+        "MetalBladeNerf_JP.ips",
+        "QuickBoomerangNerf_JP.ips",
+    },
+        PathsNA =
+    {
+        "FastCrashBomber_NA.ips",
+        "IncreaseMenuSpeed_NA.ips",
+        "MetalBladeNerf_NA.ips",
+        "QuickBoomerangNerf_NA.ips",
     };
 
     public MainWindow() => InitializeComponent();
@@ -33,10 +43,30 @@ public partial class MainWindow : Form
 
     private void GenerateButton()
     {
-        IPS patch = new();
+        IPS patchJP = new(), patchNA = new();
 
         foreach (string path in Paths)
-            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patch.Add(patch_, IPS.MergeMode.Combine);
+            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path))
+            {
+                patchJP.Add(patch_, IPS.MergeMode.Combine);
+                patchNA.Add(patch_, IPS.MergeMode.Combine);
+            }
+            else
+            {
+                Close();
+                return;
+            }
+
+        foreach (string path in PathsJP)
+            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchJP.Add(patch_, IPS.MergeMode.Combine);
+            else
+            {
+                Close();
+                return;
+            }
+
+        foreach (string path in PathsNA)
+            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchNA.Add(patch_, IPS.MergeMode.Combine);
             else
             {
                 Close();
@@ -48,7 +78,11 @@ public partial class MainWindow : Form
 
         if (shuffleLevels)
         {
-            if (F.Exists(MysteryStageSelectPath) && IPS.TryRead(out IPS patch_, MysteryStageSelectPath)) patch.Add(patch_, IPS.MergeMode.Combine);
+            if (F.Exists(MysteryStageSelectPath) && IPS.TryRead(out IPS patch_, MysteryStageSelectPath))
+            {
+                patchJP.Add(patch_, IPS.MergeMode.Combine);
+                patchNA.Add(patch_, IPS.MergeMode.Combine);
+            }
             else
             {
                 Close();
@@ -66,11 +100,14 @@ public partial class MainWindow : Form
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
-        MM2.Generate(ref patch, ref seed, out string spoiler, heatManNoItem2, shuffleAllEquipment, shuffleLevels);
+        IPS shuffledPatch = MM2.Generate(ref seed, out string spoiler, heatManNoItem2, shuffleAllEquipment, shuffleLevels);
+        patchJP.Add(shuffledPatch, IPS.MergeMode.Combine);
+        patchNA.Add(shuffledPatch, IPS.MergeMode.Combine);
 
         string outPath = P.Combine(folderPath, FileName + seed);
         F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
-        patch.WritePatch(outPath);
+        patchJP.WritePatch(outPath + "_JP");
+        patchNA.WritePatch(outPath + "_NA");
 
         seedTextBox.Text = seed.ToString();
         generateButton.Enabled = true;
