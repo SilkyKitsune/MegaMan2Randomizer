@@ -1,6 +1,7 @@
 # Mega Man 2 Randomizer
 
 ### Important Info
+- The randomizer will output a spoiler txt and two IPS files, one for Rockman 2 and one for Mega Man 2 (you will need a program like LunarIPS to apply patches)
 - Passwords no longer work!
 
 ### What's randomized?
@@ -16,6 +17,3 @@
 
 ### Difficulty Changes
 - Metal Blade/Quick Boomerang have half as much ammo
-
-### Aditional Info
-- The randomizer has an option to patch a game directly or to create an IPS file instead
