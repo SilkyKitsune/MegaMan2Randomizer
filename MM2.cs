@@ -103,10 +103,7 @@ public static class MM2
     {
         r ??= new(GetSeed());
 
-        spoiler += "\n";
-        
         AutoSizedArray<Equipment> equips = new(items);
-
         byte[] data = new byte[equips.Length];
         
         Address address = Address.HeatStageItem;
@@ -129,10 +126,7 @@ public static class MM2
     {
         r ??= new(GetSeed());
 
-        spoiler += "\n";
-
         AutoSizedArray<StageIndex> stages = new(MM2.stages);
-
         byte[] data = new byte[stages.Length];
 
         Address address = Address.BubbleStagePtr;
@@ -155,7 +149,6 @@ public static class MM2
         r ??= new(GetSeed());
 
         AutoSizedArray<Equipment> equips = new(weapons);
-
         byte[] data = new byte[equips.Length];
 
         Address address = Address.HeatStageWeapon;
@@ -173,10 +166,10 @@ public static class MM2
         return ips;
     }
 
-    public static void Generate(ref IPS ips, ref int seed, out string spoiler, bool heatManNoItem2 = false, bool shuffleAllEquipment = false, bool shuffleLevels = false)
+    public static IPS Generate(ref int seed, out string spoiler, bool heatManNoItem2 = false, bool shuffleAllEquipment = false, bool shuffleLevels = false)
     {
         if (seed == 0) seed = GetSeed();
-        ips ??= new();
+        IPS ips = new();
         spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
         Random r = new(seed);
 
@@ -184,8 +177,15 @@ public static class MM2
         else
         {
             ips.Add(ShuffleWeaponsPatch(ref spoiler, r), IPS.MergeMode.Combine);
+            spoiler += '\n';
             ips.Add(ShuffleItemsPatch(ref spoiler, r, heatManNoItem2), IPS.MergeMode.Combine);
         }
-        if (shuffleLevels) ips.Add(ShuffleStagesPatch(ref spoiler, r), IPS.MergeMode.Combine);
+        if (shuffleLevels)
+        {
+            spoiler += '\n';
+            ips.Add(ShuffleStagesPatch(ref spoiler, r), IPS.MergeMode.Combine);
+        }
+
+        return ips;
     }
 }
