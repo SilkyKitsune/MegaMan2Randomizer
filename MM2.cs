@@ -132,12 +132,11 @@ public static class MM2
         AutoSizedArray<StageIndex> stages = new(MM2.stages);
         byte[] data = new byte[stages.Length];
 
-        Address address = Address.BubbleStagePtr;
-        for (int i = 0; stages.Length > 0; i++, address++)
+        for (int i = 0; stages.Length > 0; i++)
         {
             int n = r.Next(stages.Length);
             StageIndex si = stages[n];
-            spoiler += $"{address} => {si}\n";
+            spoiler += $"{(StagePosition)i} => {si}\n";
             data[i] = (byte)si;
             stages.RemoveAt(n);
         }
