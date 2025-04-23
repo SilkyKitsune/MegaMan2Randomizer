@@ -24,6 +24,9 @@ public partial class MainWindow : Form
     {
         "FastCrashBomber_JP.ips",
         "IncreaseMenuSpeed_JP.ips",
+        "Item1Buff_JP.ips",
+        "Item2Buff_JP.ips",
+        "Item3Buff_JP.ips",
         "MetalBladeNerf_JP.ips",
         "QuickBoomerangNerf_JP.ips",
     },
@@ -31,6 +34,9 @@ public partial class MainWindow : Form
     {
         "FastCrashBomber_NA.ips",
         "IncreaseMenuSpeed_NA.ips",
+        "Item1Buff_NA.ips",
+        "Item2Buff_NA.ips",
+        "Item3Buff_NA.ips",
         "MetalBladeNerf_NA.ips",
         "QuickBoomerangNerf_NA.ips",
     };
