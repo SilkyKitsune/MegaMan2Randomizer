@@ -32,14 +32,14 @@ public static class MM2
 
     private static readonly StageIndex[] stages =
     {
-        StageIndex.HeatStage,
-        StageIndex.AirStage,
-        StageIndex.WoodStage,
-        StageIndex.BubbleStage,
-        StageIndex.QuickStage,
-        StageIndex.FlashStage,
-        StageIndex.MetalStage,
-        StageIndex.CrashStage
+        StageIndex.HeatMan,
+        StageIndex.AirMan,
+        StageIndex.WoodMan,
+        StageIndex.BubbleMan,
+        StageIndex.QuickMan,
+        StageIndex.FlashMan,
+        StageIndex.MetalMan,
+        StageIndex.CrashMan
     };
     
     private static int GetSeed()
