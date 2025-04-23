@@ -48,8 +48,8 @@ public partial class MainWindow : Form
         foreach (string path in Paths)
             if (F.Exists(path) && IPS.TryRead(out IPS patch_, path))
             {
-                patchJP.Add(patch_, IPS.MergeMode.Combine);
-                patchNA.Add(patch_, IPS.MergeMode.Combine);
+                patchJP.Add(patch_, MergeMode.Combine);
+                patchNA.Add(patch_, MergeMode.Combine);
             }
             else
             {
@@ -58,7 +58,7 @@ public partial class MainWindow : Form
             }
 
         foreach (string path in PathsJP)
-            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchJP.Add(patch_, IPS.MergeMode.Combine);
+            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchJP.Add(patch_, MergeMode.Combine);
             else
             {
                 Close();
@@ -66,7 +66,7 @@ public partial class MainWindow : Form
             }
 
         foreach (string path in PathsNA)
-            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchNA.Add(patch_, IPS.MergeMode.Combine);
+            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchNA.Add(patch_, MergeMode.Combine);
             else
             {
                 Close();
@@ -80,8 +80,8 @@ public partial class MainWindow : Form
         {
             if (F.Exists(MysteryStageSelectPath) && IPS.TryRead(out IPS patch_, MysteryStageSelectPath))
             {
-                patchJP.Add(patch_, IPS.MergeMode.Combine);
-                patchNA.Add(patch_, IPS.MergeMode.Combine);
+                patchJP.Add(patch_, MergeMode.Combine);
+                patchNA.Add(patch_, MergeMode.Combine);
             }
             else
             {
@@ -101,8 +101,8 @@ public partial class MainWindow : Form
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
         IPS shuffledPatch = MM2.Generate(ref seed, out string spoiler, heatManNoItem2, shuffleAllEquipment, shuffleLevels);
-        patchJP.Add(shuffledPatch, IPS.MergeMode.Combine);
-        patchNA.Add(shuffledPatch, IPS.MergeMode.Combine);
+        patchJP.Add(shuffledPatch, MergeMode.Combine);
+        patchNA.Add(shuffledPatch, MergeMode.Combine);
 
         string outPath = P.Combine(folderPath, FileName + seed);
         F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
