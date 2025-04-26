@@ -2,6 +2,9 @@
 
 internal enum Address : int
 {
+    BossWeaponDamageJP = 0x02E933,
+    BossWeaponDamageNA = 0x02E952,
+
     WilyStage1Ptr = 0x0340E3,
 
     BubbleStagePtr = 0x034670,
