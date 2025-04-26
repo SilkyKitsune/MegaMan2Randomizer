@@ -47,6 +47,8 @@ public partial class MainWindow : Form
 
     private void outputButton_Click(object sender, EventArgs e) => OutputFolderButton();
 
+    private void weaknessComboBox_SelectedIndexChanged(object sender, EventArgs e) => WeaknessShuffleIndex();
+
     private void GenerateButton()
     {
         IPS patchJP = new(), patchNA = new();
@@ -119,22 +121,11 @@ public partial class MainWindow : Form
         generateButton.Enabled = true;
     }
 
-    [Obsolete] private void IPSCheckBox()
-    {
-        bool ips = ipsCheckBox.Checked;
-        romPathTextBox.Enabled = !ips;
-        romPathButton.Enabled = !ips;
-    }
-
     private void OutputFolderButton()
     {
         folderBrowserDialog.ShowDialog();
         outputTextBox.Text = folderBrowserDialog.SelectedPath;
     }
 
-    [Obsolete] private void RomPathButton()
-    {
-        openFileDialog.ShowDialog();
-        romPathTextBox.Text = openFileDialog.FileName;
-    }
+    private void WeaknessShuffleIndex() => robotsOnlyCheckBox.Enabled = weaknessComboBox.SelectedIndex != 0;
 }

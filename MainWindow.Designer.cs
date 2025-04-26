@@ -28,53 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            romPathTextBox = new System.Windows.Forms.TextBox();
-            romPathLabel = new System.Windows.Forms.Label();
-            romPathButton = new System.Windows.Forms.Button();
-            outputButton = new System.Windows.Forms.Button();
             outputLabel = new System.Windows.Forms.Label();
-            outputTextBox = new System.Windows.Forms.TextBox();
+            outputButton = new System.Windows.Forms.Button();
             seedLabel = new System.Windows.Forms.Label();
+            outputTextBox = new System.Windows.Forms.TextBox();
+            weaknessLabel = new System.Windows.Forms.Label();
             seedTextBox = new System.Windows.Forms.TextBox();
             generateButton = new System.Windows.Forms.Button();
-            ipsCheckBox = new System.Windows.Forms.CheckBox();
+            nerfBusterCheckBox = new System.Windows.Forms.CheckBox();
             folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            openFileDialog = new System.Windows.Forms.OpenFileDialog();
             shuffleLevelsCheckBox = new System.Windows.Forms.CheckBox();
             heatManCheckBox = new System.Windows.Forms.CheckBox();
             shuffleEquipmentCheckBox = new System.Windows.Forms.CheckBox();
+            weaknessComboBox = new System.Windows.Forms.ComboBox();
+            robotsOnlyCheckBox = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
-            // romPathTextBox
+            // outputLabel
             // 
-            romPathTextBox.Enabled = false;
-            romPathTextBox.Location = new System.Drawing.Point(12, 27);
-            romPathTextBox.Name = "romPathTextBox";
-            romPathTextBox.Size = new System.Drawing.Size(267, 23);
-            romPathTextBox.TabIndex = 0;
-            // 
-            // romPathLabel
-            // 
-            romPathLabel.AutoSize = true;
-            romPathLabel.Location = new System.Drawing.Point(12, 9);
-            romPathLabel.Name = "romPathLabel";
-            romPathLabel.Size = new System.Drawing.Size(223, 15);
-            romPathLabel.TabIndex = 1;
-            romPathLabel.Text = "Mega Man 2 Path (Optional if Export IPS)";
-            // 
-            // romPathButton
-            // 
-            romPathButton.Enabled = false;
-            romPathButton.Location = new System.Drawing.Point(285, 27);
-            romPathButton.Name = "romPathButton";
-            romPathButton.Size = new System.Drawing.Size(25, 23);
-            romPathButton.TabIndex = 2;
-            romPathButton.Text = "...";
-            romPathButton.UseVisualStyleBackColor = true;
+            outputLabel.AutoSize = true;
+            outputLabel.Location = new System.Drawing.Point(12, 9);
+            outputLabel.Name = "outputLabel";
+            outputLabel.Size = new System.Drawing.Size(81, 15);
+            outputLabel.TabIndex = 1;
+            outputLabel.Text = "Output Folder";
             // 
             // outputButton
             // 
-            outputButton.Location = new System.Drawing.Point(285, 71);
+            outputButton.Location = new System.Drawing.Point(347, 27);
             outputButton.Name = "outputButton";
             outputButton.Size = new System.Drawing.Size(25, 23);
             outputButton.TabIndex = 5;
@@ -82,41 +63,41 @@
             outputButton.UseVisualStyleBackColor = true;
             outputButton.Click += outputButton_Click;
             // 
-            // outputLabel
-            // 
-            outputLabel.AutoSize = true;
-            outputLabel.Location = new System.Drawing.Point(12, 53);
-            outputLabel.Name = "outputLabel";
-            outputLabel.Size = new System.Drawing.Size(81, 15);
-            outputLabel.TabIndex = 4;
-            outputLabel.Text = "Output Folder";
-            // 
-            // outputTextBox
-            // 
-            outputTextBox.Location = new System.Drawing.Point(12, 71);
-            outputTextBox.Name = "outputTextBox";
-            outputTextBox.Size = new System.Drawing.Size(267, 23);
-            outputTextBox.TabIndex = 3;
-            // 
             // seedLabel
             // 
             seedLabel.AutoSize = true;
-            seedLabel.Location = new System.Drawing.Point(12, 97);
+            seedLabel.Location = new System.Drawing.Point(12, 53);
             seedLabel.Name = "seedLabel";
             seedLabel.Size = new System.Drawing.Size(89, 15);
-            seedLabel.TabIndex = 7;
+            seedLabel.TabIndex = 4;
             seedLabel.Text = "Seed (Optional)";
+            // 
+            // outputTextBox
+            // 
+            outputTextBox.Location = new System.Drawing.Point(12, 27);
+            outputTextBox.Name = "outputTextBox";
+            outputTextBox.Size = new System.Drawing.Size(329, 23);
+            outputTextBox.TabIndex = 3;
+            // 
+            // weaknessLabel
+            // 
+            weaknessLabel.AutoSize = true;
+            weaknessLabel.Location = new System.Drawing.Point(12, 97);
+            weaknessLabel.Name = "weaknessLabel";
+            weaknessLabel.Size = new System.Drawing.Size(99, 15);
+            weaknessLabel.TabIndex = 7;
+            weaknessLabel.Text = "Weakness Shuffle";
             // 
             // seedTextBox
             // 
-            seedTextBox.Location = new System.Drawing.Point(12, 115);
+            seedTextBox.Location = new System.Drawing.Point(12, 71);
             seedTextBox.Name = "seedTextBox";
-            seedTextBox.Size = new System.Drawing.Size(298, 23);
+            seedTextBox.Size = new System.Drawing.Size(360, 23);
             seedTextBox.TabIndex = 6;
             // 
             // generateButton
             // 
-            generateButton.Location = new System.Drawing.Point(235, 191);
+            generateButton.Location = new System.Drawing.Point(297, 240);
             generateButton.Name = "generateButton";
             generateButton.Size = new System.Drawing.Size(75, 23);
             generateButton.TabIndex = 8;
@@ -124,23 +105,21 @@
             generateButton.UseVisualStyleBackColor = true;
             generateButton.Click += generateButton_Click;
             // 
-            // ipsCheckBox
+            // nerfBusterCheckBox
             // 
-            ipsCheckBox.AutoSize = true;
-            ipsCheckBox.Checked = true;
-            ipsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            ipsCheckBox.Enabled = false;
-            ipsCheckBox.Location = new System.Drawing.Point(150, 194);
-            ipsCheckBox.Name = "ipsCheckBox";
-            ipsCheckBox.Size = new System.Drawing.Size(79, 19);
-            ipsCheckBox.TabIndex = 9;
-            ipsCheckBox.Text = "Export IPS";
-            ipsCheckBox.UseVisualStyleBackColor = true;
+            nerfBusterCheckBox.AutoSize = true;
+            nerfBusterCheckBox.Enabled = false;
+            nerfBusterCheckBox.Location = new System.Drawing.Point(12, 169);
+            nerfBusterCheckBox.Name = "nerfBusterCheckBox";
+            nerfBusterCheckBox.Size = new System.Drawing.Size(343, 19);
+            nerfBusterCheckBox.TabIndex = 9;
+            nerfBusterCheckBox.Text = "4 Random Robots/All Castle Bosses Immune to Mega Buster";
+            nerfBusterCheckBox.UseVisualStyleBackColor = true;
             // 
             // shuffleLevelsCheckBox
             // 
             shuffleLevelsCheckBox.AutoSize = true;
-            shuffleLevelsCheckBox.Location = new System.Drawing.Point(12, 194);
+            shuffleLevelsCheckBox.Location = new System.Drawing.Point(11, 244);
             shuffleLevelsCheckBox.Name = "shuffleLevelsCheckBox";
             shuffleLevelsCheckBox.Size = new System.Drawing.Size(98, 19);
             shuffleLevelsCheckBox.TabIndex = 10;
@@ -150,7 +129,7 @@
             // heatManCheckBox
             // 
             heatManCheckBox.AutoSize = true;
-            heatManCheckBox.Location = new System.Drawing.Point(12, 144);
+            heatManCheckBox.Location = new System.Drawing.Point(11, 219);
             heatManCheckBox.Name = "heatManCheckBox";
             heatManCheckBox.Size = new System.Drawing.Size(196, 19);
             heatManCheckBox.TabIndex = 11;
@@ -161,31 +140,54 @@
             // 
             shuffleEquipmentCheckBox.AutoSize = true;
             shuffleEquipmentCheckBox.Enabled = false;
-            shuffleEquipmentCheckBox.Location = new System.Drawing.Point(12, 169);
+            shuffleEquipmentCheckBox.Location = new System.Drawing.Point(11, 194);
             shuffleEquipmentCheckBox.Name = "shuffleEquipmentCheckBox";
             shuffleEquipmentCheckBox.Size = new System.Drawing.Size(218, 19);
             shuffleEquipmentCheckBox.TabIndex = 12;
             shuffleEquipmentCheckBox.Text = "Shuffle Weapons and Items together";
             shuffleEquipmentCheckBox.UseVisualStyleBackColor = true;
             // 
+            // weaknessComboBox
+            // 
+            weaknessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            weaknessComboBox.Enabled = false;
+            weaknessComboBox.FormattingEnabled = true;
+            weaknessComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "All" });
+            weaknessComboBox.Location = new System.Drawing.Point(12, 115);
+            weaknessComboBox.Name = "weaknessComboBox";
+            weaknessComboBox.Size = new System.Drawing.Size(360, 23);
+            weaknessComboBox.TabIndex = 13;
+            weaknessComboBox.SelectedIndexChanged += weaknessComboBox_SelectedIndexChanged;
+            // 
+            // robotsOnlyCheckBox
+            // 
+            robotsOnlyCheckBox.AutoSize = true;
+            robotsOnlyCheckBox.Enabled = false;
+            robotsOnlyCheckBox.Location = new System.Drawing.Point(12, 144);
+            robotsOnlyCheckBox.Name = "robotsOnlyCheckBox";
+            robotsOnlyCheckBox.Size = new System.Drawing.Size(257, 19);
+            robotsOnlyCheckBox.TabIndex = 14;
+            robotsOnlyCheckBox.Text = "Shuffle Castle Boss Weaknesses with Robots";
+            robotsOnlyCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(324, 226);
+            ClientSize = new System.Drawing.Size(384, 276);
+            Controls.Add(robotsOnlyCheckBox);
+            Controls.Add(weaknessComboBox);
             Controls.Add(shuffleEquipmentCheckBox);
             Controls.Add(heatManCheckBox);
             Controls.Add(shuffleLevelsCheckBox);
-            Controls.Add(ipsCheckBox);
+            Controls.Add(nerfBusterCheckBox);
             Controls.Add(generateButton);
-            Controls.Add(seedLabel);
+            Controls.Add(weaknessLabel);
             Controls.Add(seedTextBox);
             Controls.Add(outputButton);
-            Controls.Add(outputLabel);
+            Controls.Add(seedLabel);
             Controls.Add(outputTextBox);
-            Controls.Add(romPathButton);
-            Controls.Add(romPathLabel);
-            Controls.Add(romPathTextBox);
+            Controls.Add(outputLabel);
             Name = "MainWindow";
             Text = "Mega Man 2 Randomizer";
             ResumeLayout(false);
@@ -193,21 +195,19 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox romPathTextBox;
-        private System.Windows.Forms.Label romPathLabel;
-        private System.Windows.Forms.Button romPathButton;
-        private System.Windows.Forms.Button outputButton;
         private System.Windows.Forms.Label outputLabel;
-        private System.Windows.Forms.TextBox outputTextBox;
+        private System.Windows.Forms.Button outputButton;
         private System.Windows.Forms.Label seedLabel;
+        private System.Windows.Forms.TextBox outputTextBox;
+        private System.Windows.Forms.Label weaknessLabel;
         private System.Windows.Forms.TextBox seedTextBox;
         private System.Windows.Forms.Button generateButton;
-        private System.Windows.Forms.CheckBox ipsCheckBox;
+        private System.Windows.Forms.CheckBox nerfBusterCheckBox;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.CheckBox shuffleLevelsCheckBox;
         private System.Windows.Forms.CheckBox heatManCheckBox;
         private System.Windows.Forms.CheckBox shuffleEquipmentCheckBox;
+        private System.Windows.Forms.ComboBox weaknessComboBox;
+        private System.Windows.Forms.CheckBox robotsOnlyCheckBox;
     }
 }
