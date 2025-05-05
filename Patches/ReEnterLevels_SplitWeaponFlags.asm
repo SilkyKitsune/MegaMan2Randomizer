@@ -48,7 +48,7 @@ BNE $0D              ; D0 0D    ;                     ;          ;              
 LDA RobotBitField    ; A5 9A    ;                     ;          ; 0x03_40_DC   ;              ;                       ;          ; first stage select load, maybe others
 CMP #$FF             ; C9 FF    ;                     ;          ;              ;              ;                       ;          ;
 BNE $ED              ; D0 ED    ;                     ;          ;              ;              ;                       ;          ;
-LDA #$08             ; A9 08    ;                     ;          ;              ;              ;                       ;          ;
+LDA #$08             ; A9 08    ;                     ;          ;              ;              ;                       ;          ; index of wily stage 1
 STA $2A              ; 85 2A    ;                     ;          ;              ;              ;                       ;          ;
 JMP $829A            ; 4C 9A 82 ;                     ;          ;              ;              ;                       ;          ;
 LDY $865F,X          ; BC 5F 86 ;                     ;          ;              ;              ;                       ;          ;
