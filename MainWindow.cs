@@ -115,9 +115,11 @@ public partial class MainWindow : Form
 
         foreach (IPS patch in patchesNA) patchNA.Add(patch, MergeMode.Combine);
 
-        bool heatManNoItem2 = heatManCheckBox.Checked, shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
+        bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
+            robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked;
+        int weaknessShuffle = weaknessComboBox.SelectedIndex;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
-
+        
         if (shuffleLevels)
         {
             patchJP.Add(mysteryStageSelect, MergeMode.Combine);
