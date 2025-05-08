@@ -41,7 +41,59 @@ public partial class MainWindow : Form
         "QuickBoomerangNerf_NA.ips",
     };
 
-    public MainWindow() => InitializeComponent();
+    public MainWindow()
+    {
+        InitializeComponent();
+
+        bool invalidPatches = false;
+        string invalidPaths = "";
+
+        if (!IPS.TryRead(out mysteryStageSelect, MysteryStageSelectPath))
+        {
+            invalidPatches = true;
+            invalidPaths += MysteryStageSelectPath + '\n';
+        }
+
+        for (int i = 0; i < Paths.Length; i++)
+            if (!IPS.TryRead(out patches[i], Paths[i]))
+            {
+                invalidPatches = true;
+                invalidPaths += Paths[i] + '\n';
+            }
+
+        for (int i = 0; i < PathsJP.Length; i++)
+            if (!IPS.TryRead(out patchesJP[i], PathsJP[i]))
+            {
+                invalidPatches = true;
+                invalidPaths += PathsJP[i] + '\n';
+            }
+
+        for (int i = 0; i < PathsNA.Length; i++)
+            if (!IPS.TryRead(out patchesNA[i], PathsNA[i]))
+            {
+                invalidPatches = true;
+                invalidPaths += PathsNA[i] + '\n';
+            }
+        
+        if (invalidPatches)
+        {
+            outputTextBox.Enabled = false;
+            outputButton.Enabled = false;
+            seedTextBox.Enabled = false;
+            weaknessComboBox.Enabled = false;
+            robotsOnlyCheckBox.Enabled = false;
+            nerfBusterCheckBox.Enabled = false;
+            shuffleEquipmentCheckBox.Enabled = false;
+            heatManCheckBox.Enabled = false;
+            shuffleLevelsCheckBox.Enabled = false;
+            generateButton.Enabled = false;
+            seedTextBox.Text = outputTextBox.Text = "INVALID PATCHES";//temp
+            MessageBox.Show("These patches could not be loaded they may be missing or corrupt:\n" + invalidPaths, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+
+    private readonly IPS mysteryStageSelect;
+    private readonly IPS[] patches = new IPS[Paths.Length], patchesJP = new IPS[PathsJP.Length], patchesNA = new IPS[PathsNA.Length];
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
 
@@ -53,49 +105,23 @@ public partial class MainWindow : Form
     {
         IPS patchJP = new(), patchNA = new();
 
-        foreach (string path in Paths)
-            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path))
-            {
-                patchJP.Add(patch_, MergeMode.Combine);
-                patchNA.Add(patch_, MergeMode.Combine);
-            }
-            else
-            {
-                Close();
-                return;
-            }
+        foreach (IPS patch in patches)
+        {
+            patchJP.Add(patch, MergeMode.Combine);
+            patchNA.Add(patch, MergeMode.Combine);
+        }
+        
+        foreach (IPS patch in patchesJP) patchJP.Add(patch, MergeMode.Combine);
 
-        foreach (string path in PathsJP)
-            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchJP.Add(patch_, MergeMode.Combine);
-            else
-            {
-                Close();
-                return;
-            }
-
-        foreach (string path in PathsNA)
-            if (F.Exists(path) && IPS.TryRead(out IPS patch_, path)) patchNA.Add(patch_, MergeMode.Combine);
-            else
-            {
-                Close();
-                return;
-            }
+        foreach (IPS patch in patchesNA) patchNA.Add(patch, MergeMode.Combine);
 
         bool heatManNoItem2 = heatManCheckBox.Checked, shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
 
         if (shuffleLevels)
         {
-            if (F.Exists(MysteryStageSelectPath) && IPS.TryRead(out IPS patch_, MysteryStageSelectPath))
-            {
-                patchJP.Add(patch_, MergeMode.Combine);
-                patchNA.Add(patch_, MergeMode.Combine);
-            }
-            else
-            {
-                Close();
-                return;
-            }
+            patchJP.Add(mysteryStageSelect, MergeMode.Combine);
+            patchNA.Add(mysteryStageSelect, MergeMode.Combine);
         }
 
         if (!D.Exists(folderPath))
