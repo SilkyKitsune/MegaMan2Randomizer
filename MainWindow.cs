@@ -104,6 +104,19 @@ public partial class MainWindow : Form
 
     private void GenerateButton()
     {
+        bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
+            robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked;
+        int weaknessShuffle = weaknessComboBox.SelectedIndex;
+        string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
+        
+        if (!D.Exists(folderPath))
+        {
+            outputTextBox.Text = InvalidPath;
+            return;
+        }
+
+        generateButton.Enabled = false;
+
         IPS patchJP = new(), patchNA = new();
 
         foreach (IPS patch in patches)
@@ -116,24 +129,11 @@ public partial class MainWindow : Form
 
         foreach (IPS patch in patchesNA) patchNA.Add(patch, MergeMode.Combine);
 
-        bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
-            robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked;
-        int weaknessShuffle = weaknessComboBox.SelectedIndex;
-        string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
-        
         if (shuffleLevels)
         {
             patchJP.Add(mysteryStageSelect, MergeMode.Combine);
             patchNA.Add(mysteryStageSelect, MergeMode.Combine);
         }
-
-        if (!D.Exists(folderPath))
-        {
-            outputTextBox.Text = InvalidPath;
-            return;
-        }
-
-        generateButton.Enabled = false;
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
