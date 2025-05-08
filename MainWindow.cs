@@ -44,6 +44,7 @@ public partial class MainWindow : Form
     public MainWindow()
     {
         InitializeComponent();
+        weaknessComboBox.SelectedIndex = 0;
 
         bool invalidPatches = false;
         string invalidPaths = "";
