@@ -108,7 +108,6 @@
             // nerfBusterCheckBox
             // 
             nerfBusterCheckBox.AutoSize = true;
-            nerfBusterCheckBox.Enabled = false;
             nerfBusterCheckBox.Location = new System.Drawing.Point(12, 169);
             nerfBusterCheckBox.Name = "nerfBusterCheckBox";
             nerfBusterCheckBox.Size = new System.Drawing.Size(343, 19);
@@ -139,7 +138,6 @@
             // shuffleEquipmentCheckBox
             // 
             shuffleEquipmentCheckBox.AutoSize = true;
-            shuffleEquipmentCheckBox.Enabled = false;
             shuffleEquipmentCheckBox.Location = new System.Drawing.Point(11, 194);
             shuffleEquipmentCheckBox.Name = "shuffleEquipmentCheckBox";
             shuffleEquipmentCheckBox.Size = new System.Drawing.Size(218, 19);
