@@ -13,8 +13,12 @@ Patches/MysteryStageSelect_NameTableEdit.nes
 Patches/MysteryStageSelect_OAMEdit.ips
 Patches/QuickSwap.asm
 Patches/ReplaceBooBeamWalls.ips
+Patches/WeaponGetScreen.asm
 Test/
+Bank C.asm
+Bank F.asm
 MM2R Notes.txt
+ROM Map.txt
 
 # User-specific files
 *.rsuser
