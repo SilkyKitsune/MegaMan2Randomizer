@@ -284,7 +284,5 @@ public static class MM2
 
             spoiler += '\n' + s;
         }
-
-        return ips;
     }
 }
