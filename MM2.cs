@@ -191,7 +191,34 @@ public static class MM2
         ips.Add(false, (int)Address.HeatStageItem, data);
         return ips;
     }
-    
+
+    private static void ShuffleBusterInvulnerabilityPatch(out IPS jp, out IPS na, out string spoiler, Random r = null)
+    {
+        r ??= new(GetSeed());
+        spoiler = "Invulnerable to Mega Buster: ";
+
+        byte[] data = new byte[weaknessSets.Length];
+        for (int i = 0; i < 8; i++) data[i] = weaknessSets[i][0];
+        for (int i = 8; i < data.Length; i++) data[i] = 0;
+
+        AutoSizedArray<StageIndex> robots = new(stages, stages.Length);
+
+        for (int i = 0; i < 4; i++)
+        {
+            int n = r.Next(robots.Length);
+            StageIndex robot = robots[n];
+            spoiler += i < 3 ? robot + ", " : robot;
+            data[(int)robot] = 0;
+            robots.RemoveAt(n);
+        }
+
+        jp = new();
+        jp.Add(false, (int)Address.BossWeaponDamageJP, data);
+
+        na = new();
+        na.Add(false, (int)Address.BossWeaponDamageNA, data);
+    }
+
     private static IPS ShuffleStagesPatch(out string spoiler, Random r = null)
     {
         r ??= new(GetSeed());
@@ -281,6 +308,16 @@ public static class MM2
 
             jp.Add(stages, MergeMode.Combine);
             na.Add(stages, MergeMode.Combine);
+
+            spoiler += '\n' + s;
+        }
+
+        if (nerfBuster)
+        {
+            ShuffleBusterInvulnerabilityPatch(out IPS nerfBusterJP, out IPS nerfBusterNA, out string s, r);
+
+            jp.Add(nerfBusterJP, MergeMode.Combine);
+            na.Add(nerfBusterNA, MergeMode.Combine);
 
             spoiler += '\n' + s;
         }
