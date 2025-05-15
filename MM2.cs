@@ -57,47 +57,67 @@ public static class MM2
         _ => equip.ToString()
     };
 
-    private static IPS ShuffleEquipmentPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
-    {//this patch is writing over split weapon code
+    private static void ShuffleEquipmentPatch(out IPS weaponsPatch, out IPS itemsPatch, out string spoiler, Random r = null, bool heatManNoItem2 = false)
+    {
         r ??= new(GetSeed());
         spoiler = "";
 
-        AutoSizedArray<Equipment> equips = new(weapons);
-        foreach (Equipment item in items) equips.Add(item == Equipment.None ? item : item | Equipment.CrashBomber);
+        AutoSizedArray<ushort> equips = new(weapons.Length + items.Length);
+        foreach (Equipment weapon in weapons) equips.Add((byte)weapon);
+        foreach (Equipment item in items) equips.Add((ushort)(0x0100 | (byte)item));
 
-        byte[] data = new byte[equips.Length];
-        
-        Address weaponAddress = Address.HeatStageWeapon, itemAddress = Address.HeatStageItem;
-        for (int i = 0; equips.Length > 0; i++, weaponAddress++, itemAddress++)
+        byte[] weaponData = new byte[weapons.Length], itemData = new byte[items.Length];
+
+        for (int i = 0; equips.Length > 0; i++)
         {
-            int n = r.Next(equips.Length);////heat man no item 2
-            Equipment weapon = equips[n];
+            int h = heatManNoItem2 && i == 0 ? 1 : 0;
+
+            int n = r.Next(equips.Length - h);
+            ushort weapon = equips[n];
             equips.RemoveAt(n);
-
-            n = r.Next(equips.Length);////
-            Equipment item = equips[n];
-            equips.RemoveAt(n);
-
-            bool weaponIsItem = weapon > Equipment.CrashBomber, itemIsItem = item > Equipment.CrashBomber;
-
-            spoiler += $"{weaponAddress} => {GetName(weaponIsItem ? weapon ^ Equipment.CrashBomber : weapon, weaponIsItem)}\n{itemAddress} => {GetName(itemIsItem ? item ^ Equipment.CrashBomber : item, itemIsItem)}\n";
-
-            Equipment weaponByte = Equipment.None, itemByte = Equipment.None;
             
-            if (weaponIsItem) itemByte |= weapon ^ Equipment.CrashBomber;
-            else weaponByte |= weapon;
+            n = r.Next(equips.Length - h);
+            ushort item = equips[n];
+            equips.RemoveAt(n);
 
-            if (itemIsItem) itemByte |= item ^ Equipment.CrashBomber;
-            else weaponByte |= item;
+            spoiler += $"{(StageIndex)i} => ";
 
-            data[i] = (byte)weaponByte;
-            data[i + weapons.Length] = (byte)itemByte;
+            byte weaponByte = 0, itemByte = 0, tempByte;
+
+            bool weaponIsItem = weapon > byte.MaxValue, itemIsItem = item > byte.MaxValue;
+            if (weaponIsItem)
+            {
+                tempByte = (byte)(weapon & byte.MaxValue);
+                itemByte |= tempByte;
+            }
+            else
+            {
+                tempByte = (byte)weapon;
+                weaponByte |= tempByte;
+            }
+            spoiler += GetName((Equipment)tempByte, weaponIsItem) + ',' + ' ';
+
+            if (itemIsItem)
+            {
+                tempByte = (byte)(item & byte.MaxValue);
+                itemByte |= tempByte;
+            }
+            else
+            {
+                tempByte = (byte)item;
+                weaponByte |= tempByte;
+            }
+            spoiler += GetName((Equipment)tempByte, itemIsItem) + '\n';
+
+            weaponData[i] = weaponByte;
+            itemData[i] = itemByte;
         }
-        //weapon/item bytes need to be split into two patches
-        IPS ips = new();
-        ips.Add(false, (int)Address.WeaponBitMasks, data);
-        //ips.Add(false, (int)Address., data);
-        return ips;
+
+        weaponsPatch = new();
+        weaponsPatch.Add(false, (int)Address.WeaponBitMasks, weaponData);
+
+        itemsPatch = new();
+        itemsPatch.Add(false, (int)Address.HeatStageItem, itemData);
     }
 
     private static IPS ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
