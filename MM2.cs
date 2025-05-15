@@ -94,6 +94,17 @@ public static class MM2
         _ => equip.ToString()
     };
 
+    private static byte[] Rearrange(byte[][] data)
+    {
+        byte[] newData = new byte[data.Length * data[0].Length];
+
+        for (int i = 0, k = 0, l = data[0].Length; i < l; i++)
+            for (int j = 0; j < data.Length; j++)
+                newData[k++] = data[j][i];
+
+        return newData;
+    }
+
     private static void ShuffleEquipmentPatch(out IPS weaponsPatch, out IPS itemsPatch, out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(GetSeed());
