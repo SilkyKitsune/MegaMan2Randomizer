@@ -137,9 +137,9 @@ public partial class MainWindow : Form
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
-        IPS shuffledPatch = MM2.Generate(ref seed, out string spoiler, heatManNoItem2, shuffleAllEquipment, shuffleLevels);
-        patchJP.Add(shuffledPatch, MergeMode.Combine);
-        patchNA.Add(shuffledPatch, MergeMode.Combine);
+        MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
+        patchJP.Add(shuffledPatchJP, MergeMode.Combine);
+        patchNA.Add(shuffledPatchNA, MergeMode.Combine);
 
         string outPath = P.Combine(folderPath, FileName + seed);
         F.WriteAllText(outPath + "_Spoiler.txt", spoiler);

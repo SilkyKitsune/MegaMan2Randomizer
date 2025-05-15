@@ -189,29 +189,51 @@ public static class MM2
         return ips;
     }
     
-    public static IPS Generate(ref int seed, out string spoiler, bool heatManNoItem2 = false, bool shuffleAllEquipment = false, bool shuffleLevels = false)
+    public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler,
+        bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
+        bool shuffleLevels = false,
+        int weaknessShuffle = 0, bool robotsOnly = false,
+        bool nerfBuster = false)
     {
         if (seed == 0) seed = GetSeed();
         Random r = new(seed);
 
         spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
-        IPS ips = new();
+        jp = new();
+        na = new();
 
         if (shuffleAllEquipment)
         {
-            ips.Add(ShuffleEquipmentPatch(out string s, r, heatManNoItem2), MergeMode.Combine);
+            ShuffleEquipmentPatch(out IPS weapons, out IPS items, out string s, r, heatManNoItem2);
+
+            jp.Add(weapons, MergeMode.Combine);
+            jp.Add(items, MergeMode.Combine);
+
+            na.Add(weapons, MergeMode.Combine);
+            na.Add(items, MergeMode.Combine);
+
             spoiler += s;
         }
         else
         {
-            ips.Add(ShuffleWeaponsPatch(out string s, r), MergeMode.Combine);
-            spoiler += s + '\n';
-            ips.Add(ShuffleItemsPatch(out s, r, heatManNoItem2), MergeMode.Combine);
-            spoiler += s;
+            IPS weaons = ShuffleWeaponsPatch(out string s, r), items = ShuffleItemsPatch(out string s_, r, heatManNoItem2);
+
+            jp.Add(weaons, MergeMode.Combine);
+            jp.Add(items, MergeMode.Combine);
+
+            na.Add(weaons, MergeMode.Combine);
+            na.Add(items, MergeMode.Combine);
+
+            spoiler += s + '\n' + s_;
         }
+
         if (shuffleLevels)
         {
-            ips.Add(ShuffleStagesPatch(out string s, r), MergeMode.Combine);
+            IPS stages = ShuffleStagesPatch(out string s, r);
+
+            jp.Add(stages, MergeMode.Combine);
+            na.Add(stages, MergeMode.Combine);
+
             spoiler += '\n' + s;
         }
 
