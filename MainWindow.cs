@@ -14,7 +14,7 @@ public partial class MainWindow : Form
     private static readonly string[]
         Paths =
     {
-        //"BooBeamNerf.ips",
+        "BooBeamNerf.ips",
         "IncreaseBarSpeed.ips",
         "KeepETanks.ips",
         "ReEnterLevels.ips",

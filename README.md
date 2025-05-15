@@ -13,7 +13,7 @@
 - Weapon get screen is faster
 - Crash Bomber takes half the time to explode
 - Game over no longer resets E-Tanks
-- *Coming soon: Boo Beam Trap (Wily 4 boss) takes damage from all weapons now*
+- Boobeam Trap (Wily 4 boss) dies instantly
 
 ### Difficulty Changes
 - Metal Blade/Quick Boomerang have half as much ammo
