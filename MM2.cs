@@ -173,7 +173,7 @@ public static class MM2
         r ??= new(GetSeed());
         spoiler = "";
 
-        AutoSizedArray<Equipment> equips = new(items);
+        AutoSizedArray<Equipment> equips = new(items, items.Length);
         byte[] data = new byte[equips.Length];
         
         Address address = Address.HeatStageItem;
@@ -224,7 +224,7 @@ public static class MM2
         r ??= new(GetSeed());
         spoiler = "";
 
-        AutoSizedArray<StageIndex> stages = new(MM2.stages);
+        AutoSizedArray<StageIndex> stages = new(MM2.stages, MM2.stages.Length);
         byte[] data = new byte[stages.Length];
 
         for (int i = 0; stages.Length > 0; i++)
