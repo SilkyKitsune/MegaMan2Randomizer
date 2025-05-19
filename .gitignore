@@ -15,9 +15,11 @@ Patches/QuickSwap.asm
 Patches/ReplaceBooBeamWalls.ips
 Patches/WeaponGetScreen.asm
 Test/
+Bank B.asm
 Bank C.asm
 Bank F.asm
 MM2R Notes.txt
+RAM Map.txt
 ROM Map.txt
 
 # User-specific files
