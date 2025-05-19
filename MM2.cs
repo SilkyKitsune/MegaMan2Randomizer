@@ -42,6 +42,24 @@ public static class MM2
         StageIndex.CrashMan
     };
 
+    private static readonly string[] bossNames =
+    {
+        "Heat Man",
+        "Air Man",
+        "Wood Man",
+        "Bubble Man",
+        "Quick Man",
+        "Flash Man",
+        "Metal Man",
+        "Crash Man",
+        "Mecha Dragon",
+        "Picopicokun",
+        "Guts Tank",
+        "Boobeam Trap",
+        "Wily Machine",
+        "Wily Alien"
+    };
+
     private static readonly byte[][] weaknessSets =
     {//need logic to ensure no boss becomes invulnerable
         //             P     H     A     W     B     Q     C     M
