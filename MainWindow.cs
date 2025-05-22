@@ -89,7 +89,7 @@ public partial class MainWindow : Form
             shuffleLevelsCheckBox.Enabled = false;
             generateButton.Enabled = false;
             seedTextBox.Text = outputTextBox.Text = "INVALID PATCHES";//temp
-            MessageBox.Show("These patches could not be loaded they may be missing or corrupt:\n" + invalidPaths, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("These patches could not be loaded they may be missing or corrupt:\n" + invalidPaths, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 
