@@ -22,6 +22,7 @@ public partial class MainWindow : Form
     },
         PathsJP =
     {
+        "AtomicFireFix_JP.ips",
         "FastCrashBomber_JP.ips",
         "IncreaseMenuSpeed_JP.ips",
         "Item1Buff_JP.ips",
@@ -32,6 +33,7 @@ public partial class MainWindow : Form
     },
         PathsNA =
     {
+        "AtomicFireFix_NA.ips",
         "FastCrashBomber_NA.ips",
         "IncreaseMenuSpeed_NA.ips",
         "Item1Buff_NA.ips",
