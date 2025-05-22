@@ -58,6 +58,23 @@ public static class MM2
         "Boobeam Trap",
         "Wily Machine",
         "Wily Alien"
+    },
+        bossNamesWithSpaces =
+    {
+        "Heat Man     ",
+        "Air Man      ",
+        "Wood Man     ",
+        "Bubble Man   ",
+        "Quick Man    ",
+        "Flash Man    ",
+        "Metal Man    ",
+        "Crash Man    ",
+        "Mecha Dragon ",
+        "Picopicokun  ",
+        "Guts Tank    ",
+        "Boobeam Trap ",
+        "Wily Machine ",
+        "Wily Alien   "
     };
 
     private static readonly byte[][] weaknessSets =
