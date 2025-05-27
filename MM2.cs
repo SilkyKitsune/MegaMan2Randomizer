@@ -281,7 +281,7 @@ public static class MM2
         r ??= new(GetSeed());
         spoiler = "";
 
-        AutoSizedArray<Equipment> equips = new(weapons);
+        AutoSizedArray<Equipment> equips = new(weapons, weapons.Length);
         byte[] data = new byte[equips.Length];
 
         Address address = Address.HeatStageWeapon;
