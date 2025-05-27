@@ -276,6 +276,41 @@ public static class MM2
         return ips;
     }
 
+    private static void ShuffleWeaknessSetsPatch(out IPS jp, out IPS na, out string spoiler, Random r = null, bool robotsOnly = false)
+    {
+        r ??= new(GetSeed());
+        spoiler = "- Boss Sets Weakness Shuffle -\n";
+        
+        byte[][] weaknessSets_ = robotsOnly ? MM2.weaknessSets[..8] : MM2.weaknessSets;
+        string[] bossNames_ = robotsOnly ? MM2.bossNames[..8] : MM2.bossNames;
+
+        AutoSizedArray<byte[]> weaknessSets = new(weaknessSets_, weaknessSets_.Length), data = new(MM2.weaknessSets.Length);
+        AutoSizedArray<string> bossNames = new(bossNames_, bossNames_.Length);
+
+        for (int i = 0; weaknessSets.Length > 0; i++)
+        {
+            int n = r.Next(weaknessSets.Length);
+            byte[] weaknessSet = weaknessSets[n];
+
+            spoiler += $"{MM2.bossNames[i]} => {bossNames[n]}\n";
+
+            data.Add(weaknessSet);
+
+            weaknessSets.RemoveAt(n);
+            bossNames.RemoveAt(n);
+        }
+
+        if (robotsOnly) data.Add(MM2.weaknessSets[8..]);
+
+        byte[] rearrangedData = Rearrange(data.ToArray());
+
+        jp = new();
+        jp.Add(false, (int)Address.BossWeaponDamageJP, rearrangedData);
+
+        na = new();
+        na.Add(false, (int)Address.BossWeaponDamageNA, rearrangedData);
+    }
+
     private static IPS ShuffleWeaponsPatch(out string spoiler, Random r = null)
     {
         r ??= new(GetSeed());
