@@ -148,9 +148,8 @@
             // weaknessComboBox
             // 
             weaknessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            weaknessComboBox.Enabled = false;
             weaknessComboBox.FormattingEnabled = true;
-            weaknessComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "All" });
+            weaknessComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "Random (Coming soon)" });
             weaknessComboBox.Location = new System.Drawing.Point(12, 115);
             weaknessComboBox.Name = "weaknessComboBox";
             weaknessComboBox.Size = new System.Drawing.Size(360, 23);
@@ -160,7 +159,6 @@
             // robotsOnlyCheckBox
             // 
             robotsOnlyCheckBox.AutoSize = true;
-            robotsOnlyCheckBox.Enabled = false;
             robotsOnlyCheckBox.Location = new System.Drawing.Point(12, 144);
             robotsOnlyCheckBox.Name = "robotsOnlyCheckBox";
             robotsOnlyCheckBox.Size = new System.Drawing.Size(257, 19);

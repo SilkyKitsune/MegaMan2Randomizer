@@ -47,6 +47,7 @@ public partial class MainWindow : Form
     {
         InitializeComponent();
         weaknessComboBox.SelectedIndex = 0;
+        robotsOnlyCheckBox.Enabled = true;//temp, idk why winforms isn't setting this true
 
         bool invalidPatches = false;
         string invalidPaths = "";
@@ -111,6 +112,12 @@ public partial class MainWindow : Form
         int weaknessShuffle = weaknessComboBox.SelectedIndex;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
         
+        if (weaknessShuffle == 3)//temp
+        {
+            MessageBox.Show("Selected weakness shuffle option is currently not available", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+
         if (!D.Exists(folderPath))
         {
             outputTextBox.Text = InvalidPath;
