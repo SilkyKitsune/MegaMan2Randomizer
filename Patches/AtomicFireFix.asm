@@ -3,7 +3,7 @@
 ; Instructions JP ; Bytes JP    ; Instructions NA   ; Bytes NA    ; File Addr JP ; File Addr NA ; Mapped Addr JP ; Mapped Addr NA ; Comments
 ; ------------------------------------------------------------------------------------------------------------------------------------------
 LDA $A931,Y       ; B9 31 A9    ; LDA $A950,Y       ; B9 50 A9    ; 0x02_E679    ; 0x02_E67C    ; $A669          ; $A66C           ; load from atomice fire damage values
-BEQ $44           ; F0 44       ; BEQ $47           ; F0 47       ; 0x02_E67C    ; 0x02_E67F    ; $A66C          ; $A66F           ; branch to $A6B2
+BEQ $44           ; F0 44       ; BEQ $47           ; F0 47       ; 0x02_E67C    ; 0x02_E67F    ; $A66C          ; $A66F           ; branch to $A6B2/$A6B8
 LDA $04E0,X       ; BD E0 04    ;                   ;             ; 0x02_E67E    ; 0x02_E681    ; $A66E          ; $A671           ;
 CMP #$02          ; C9 02       ;                   ;             ; 0x02_E681    ; 0x02_E684    ; $A671          ; $A674           ;
 BCC $12           ; 90 12       ;                   ;             ; 0x02_E683    ; 0x02_E686    ; $A673          ; $A676           ; branch to $A687/$A68A
