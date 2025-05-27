@@ -428,6 +428,40 @@ public static class MM2
             spoiler += '\n' + s;
         }
 
+        switch (weaknessShuffle)
+        {
+            default:
+                {
+                    byte[] ws = Rearrange(weaknessSets);
+
+                    jp.Add(false, (int)Address.BossWeaponDamageJP, ws);
+                    na.Add(false, (int)Address.BossWeaponDamageNA, ws);
+
+                    break;
+                }
+            case 1:
+                {
+                    ShuffleWeaknessSetsPatch(out IPS weaknessesJP, out IPS weaknessesNA, out string s, r, robotsOnly);
+
+                    jp.Add(weaknessesJP, MergeMode.Combine);
+                    na.Add(weaknessesNA, MergeMode.Combine);
+
+                    spoiler += '\n' + s;
+                    break;
+                }
+            case 2:
+                {
+                    ShuffleWeaknessesPerBossPatch(out IPS weaknessesJP, out IPS weaknessesNA, out string s, r, robotsOnly);
+
+                    jp.Add(weaknessesJP, MergeMode.Combine);
+                    na.Add(weaknessesNA, MergeMode.Combine);
+
+                    spoiler += '\n' + s;
+                    break;
+                }
+            //case 3:
+        }
+
         if (nerfBuster)
         {
             ShuffleBusterInvulnerabilityPatch(out IPS nerfBusterJP, out IPS nerfBusterNA, out string s, r);
