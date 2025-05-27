@@ -326,12 +326,12 @@ public static class MM2
         }
         else
         {
-            IPS weaons = ShuffleWeaponsPatch(out string s, r), items = ShuffleItemsPatch(out string s_, r, heatManNoItem2);
+            IPS weapons = ShuffleWeaponsPatch(out string s, r), items = ShuffleItemsPatch(out string s_, r, heatManNoItem2);
 
-            jp.Add(weaons, MergeMode.Combine);
+            jp.Add(weapons, MergeMode.Combine);
             jp.Add(items, MergeMode.Combine);
 
-            na.Add(weaons, MergeMode.Combine);
+            na.Add(weapons, MergeMode.Combine);
             na.Add(items, MergeMode.Combine);
 
             spoiler += s + '\n' + s_;
