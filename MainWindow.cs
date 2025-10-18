@@ -9,7 +9,8 @@ namespace MM2Randomizer;
 
 public partial class MainWindow : Form
 {
-    private const string InvalidPath = "INVALID PATH", FileName = "MM2R_", MysteryStageSelectPath = "MysteryStageSelect.ips";
+    private const string InvalidPath = "INVALID PATH", FileName = "MM2R_", MysteryStageSelectPath = "MysteryStageSelect.ips",
+        HalloweenModePath = "HalloweenMode.ips", HalloweenModeJPPath = "HalloweenMode_JP.ips", HalloweenModeNAPath = "HalloweenMode_NA.ips";
 
     private static readonly string[]
         Paths =
@@ -51,11 +52,29 @@ public partial class MainWindow : Form
 
         bool invalidPatches = false;
         string invalidPaths = "";
-
+        
         if (!IPS.TryRead(out mysteryStageSelect, MysteryStageSelectPath))
         {
             invalidPatches = true;
             invalidPaths += MysteryStageSelectPath + '\n';
+        }
+
+        if (!IPS.TryRead(out halloweenMode, HalloweenModePath))
+        {
+            invalidPatches = true;
+            invalidPaths += HalloweenModePath + '\n';
+        }
+
+        if (!IPS.TryRead(out halloweenModeJP, HalloweenModeJPPath))
+        {
+            invalidPatches = true;
+            invalidPaths += HalloweenModeJPPath + '\n';
+        }
+
+        if (!IPS.TryRead(out halloweenModeNA, HalloweenModeNAPath))
+        {
+            invalidPatches = true;
+            invalidPaths += HalloweenModeNAPath + '\n';
         }
 
         for (int i = 0; i < Paths.Length; i++)
@@ -94,9 +113,15 @@ public partial class MainWindow : Form
             seedTextBox.Text = outputTextBox.Text = "INVALID PATCHES";//temp
             MessageBox.Show("These patches could not be loaded they may be missing or corrupt:\n" + invalidPaths, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        october = DateTime.Now.Month == 10;
+
+        if (october) Text += " 🎃";
     }
 
-    private readonly IPS mysteryStageSelect;
+    private readonly bool october;
+
+    private readonly IPS mysteryStageSelect, halloweenMode, halloweenModeJP, halloweenModeNA;
     private readonly IPS[] patches = new IPS[Paths.Length], patchesJP = new IPS[PathsJP.Length], patchesNA = new IPS[PathsNA.Length];
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
@@ -144,13 +169,22 @@ public partial class MainWindow : Form
             patchNA.Add(mysteryStageSelect, MergeMode.Combine);
         }
 
+        if (october)
+        {
+            patchJP.Add(halloweenMode, MergeMode.Combine);
+            patchJP.Add(halloweenModeJP, MergeMode.Combine);
+
+            patchNA.Add(halloweenMode, MergeMode.Combine);
+            patchNA.Add(halloweenModeNA, MergeMode.Combine);
+        }
+
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
         MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
         patchJP.Add(shuffledPatchJP, MergeMode.Combine);
         patchNA.Add(shuffledPatchNA, MergeMode.Combine);
 
-        string outPath = P.Combine(folderPath, FileName + seed);
+        string outPath = P.Combine(folderPath, (october ? "MM2R🎃_" : FileName) + seed);
         F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
         patchJP.WritePatch(outPath + "_JP");
         patchNA.WritePatch(outPath + "_NA");
