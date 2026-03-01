@@ -1,4 +1,4 @@
-﻿; Just fyi idk if this will work in an assembler, it was hand assembled/disassembled
+; Just fyi idk if this will work in an assembler, it was hand assembled/disassembled
 
 Instructions ; Bytes    ; File Addr  ; Replacement ; Bytes    ; Comments
 -------------------------------------------------------------------------
