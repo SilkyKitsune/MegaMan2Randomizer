@@ -53,46 +53,46 @@ public partial class MainWindow : Form
         bool invalidPatches = false;
         string invalidPaths = "";
         
-        if (!IPS.TryRead(out mysteryStageSelect, MysteryStageSelectPath))
+        if (!IPSOld.TryRead(out mysteryStageSelect, MysteryStageSelectPath))
         {
             invalidPatches = true;
             invalidPaths += MysteryStageSelectPath + '\n';
         }
 
-        if (!IPS.TryRead(out halloweenMode, HalloweenModePath))
+        if (!IPSOld.TryRead(out halloweenMode, HalloweenModePath))
         {
             invalidPatches = true;
             invalidPaths += HalloweenModePath + '\n';
         }
 
-        if (!IPS.TryRead(out halloweenModeJP, HalloweenModeJPPath))
+        if (!IPSOld.TryRead(out halloweenModeJP, HalloweenModeJPPath))
         {
             invalidPatches = true;
             invalidPaths += HalloweenModeJPPath + '\n';
         }
 
-        if (!IPS.TryRead(out halloweenModeNA, HalloweenModeNAPath))
+        if (!IPSOld.TryRead(out halloweenModeNA, HalloweenModeNAPath))
         {
             invalidPatches = true;
             invalidPaths += HalloweenModeNAPath + '\n';
         }
 
         for (int i = 0; i < Paths.Length; i++)
-            if (!IPS.TryRead(out patches[i], Paths[i]))
+            if (!IPSOld.TryRead(out patches[i], Paths[i]))
             {
                 invalidPatches = true;
                 invalidPaths += Paths[i] + '\n';
             }
 
         for (int i = 0; i < PathsJP.Length; i++)
-            if (!IPS.TryRead(out patchesJP[i], PathsJP[i]))
+            if (!IPSOld.TryRead(out patchesJP[i], PathsJP[i]))
             {
                 invalidPatches = true;
                 invalidPaths += PathsJP[i] + '\n';
             }
 
         for (int i = 0; i < PathsNA.Length; i++)
-            if (!IPS.TryRead(out patchesNA[i], PathsNA[i]))
+            if (!IPSOld.TryRead(out patchesNA[i], PathsNA[i]))
             {
                 invalidPatches = true;
                 invalidPaths += PathsNA[i] + '\n';
@@ -121,8 +121,8 @@ public partial class MainWindow : Form
 
     private readonly bool october;
 
-    private readonly IPS mysteryStageSelect, halloweenMode, halloweenModeJP, halloweenModeNA;
-    private readonly IPS[] patches = new IPS[Paths.Length], patchesJP = new IPS[PathsJP.Length], patchesNA = new IPS[PathsNA.Length];
+    private readonly IPSOld mysteryStageSelect, halloweenMode, halloweenModeJP, halloweenModeNA;
+    private readonly IPSOld[] patches = new IPSOld[Paths.Length], patchesJP = new IPSOld[PathsJP.Length], patchesNA = new IPSOld[PathsNA.Length];
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
 
@@ -151,38 +151,38 @@ public partial class MainWindow : Form
 
         generateButton.Enabled = false;
 
-        IPS patchJP = new(), patchNA = new();
+        IPSOld patchJP = new(), patchNA = new();
 
-        foreach (IPS patch in patches)
+        foreach (IPSOld patch in patches)
         {
-            patchJP.Add(patch, MergeMode.Combine);
-            patchNA.Add(patch, MergeMode.Combine);
+            patchJP.Add(patch, MergeMode.None);
+            patchNA.Add(patch, MergeMode.None);
         }
         
-        foreach (IPS patch in patchesJP) patchJP.Add(patch, MergeMode.Combine);
+        foreach (IPSOld patch in patchesJP) patchJP.Add(patch, MergeMode.None);
 
-        foreach (IPS patch in patchesNA) patchNA.Add(patch, MergeMode.Combine);
+        foreach (IPSOld patch in patchesNA) patchNA.Add(patch, MergeMode.None);
 
         if (shuffleLevels)
         {
-            patchJP.Add(mysteryStageSelect, MergeMode.Combine);
-            patchNA.Add(mysteryStageSelect, MergeMode.Combine);
+            patchJP.Add(mysteryStageSelect, MergeMode.None);
+            patchNA.Add(mysteryStageSelect, MergeMode.None);
         }
 
         if (october)
         {
-            patchJP.Add(halloweenMode, MergeMode.Combine);
-            patchJP.Add(halloweenModeJP, MergeMode.Combine);
+            patchJP.Add(halloweenMode, MergeMode.None);
+            patchJP.Add(halloweenModeJP, MergeMode.None);
 
-            patchNA.Add(halloweenMode, MergeMode.Combine);
-            patchNA.Add(halloweenModeNA, MergeMode.Combine);
+            patchNA.Add(halloweenMode, MergeMode.None);
+            patchNA.Add(halloweenModeNA, MergeMode.None);
         }
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
-        MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
-        patchJP.Add(shuffledPatchJP, MergeMode.Combine);
-        patchNA.Add(shuffledPatchNA, MergeMode.Combine);
+        MM2.Generate(ref seed, out IPSOld shuffledPatchJP, out IPSOld shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
+        patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
+        patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
 
         string outPath = P.Combine(folderPath, (october ? "MM2R🎃_" : FileName) + seed);
         F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
