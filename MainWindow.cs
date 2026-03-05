@@ -131,10 +131,10 @@ public partial class MainWindow : Form
         patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
         patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
 
-        string outPath = P.Combine(folderPath, (october ? "MM2R🎃_" : FileName) + seed);
+        string outPath = P.Combine(folderPath, (october ? "MM2R🎃 " : "MM2R ") + seed);
         F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
-        patchJP.WritePatch(outPath + "_JP");
-        patchNA.WritePatch(outPath + "_NA");
+        patchJP.WritePatch(outPath + $" ({PatchManager.VersionID.Japan})");
+        patchNA.WritePatch(outPath + $" ({PatchManager.VersionID.NorthAmerica})");
 
         seedTextBox.Text = seed.ToString();
         generateButton.Enabled = true;
