@@ -114,13 +114,6 @@ public static class MM2
         new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0xFF, 0xFF, 0xFF }  //Wily Alien W6
     };
 
-    private static int GetSeed()
-    {
-        int ms = Environment.TickCount;
-        DateTime now = DateTime.Now;
-        return ms ^ ((now.Year * 10000) + (now.Month * 100) + now.Day);
-    }
-
     private static string GetName(Equipment equip, bool item) => equip switch
     {
         Equipment.Item1 => item ? nameof(Equipment.Item1) : nameof(Equipment.AtomicFire),
@@ -129,20 +122,9 @@ public static class MM2
         _ => equip.ToString()
     };
 
-    private static byte[] Rearrange(byte[][] data)
-    {
-        byte[] newData = new byte[data.Length * data[0].Length];
-
-        for (int i = 0, k = 0, l = data[0].Length; i < l; i++)
-            for (int j = 0; j < data.Length; j++)
-                newData[k++] = data[j][i];
-
-        return newData;
-    }
-
     private static void ShuffleEquipmentPatch(out Patch weaponsPatch, out Patch itemsPatch, out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
-        r ??= new(GetSeed());
+        r ??= new(Util.GetSeed());
         spoiler = "";
 
         AutoSizedArray<ushort> equips = new(weapons.Length + items.Length);
@@ -203,7 +185,7 @@ public static class MM2
 
     private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
-        r ??= new(GetSeed());
+        r ??= new(Util.GetSeed());
         spoiler = "";
 
         AutoSizedArray<Equipment> equips = new(items, items.Length);
@@ -225,7 +207,7 @@ public static class MM2
 
     private static void ShuffleBusterInvulnerabilityPatch(out Patch jp, out Patch na, out string spoiler, Random r = null)
     {
-        r ??= new(GetSeed());
+        r ??= new(Util.GetSeed());
         spoiler = "Invulnerable to Mega Buster: ";
 
         byte[] data = new byte[weaknessSets.Length];
@@ -250,7 +232,7 @@ public static class MM2
 
     private static Patch ShuffleStagesPatch(out string spoiler, Random r = null)
     {
-        r ??= new(GetSeed());
+        r ??= new(Util.GetSeed());
         spoiler = "";
 
         AutoSizedArray<StageIndex> stages = new(MM2.stages, MM2.stages.Length);
@@ -270,7 +252,7 @@ public static class MM2
 
     private static void ShuffleWeaknessesPerBossPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
     {
-        r ??= new(GetSeed());
+        r ??= new(Util.GetSeed());
         spoiler = "- Per Boss Weakness Shuffle -\n" +
             "                 P    H    A    W    B    Q    C    M\n";
 
@@ -305,16 +287,16 @@ public static class MM2
 
         if (robotsOnly) for (int i = 8; i < data.Length; i++) data[i] = weaknessSets[i];
 
-        byte[] rearrangedData = Rearrange(data);
+        byte[] rearrangedData = Util.Rearrange(data);
 
         jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
 
         na = new((int)Address.BossWeaponDamageNA, rearrangedData);
     }
-
+    
     private static void ShuffleWeaknessSetsPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
     {
-        r ??= new(GetSeed());
+        r ??= new(Util.GetSeed());
         spoiler = "- Boss Sets Weakness Shuffle -\n";
         
         byte[][] weaknessSets_ = robotsOnly ? MM2.weaknessSets[..8] : MM2.weaknessSets;
@@ -338,7 +320,7 @@ public static class MM2
 
         if (robotsOnly) data.Add(MM2.weaknessSets[8..]);
 
-        byte[] rearrangedData = Rearrange(data.ToArray());
+        byte[] rearrangedData = Util.Rearrange(data.ToArray());
 
         jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
 
@@ -347,7 +329,7 @@ public static class MM2
 
     private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
     {
-        r ??= new(GetSeed());
+        r ??= new(Util.GetSeed());
         spoiler = "";
 
         AutoSizedArray<Equipment> equips = new(weapons, weapons.Length);
@@ -372,7 +354,7 @@ public static class MM2
         int weaknessShuffle = 0, bool robotsOnly = false,
         bool nerfBuster = false)
     {
-        if (seed == 0) seed = GetSeed();
+        if (seed == 0) seed = Util.GetSeed();
         Random r = new(seed);
 
         spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
@@ -418,7 +400,7 @@ public static class MM2
         {
             default:
                 {
-                    byte[] ws = Rearrange(weaknessSets);
+                    byte[] ws = Util.Rearrange(weaknessSets);
 
                     jp.Add(new Patch((int)Address.BossWeaponDamageJP, ws), MergeMode.CombineOver);
                     na.Add(new Patch((int)Address.BossWeaponDamageNA, ws), MergeMode.CombineOver);
