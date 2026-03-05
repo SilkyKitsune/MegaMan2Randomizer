@@ -140,7 +140,7 @@ public static class MM2
         return newData;
     }
 
-    private static void ShuffleEquipmentPatch(out IPSOld weaponsPatch, out IPSOld itemsPatch, out string spoiler, Random r = null, bool heatManNoItem2 = false)
+    private static void ShuffleEquipmentPatch(out Patch weaponsPatch, out Patch itemsPatch, out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(GetSeed());
         spoiler = "";
@@ -196,14 +196,12 @@ public static class MM2
             itemData[i] = itemByte;
         }
 
-        weaponsPatch = new();
-        weaponsPatch.Add(false, (int)Address.WeaponBitMasks, weaponData);
+        weaponsPatch = new((int)Address.WeaponBitMasks, weaponData);
 
-        itemsPatch = new();
-        itemsPatch.Add(false, (int)Address.HeatStageItem, itemData);
+        itemsPatch = new((int)Address.HeatStageItem, itemData);
     }
 
-    private static IPSOld ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
+    private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(GetSeed());
         spoiler = "";
@@ -222,12 +220,10 @@ public static class MM2
             equips.RemoveAt(n);
         }
 
-        IPSOld ips = new();
-        ips.Add(false, (int)Address.HeatStageItem, data);
-        return ips;
+        return new((int)Address.HeatStageItem, data);
     }
 
-    private static void ShuffleBusterInvulnerabilityPatch(out IPSOld jp, out IPSOld na, out string spoiler, Random r = null)
+    private static void ShuffleBusterInvulnerabilityPatch(out Patch jp, out Patch na, out string spoiler, Random r = null)
     {
         r ??= new(GetSeed());
         spoiler = "Invulnerable to Mega Buster: ";
@@ -247,14 +243,12 @@ public static class MM2
             robots.RemoveAt(n);
         }
 
-        jp = new();
-        jp.Add(false, (int)Address.BossWeaponDamageJP, data);
+        jp = new((int)Address.BossWeaponDamageJP, data);
 
-        na = new();
-        na.Add(false, (int)Address.BossWeaponDamageNA, data);
+        na = new((int)Address.BossWeaponDamageNA, data);
     }
 
-    private static IPSOld ShuffleStagesPatch(out string spoiler, Random r = null)
+    private static Patch ShuffleStagesPatch(out string spoiler, Random r = null)
     {
         r ??= new(GetSeed());
         spoiler = "";
@@ -271,12 +265,10 @@ public static class MM2
             stages.RemoveAt(n);
         }
 
-        IPSOld ips = new();
-        ips.Add(false, (int)Address.BubbleStagePtr, data);
-        return ips;
+        return new((int)Address.BubbleStagePtr, data);
     }
 
-    private static void ShuffleWeaknessesPerBossPatch(out IPSOld jp, out IPSOld na, out string spoiler, Random r = null, bool robotsOnly = false)
+    private static void ShuffleWeaknessesPerBossPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
     {
         r ??= new(GetSeed());
         spoiler = "- Per Boss Weakness Shuffle -\n" +
@@ -315,14 +307,12 @@ public static class MM2
 
         byte[] rearrangedData = Rearrange(data);
 
-        jp = new();
-        jp.Add(false, (int)Address.BossWeaponDamageJP, rearrangedData);
+        jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
 
-        na = new();
-        na.Add(false, (int)Address.BossWeaponDamageNA, rearrangedData);
+        na = new((int)Address.BossWeaponDamageNA, rearrangedData);
     }
 
-    private static void ShuffleWeaknessSetsPatch(out IPSOld jp, out IPSOld na, out string spoiler, Random r = null, bool robotsOnly = false)
+    private static void ShuffleWeaknessSetsPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
     {
         r ??= new(GetSeed());
         spoiler = "- Boss Sets Weakness Shuffle -\n";
@@ -350,14 +340,12 @@ public static class MM2
 
         byte[] rearrangedData = Rearrange(data.ToArray());
 
-        jp = new();
-        jp.Add(false, (int)Address.BossWeaponDamageJP, rearrangedData);
+        jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
 
-        na = new();
-        na.Add(false, (int)Address.BossWeaponDamageNA, rearrangedData);
+        na = new((int)Address.BossWeaponDamageNA, rearrangedData);
     }
 
-    private static IPSOld ShuffleWeaponsPatch(out string spoiler, Random r = null)
+    private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
     {
         r ??= new(GetSeed());
         spoiler = "";
@@ -375,12 +363,10 @@ public static class MM2
             equips.RemoveAt(n);
         }
 
-        IPSOld ips = new();
-        ips.Add(false, (int)Address.WeaponBitMasks, data);
-        return ips;
+        return new((int)Address.WeaponBitMasks, data);
     }
     
-    public static void Generate(ref int seed, out IPSOld jp, out IPSOld na, out string spoiler,
+    public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler,
         bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
         bool shuffleLevels = false,
         int weaknessShuffle = 0, bool robotsOnly = false,
@@ -395,7 +381,7 @@ public static class MM2
 
         if (shuffleAllEquipment)
         {
-            ShuffleEquipmentPatch(out IPSOld weapons, out IPSOld items, out string s, r, heatManNoItem2);
+            ShuffleEquipmentPatch(out Patch weapons, out Patch items, out string s, r, heatManNoItem2);
 
             jp.Add(weapons, MergeMode.CombineOver);
             jp.Add(items, MergeMode.CombineOver);
@@ -407,7 +393,7 @@ public static class MM2
         }
         else
         {
-            IPSOld weapons = ShuffleWeaponsPatch(out string s, r), items = ShuffleItemsPatch(out string s_, r, heatManNoItem2);
+            Patch weapons = ShuffleWeaponsPatch(out string s, r), items = ShuffleItemsPatch(out string s_, r, heatManNoItem2);
 
             jp.Add(weapons, MergeMode.CombineOver);
             jp.Add(items, MergeMode.CombineOver);
@@ -420,7 +406,7 @@ public static class MM2
 
         if (shuffleLevels)
         {
-            IPSOld stages = ShuffleStagesPatch(out string s, r);
+            Patch stages = ShuffleStagesPatch(out string s, r);
 
             jp.Add(stages, MergeMode.CombineOver);
             na.Add(stages, MergeMode.CombineOver);
@@ -434,14 +420,14 @@ public static class MM2
                 {
                     byte[] ws = Rearrange(weaknessSets);
 
-                    jp.Add(false, (int)Address.BossWeaponDamageJP, ws);
-                    na.Add(false, (int)Address.BossWeaponDamageNA, ws);
+                    jp.Add(new Patch((int)Address.BossWeaponDamageJP, ws), MergeMode.CombineOver);
+                    na.Add(new Patch((int)Address.BossWeaponDamageNA, ws), MergeMode.CombineOver);
 
                     break;
                 }
             case 1:
                 {
-                    ShuffleWeaknessSetsPatch(out IPSOld weaknessesJP, out IPSOld weaknessesNA, out string s, r, robotsOnly);
+                    ShuffleWeaknessSetsPatch(out Patch weaknessesJP, out Patch weaknessesNA, out string s, r, robotsOnly);
 
                     jp.Add(weaknessesJP, MergeMode.CombineOver);
                     na.Add(weaknessesNA, MergeMode.CombineOver);
@@ -451,7 +437,7 @@ public static class MM2
                 }
             case 2:
                 {
-                    ShuffleWeaknessesPerBossPatch(out IPSOld weaknessesJP, out IPSOld weaknessesNA, out string s, r, robotsOnly);
+                    ShuffleWeaknessesPerBossPatch(out Patch weaknessesJP, out Patch weaknessesNA, out string s, r, robotsOnly);
 
                     jp.Add(weaknessesJP, MergeMode.CombineOver);
                     na.Add(weaknessesNA, MergeMode.CombineOver);
@@ -464,7 +450,7 @@ public static class MM2
 
         if (nerfBuster)
         {
-            ShuffleBusterInvulnerabilityPatch(out IPSOld nerfBusterJP, out IPSOld nerfBusterNA, out string s, r);
+            ShuffleBusterInvulnerabilityPatch(out Patch nerfBusterJP, out Patch nerfBusterNA, out string s, r);
 
             jp.Add(nerfBusterJP, MergeMode.CombineOver);
             na.Add(nerfBusterNA, MergeMode.CombineOver);

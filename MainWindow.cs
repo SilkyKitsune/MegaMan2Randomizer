@@ -53,46 +53,46 @@ public partial class MainWindow : Form
         bool invalidPatches = false;
         string invalidPaths = "";
         
-        if (!IPSOld.TryRead(out mysteryStageSelect, MysteryStageSelectPath))
+        if (!IPS.TryRead(out mysteryStageSelect, MysteryStageSelectPath))
         {
             invalidPatches = true;
             invalidPaths += MysteryStageSelectPath + '\n';
         }
 
-        if (!IPSOld.TryRead(out halloweenMode, HalloweenModePath))
+        if (!IPS.TryRead(out halloweenMode, HalloweenModePath))
         {
             invalidPatches = true;
             invalidPaths += HalloweenModePath + '\n';
         }
 
-        if (!IPSOld.TryRead(out halloweenModeJP, HalloweenModeJPPath))
+        if (!IPS.TryRead(out halloweenModeJP, HalloweenModeJPPath))
         {
             invalidPatches = true;
             invalidPaths += HalloweenModeJPPath + '\n';
         }
 
-        if (!IPSOld.TryRead(out halloweenModeNA, HalloweenModeNAPath))
+        if (!IPS.TryRead(out halloweenModeNA, HalloweenModeNAPath))
         {
             invalidPatches = true;
             invalidPaths += HalloweenModeNAPath + '\n';
         }
 
         for (int i = 0; i < Paths.Length; i++)
-            if (!IPSOld.TryRead(out patches[i], Paths[i]))
+            if (!IPS.TryRead(out patches[i], Paths[i]))
             {
                 invalidPatches = true;
                 invalidPaths += Paths[i] + '\n';
             }
 
         for (int i = 0; i < PathsJP.Length; i++)
-            if (!IPSOld.TryRead(out patchesJP[i], PathsJP[i]))
+            if (!IPS.TryRead(out patchesJP[i], PathsJP[i]))
             {
                 invalidPatches = true;
                 invalidPaths += PathsJP[i] + '\n';
             }
 
         for (int i = 0; i < PathsNA.Length; i++)
-            if (!IPSOld.TryRead(out patchesNA[i], PathsNA[i]))
+            if (!IPS.TryRead(out patchesNA[i], PathsNA[i]))
             {
                 invalidPatches = true;
                 invalidPaths += PathsNA[i] + '\n';
@@ -121,8 +121,8 @@ public partial class MainWindow : Form
 
     private readonly bool october;
 
-    private readonly IPSOld mysteryStageSelect, halloweenMode, halloweenModeJP, halloweenModeNA;
-    private readonly IPSOld[] patches = new IPSOld[Paths.Length], patchesJP = new IPSOld[PathsJP.Length], patchesNA = new IPSOld[PathsNA.Length];
+    private readonly IPS mysteryStageSelect, halloweenMode, halloweenModeJP, halloweenModeNA;
+    private readonly IPS[] patches = new IPS[Paths.Length], patchesJP = new IPS[PathsJP.Length], patchesNA = new IPS[PathsNA.Length];
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
 
@@ -151,17 +151,17 @@ public partial class MainWindow : Form
 
         generateButton.Enabled = false;
 
-        IPSOld patchJP = new(), patchNA = new();
+        IPS patchJP = new(), patchNA = new();
 
-        foreach (IPSOld patch in patches)
+        foreach (IPS patch in patches)
         {
             patchJP.Add(patch, MergeMode.None);
             patchNA.Add(patch, MergeMode.None);
         }
         
-        foreach (IPSOld patch in patchesJP) patchJP.Add(patch, MergeMode.None);
+        foreach (IPS patch in patchesJP) patchJP.Add(patch, MergeMode.None);
 
-        foreach (IPSOld patch in patchesNA) patchNA.Add(patch, MergeMode.None);
+        foreach (IPS patch in patchesNA) patchNA.Add(patch, MergeMode.None);
 
         if (shuffleLevels)
         {
@@ -180,7 +180,7 @@ public partial class MainWindow : Form
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
-        MM2.Generate(ref seed, out IPSOld shuffledPatchJP, out IPSOld shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
+        MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
         patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
         patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
 
