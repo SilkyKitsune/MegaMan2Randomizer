@@ -145,7 +145,7 @@ public partial class MainWindow : Form
 
         if (!D.Exists(folderPath))
         {
-            outputTextBox.Text = InvalidPath;
+            MessageBox.Show("Output folder path does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
