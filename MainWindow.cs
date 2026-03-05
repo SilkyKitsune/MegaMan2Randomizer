@@ -143,6 +143,12 @@ public partial class MainWindow : Form
             return;
         }
 
+        if (string.IsNullOrEmpty(folderPath))
+        {
+            MessageBox.Show("No output folder path specified", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+
         if (!D.Exists(folderPath))
         {
             MessageBox.Show("Output folder path does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
