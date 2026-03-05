@@ -50,55 +50,7 @@ public partial class MainWindow : Form
         weaknessComboBox.SelectedIndex = 0;
         robotsOnlyCheckBox.Enabled = true;//temp, idk why winforms isn't setting this true
 
-        bool invalidPatches = false;
-        string invalidPaths = "";
-        
-        if (!IPS.TryRead(out mysteryStageSelect, MysteryStageSelectPath))
-        {
-            invalidPatches = true;
-            invalidPaths += MysteryStageSelectPath + '\n';
-        }
-
-        if (!IPS.TryRead(out halloweenMode, HalloweenModePath))
-        {
-            invalidPatches = true;
-            invalidPaths += HalloweenModePath + '\n';
-        }
-
-        if (!IPS.TryRead(out halloweenModeJP, HalloweenModeJPPath))
-        {
-            invalidPatches = true;
-            invalidPaths += HalloweenModeJPPath + '\n';
-        }
-
-        if (!IPS.TryRead(out halloweenModeNA, HalloweenModeNAPath))
-        {
-            invalidPatches = true;
-            invalidPaths += HalloweenModeNAPath + '\n';
-        }
-
-        for (int i = 0; i < Paths.Length; i++)
-            if (!IPS.TryRead(out patches[i], Paths[i]))
-            {
-                invalidPatches = true;
-                invalidPaths += Paths[i] + '\n';
-            }
-
-        for (int i = 0; i < PathsJP.Length; i++)
-            if (!IPS.TryRead(out patchesJP[i], PathsJP[i]))
-            {
-                invalidPatches = true;
-                invalidPaths += PathsJP[i] + '\n';
-            }
-
-        for (int i = 0; i < PathsNA.Length; i++)
-            if (!IPS.TryRead(out patchesNA[i], PathsNA[i]))
-            {
-                invalidPatches = true;
-                invalidPaths += PathsNA[i] + '\n';
-            }
-        
-        if (invalidPatches)
+        if (PatchManager.LoadPatches(out string errors))
         {
             outputTextBox.Enabled = false;
             outputButton.Enabled = false;
@@ -111,7 +63,7 @@ public partial class MainWindow : Form
             shuffleLevelsCheckBox.Enabled = false;
             generateButton.Enabled = false;
             seedTextBox.Text = outputTextBox.Text = "INVALID PATCHES";//temp
-            MessageBox.Show("These patches could not be loaded they may be missing or corrupt:\n" + invalidPaths, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Errors loading patches:\n" + errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         october = DateTime.Now.Month == 10;
@@ -120,9 +72,6 @@ public partial class MainWindow : Form
     }
 
     private readonly bool october;
-
-    private readonly IPS mysteryStageSelect, halloweenMode, halloweenModeJP, halloweenModeNA;
-    private readonly IPS[] patches = new IPS[Paths.Length], patchesJP = new IPS[PathsJP.Length], patchesNA = new IPS[PathsNA.Length];
 
     private void generateButton_Click(object sender, EventArgs e) => GenerateButton();
 
@@ -158,30 +107,22 @@ public partial class MainWindow : Form
         generateButton.Enabled = false;
 
         IPS patchJP = new(), patchNA = new();
-
-        foreach (IPS patch in patches)
-        {
-            patchJP.Add(patch, MergeMode.None);
-            patchNA.Add(patch, MergeMode.None);
-        }
-        
-        foreach (IPS patch in patchesJP) patchJP.Add(patch, MergeMode.None);
-
-        foreach (IPS patch in patchesNA) patchNA.Add(patch, MergeMode.None);
+        PatchManager.AddPatches(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan);
+        PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica);
 
         if (shuffleLevels)
         {
-            patchJP.Add(mysteryStageSelect, MergeMode.None);
-            patchNA.Add(mysteryStageSelect, MergeMode.None);
+            PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.MysteryStageSelect);
+            PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.MysteryStageSelect);
         }
 
         if (october)
         {
-            patchJP.Add(halloweenMode, MergeMode.None);
-            patchJP.Add(halloweenModeJP, MergeMode.None);
+            PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.HalloweenMode1);
+            PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.HalloweenMode2);
 
-            patchNA.Add(halloweenMode, MergeMode.None);
-            patchNA.Add(halloweenModeNA, MergeMode.None);
+            PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode1);
+            PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode2);
         }
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
@@ -204,6 +145,6 @@ public partial class MainWindow : Form
         folderBrowserDialog.ShowDialog();
         outputTextBox.Text = folderBrowserDialog.SelectedPath;
     }
-
+    
     private void WeaknessShuffleIndex() => robotsOnlyCheckBox.Enabled = weaknessComboBox.SelectedIndex != 0;
 }
