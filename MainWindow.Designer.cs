@@ -185,7 +185,7 @@
             Controls.Add(outputTextBox);
             Controls.Add(outputLabel);
             Name = "MainWindow";
-            Text = "Mega Man 2 Randomizer";
+            Text = "Mega Man Randomizer";
             ResumeLayout(false);
             PerformLayout();
         }
