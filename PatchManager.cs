@@ -8,7 +8,6 @@ public static class PatchManager
 {
     public enum GameID : int
     {
-        MM1,
         MM2,
 
         Count
@@ -19,18 +18,12 @@ public static class PatchManager
         None = '\0',
         Japan = 'J',
         NorthAmerica = 'N',
-        SuperNintendo = 'S',
-        WilyWars = 'G',
-        SequelWars = 'R'
     }
 
     public enum PatchID : int
     {
-        SplitWeaponFlagsMM1,
-
         AtomicFireFix,
         BooBeamNerf,
-        CrashScreen,
         FastCrashBomber,
         HalloweenMode1,
         HalloweenMode2,
@@ -45,7 +38,6 @@ public static class PatchManager
         MysteryStageSelect,
         QuickBoomerangNerf,
         ReEnterLevelsMM2,
-        SplitBossIndicesMM2,
         SplitWeaponFlagsMM2,
 
         Count
@@ -155,7 +147,6 @@ public static class PatchManager
         }
 
         errors +=
-            ValidatePatches(GameID.MM1, PatchID.SplitWeaponFlagsMM1, PatchID.AtomicFireFix, VersionID.Japan) +
             ValidatePatches(GameID.MM2, PatchID.AtomicFireFix, PatchID.Count, VersionID.Japan, VersionID.NorthAmerica);
 
         return errors.Length > 0;

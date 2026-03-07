@@ -42,19 +42,12 @@
             shuffleEquipmentCheckBox = new System.Windows.Forms.CheckBox();
             weaknessComboBox = new System.Windows.Forms.ComboBox();
             robotsOnlyCheckBox = new System.Windows.Forms.CheckBox();
-            tabControl = new System.Windows.Forms.TabControl();
-            MM1Tab = new System.Windows.Forms.TabPage();
-            label1 = new System.Windows.Forms.Label();
-            MM2Tab = new System.Windows.Forms.TabPage();
-            tabControl.SuspendLayout();
-            MM1Tab.SuspendLayout();
-            MM2Tab.SuspendLayout();
             SuspendLayout();
             // 
             // outputLabel
             // 
             outputLabel.AutoSize = true;
-            outputLabel.Location = new System.Drawing.Point(12, 265);
+            outputLabel.Location = new System.Drawing.Point(12, 9);
             outputLabel.Name = "outputLabel";
             outputLabel.Size = new System.Drawing.Size(81, 15);
             outputLabel.TabIndex = 1;
@@ -62,7 +55,7 @@
             // 
             // outputButton
             // 
-            outputButton.Location = new System.Drawing.Point(383, 283);
+            outputButton.Location = new System.Drawing.Point(347, 27);
             outputButton.Name = "outputButton";
             outputButton.Size = new System.Drawing.Size(25, 23);
             outputButton.TabIndex = 5;
@@ -73,7 +66,7 @@
             // seedLabel
             // 
             seedLabel.AutoSize = true;
-            seedLabel.Location = new System.Drawing.Point(12, 309);
+            seedLabel.Location = new System.Drawing.Point(12, 53);
             seedLabel.Name = "seedLabel";
             seedLabel.Size = new System.Drawing.Size(89, 15);
             seedLabel.TabIndex = 4;
@@ -81,15 +74,15 @@
             // 
             // outputTextBox
             // 
-            outputTextBox.Location = new System.Drawing.Point(12, 283);
+            outputTextBox.Location = new System.Drawing.Point(12, 27);
             outputTextBox.Name = "outputTextBox";
-            outputTextBox.Size = new System.Drawing.Size(365, 23);
+            outputTextBox.Size = new System.Drawing.Size(329, 23);
             outputTextBox.TabIndex = 3;
             // 
             // weaknessLabel
             // 
             weaknessLabel.AutoSize = true;
-            weaknessLabel.Location = new System.Drawing.Point(6, 3);
+            weaknessLabel.Location = new System.Drawing.Point(12, 97);
             weaknessLabel.Name = "weaknessLabel";
             weaknessLabel.Size = new System.Drawing.Size(99, 15);
             weaknessLabel.TabIndex = 7;
@@ -97,14 +90,14 @@
             // 
             // seedTextBox
             // 
-            seedTextBox.Location = new System.Drawing.Point(12, 327);
+            seedTextBox.Location = new System.Drawing.Point(12, 71);
             seedTextBox.Name = "seedTextBox";
-            seedTextBox.Size = new System.Drawing.Size(315, 23);
+            seedTextBox.Size = new System.Drawing.Size(360, 23);
             seedTextBox.TabIndex = 6;
             // 
             // generateButton
             // 
-            generateButton.Location = new System.Drawing.Point(333, 327);
+            generateButton.Location = new System.Drawing.Point(297, 240);
             generateButton.Name = "generateButton";
             generateButton.Size = new System.Drawing.Size(75, 23);
             generateButton.TabIndex = 8;
@@ -115,7 +108,7 @@
             // nerfBusterCheckBox
             // 
             nerfBusterCheckBox.AutoSize = true;
-            nerfBusterCheckBox.Location = new System.Drawing.Point(6, 75);
+            nerfBusterCheckBox.Location = new System.Drawing.Point(12, 169);
             nerfBusterCheckBox.Name = "nerfBusterCheckBox";
             nerfBusterCheckBox.Size = new System.Drawing.Size(343, 19);
             nerfBusterCheckBox.TabIndex = 9;
@@ -125,7 +118,7 @@
             // shuffleLevelsCheckBox
             // 
             shuffleLevelsCheckBox.AutoSize = true;
-            shuffleLevelsCheckBox.Location = new System.Drawing.Point(5, 150);
+            shuffleLevelsCheckBox.Location = new System.Drawing.Point(11, 244);
             shuffleLevelsCheckBox.Name = "shuffleLevelsCheckBox";
             shuffleLevelsCheckBox.Size = new System.Drawing.Size(98, 19);
             shuffleLevelsCheckBox.TabIndex = 10;
@@ -135,7 +128,7 @@
             // heatManCheckBox
             // 
             heatManCheckBox.AutoSize = true;
-            heatManCheckBox.Location = new System.Drawing.Point(5, 125);
+            heatManCheckBox.Location = new System.Drawing.Point(11, 219);
             heatManCheckBox.Name = "heatManCheckBox";
             heatManCheckBox.Size = new System.Drawing.Size(196, 19);
             heatManCheckBox.TabIndex = 11;
@@ -145,7 +138,7 @@
             // shuffleEquipmentCheckBox
             // 
             shuffleEquipmentCheckBox.AutoSize = true;
-            shuffleEquipmentCheckBox.Location = new System.Drawing.Point(5, 100);
+            shuffleEquipmentCheckBox.Location = new System.Drawing.Point(11, 194);
             shuffleEquipmentCheckBox.Name = "shuffleEquipmentCheckBox";
             shuffleEquipmentCheckBox.Size = new System.Drawing.Size(218, 19);
             shuffleEquipmentCheckBox.TabIndex = 12;
@@ -157,7 +150,7 @@
             weaknessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             weaknessComboBox.FormattingEnabled = true;
             weaknessComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "Random (Coming soon)" });
-            weaknessComboBox.Location = new System.Drawing.Point(6, 21);
+            weaknessComboBox.Location = new System.Drawing.Point(12, 115);
             weaknessComboBox.Name = "weaknessComboBox";
             weaknessComboBox.Size = new System.Drawing.Size(360, 23);
             weaknessComboBox.TabIndex = 13;
@@ -166,79 +159,33 @@
             // robotsOnlyCheckBox
             // 
             robotsOnlyCheckBox.AutoSize = true;
-            robotsOnlyCheckBox.Location = new System.Drawing.Point(6, 50);
+            robotsOnlyCheckBox.Location = new System.Drawing.Point(12, 144);
             robotsOnlyCheckBox.Name = "robotsOnlyCheckBox";
             robotsOnlyCheckBox.Size = new System.Drawing.Size(257, 19);
             robotsOnlyCheckBox.TabIndex = 14;
             robotsOnlyCheckBox.Text = "Shuffle Castle Boss Weaknesses with Robots";
             robotsOnlyCheckBox.UseVisualStyleBackColor = true;
             // 
-            // tabControl
-            // 
-            tabControl.Controls.Add(MM1Tab);
-            tabControl.Controls.Add(MM2Tab);
-            tabControl.Location = new System.Drawing.Point(12, 12);
-            tabControl.Name = "tabControl";
-            tabControl.SelectedIndex = 0;
-            tabControl.Size = new System.Drawing.Size(400, 250);
-            tabControl.TabIndex = 15;
-            // 
-            // MM1Tab
-            // 
-            MM1Tab.Controls.Add(label1);
-            MM1Tab.Location = new System.Drawing.Point(4, 24);
-            MM1Tab.Name = "MM1Tab";
-            MM1Tab.Padding = new System.Windows.Forms.Padding(3);
-            MM1Tab.Size = new System.Drawing.Size(392, 222);
-            MM1Tab.TabIndex = 0;
-            MM1Tab.Text = "Mega Man 1";
-            MM1Tab.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(6, 3);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(82, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Coming soon!";
-            // 
-            // MM2Tab
-            // 
-            MM2Tab.Controls.Add(weaknessLabel);
-            MM2Tab.Controls.Add(robotsOnlyCheckBox);
-            MM2Tab.Controls.Add(heatManCheckBox);
-            MM2Tab.Controls.Add(shuffleEquipmentCheckBox);
-            MM2Tab.Controls.Add(nerfBusterCheckBox);
-            MM2Tab.Controls.Add(shuffleLevelsCheckBox);
-            MM2Tab.Controls.Add(weaknessComboBox);
-            MM2Tab.Location = new System.Drawing.Point(4, 24);
-            MM2Tab.Name = "MM2Tab";
-            MM2Tab.Padding = new System.Windows.Forms.Padding(3);
-            MM2Tab.Size = new System.Drawing.Size(392, 222);
-            MM2Tab.TabIndex = 1;
-            MM2Tab.Text = "Mega Man 2";
-            MM2Tab.UseVisualStyleBackColor = true;
-            // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(424, 366);
-            Controls.Add(tabControl);
+            ClientSize = new System.Drawing.Size(384, 276);
+            Controls.Add(robotsOnlyCheckBox);
+            Controls.Add(weaknessComboBox);
+            Controls.Add(shuffleEquipmentCheckBox);
+            Controls.Add(heatManCheckBox);
+            Controls.Add(shuffleLevelsCheckBox);
+            Controls.Add(nerfBusterCheckBox);
             Controls.Add(generateButton);
-            Controls.Add(outputLabel);
-            Controls.Add(seedLabel);
+            Controls.Add(weaknessLabel);
             Controls.Add(seedTextBox);
             Controls.Add(outputButton);
+            Controls.Add(seedLabel);
             Controls.Add(outputTextBox);
+            Controls.Add(outputLabel);
             Name = "MainWindow";
-            Text = "Mega Man Randomizer";
-            tabControl.ResumeLayout(false);
-            MM1Tab.ResumeLayout(false);
-            MM1Tab.PerformLayout();
-            MM2Tab.ResumeLayout(false);
-            MM2Tab.PerformLayout();
+            Text = "Mega Man 2 Randomizer";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -258,9 +205,5 @@
         private System.Windows.Forms.CheckBox shuffleEquipmentCheckBox;
         private System.Windows.Forms.ComboBox weaknessComboBox;
         private System.Windows.Forms.CheckBox robotsOnlyCheckBox;
-        private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage MM1Tab;
-        private System.Windows.Forms.TabPage MM2Tab;
-        private System.Windows.Forms.Label label1;
     }
 }
