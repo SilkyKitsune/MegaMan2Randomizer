@@ -6,6 +6,89 @@ namespace MM2Randomizer;
 
 public static class MM2
 {
+    private enum Address : int
+    {
+        BossWeaponDamageJP = 0x02_E933,
+        BossWeaponDamageNA = 0x02_E952,
+
+        WilyStage1Ptr = 0x03_40E3,
+
+        BubbleStagePtr = 0x03_4670,
+        AirStagePtr =    0x03_4671,
+        QuickStagePtr =  0x03_4672,
+        WoodStagePtr =   0x03_4673,
+        CrashStagePtr =  0x03_4674,
+        FlashStagePtr =  0x03_4675,
+        MetalStagePtr =  0x03_4676,
+        HeatStagePtr =   0x03_4677,
+
+        HeatStageWeapon =   0x03_C289,
+        AirStageWeapon =    0x03_C28A,
+        WoodStageWeapon =   0x03_C28B,
+        BubbleStageWeapon = 0x03_C28C,
+        QuickStageWeapon =  0x03_C28D,
+        FlashStageWeapon =  0x03_C28E,
+        MetalStageWeapon =  0x03_C28F,
+        CrashStageWeapon =  0x03_C290,
+
+        HeatStageItem =   0x03_C291,
+        AirStageItem =    0x03_C292,
+        WoodStageItem =   0x03_C293,
+        BubbleStageItem = 0x03_C294,
+        QuickStageItem =  0x03_C295,
+        FlashStageItem =  0x03_C296,
+        MetalStageItem =  0x03_C297,
+        CrashStageItem =  0x03_C298,
+
+        WeaponBitMasks = 0x03_F2F8,
+    }
+
+    private enum Equipment : byte
+    {
+        None = 0x00,
+
+        AtomicFire =     0x01,
+        AirShooter =     0x02,
+        LeafShield =     0x04,
+        BubbleLead =     0x08,
+        QuickBoomerang = 0x10,
+        FlashStopper =   0x20,
+        MetalBlade =     0x40,
+        CrashBomber =    0x80,
+
+        Item1 = AtomicFire,
+        Item2 = AirShooter,
+        Item3 = LeafShield
+    }
+
+    private enum Pickups : byte
+    {
+        BigWeapon = 0x78,
+        ETank = 0x7A,
+        OneUp = 0x7E
+    }
+
+    private enum StageIndex : byte
+    {
+        HeatMan =   0x00,
+        AirMan =    0x01,
+        WoodMan =   0x02,
+        BubbleMan = 0x03,
+        QuickMan =  0x04,
+        FlashMan =  0x05,
+        MetalMan =  0x06,
+        CrashMan =  0x07,
+
+        MechaDragonW1 =    0x08,
+        //not sure where wily 2 is
+        GutsTankW3 =       0x0A,
+        BoobeamTrapW4 =    0x0B,
+        TeleporterRoomW5 = 0x0C,
+        WilyAlienW6 =      0x0D,
+
+        TitleScreen = 0x09//I think this is actually because the game crashes
+    }
+
     private static readonly Equipment[]
         weapons =
     {
