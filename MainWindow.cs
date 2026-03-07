@@ -99,6 +99,13 @@ public partial class MainWindow : Form
 
         switch ((PatchManager.GameID)gameOption)
         {
+            case PatchManager.GameID.MM1:
+                {
+                    MessageBox.Show("Mega Man 1 randomization is currently not available", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    generateButton.Enabled = true;
+                    return;
+                }
+
             case PatchManager.GameID.MM2:
                 {
                     IPS patchJP = new(), patchNA = new();
