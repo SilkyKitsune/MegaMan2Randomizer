@@ -1,7 +1,5 @@
 ﻿using System;
-using F = System.IO.File;
-using D = System.IO.Directory;
-using P = System.IO.Path;
+using System.IO;
 using System.Windows.Forms;
 using IPSLib;
 
@@ -98,7 +96,7 @@ public partial class MainWindow : Form
             return;
         }
 
-        if (!D.Exists(folderPath))
+        if (!Directory.Exists(folderPath))
         {
             MessageBox.Show("Output folder path does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
@@ -131,10 +129,10 @@ public partial class MainWindow : Form
         patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
         patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
 
-        string outPath = P.Combine(folderPath, (october ? "MM2R🎃 " : "MM2R ") + seed);
-        F.WriteAllText(outPath + "_Spoiler.txt", spoiler);
-        patchJP.WritePatch(outPath + $" ({PatchManager.VersionID.Japan})");
-        patchNA.WritePatch(outPath + $" ({PatchManager.VersionID.NorthAmerica})");
+        folderPath += '\\' + (october ? "MM2R🎃 " : "MM2R ") + seed;
+        File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
+        patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
+        patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
 
         seedTextBox.Text = seed.ToString();
         generateButton.Enabled = true;
