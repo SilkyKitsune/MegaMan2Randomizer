@@ -77,6 +77,18 @@ public static class MM2
         "Wily Alien   "
     };
 
+    private static readonly byte[] randomWeaknessPool =
+    {
+        //curved set of values ranging from 0 to 1C
+    };
+
+    private static readonly int[] randomWeaknessIndices =
+    {
+        //used for limiting randomWeaknessPool to a min/max
+        0,
+        randomWeaknessPool.Length//temp
+    };
+
     private static readonly byte[][] weaknessSets =
     {//need logic to ensure no boss becomes invulnerable
         //             P     H     A     W     B     Q     C     M
@@ -93,6 +105,9 @@ public static class MM2
         new byte[] { 0x01, 0x08, 0x00, 0x00, 0x01, 0x02, 0x01, 0x00 }, //Guts Tank W3
         new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00 }, //Boobeam Trap W4, should other weapons work?
         new byte[] { 0x01, 0x0E, 0x01, 0x00, 0x00, 0x01, 0x04, 0x01 }, //Wily Machine W5 (these might only be phase 2)
+        //wily machine values taken from mmkb
+        //phase 1    0x01, 0x0E, 0x01, 0x00, 0x00, 0x00, 0x04, 0x01
+        //phase 2    0x01, 0x00, 0x01, 0x00, 0x00, 0x01, 0x04, 0x01
         new byte[] { 0x01, 0x08, 0x02, 0x04, 0x04, 0x01, 0x00, 0x00 }  //Wily Alien W6
     },
         weaknessSetsVanilla =
@@ -121,6 +136,46 @@ public static class MM2
         Equipment.Item3 => item ? nameof(Equipment.Item3) : nameof(Equipment.LeafShield),
         _ => equip.ToString()
     };
+
+    private static void RandomWeaknessesPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)//min max args
+    {
+        r ??= new(Util.GetSeed());
+        spoiler = "- Random Weaknesses -\n" +
+            "                 P    H    A    W    B    Q    C    M\n";
+
+        byte[] randomWeaknessPool = MM2.randomWeaknessPool[randomWeaknessIndices[0/*min*/]..randomWeaknessIndices[^1/*max*/]];
+        byte[][] data = new byte[weaknessSets.Length][];
+
+        for (int i = 0, l = robotsOnly ? 8 : data.Length, l_ = weaknessSets[0].Length; i < l; i++)
+        {
+            byte[] data_ = data[i] = new byte[l_];
+            spoiler += bossNamesWithSpaces[i];
+
+            for (int j = 0; j < data_.Length; j++)
+            {
+                byte weakness = 0;//randomWeaknessPool[r.Next(randomWeaknessPool.Length)];
+                data_[j] = weakness;
+
+                string weaknessStr = weakness.ToString();
+                spoiler += weaknessStr.Length switch
+                {
+                    1 => "    ",
+                    2 => "   ",
+                    3 => "  ",
+                    4 => " ",
+                    _ => string.Empty
+                } + weaknessStr;
+            }
+            spoiler += '\n';
+        }
+
+        if (robotsOnly) for (int i = 8; i < data.Length; i++) data[i] = weaknessSets[i];
+
+        byte[] rearrangedData = Util.Rearrange(data);
+
+        jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
+        na = new((int)Address.BossWeaponDamageNA, rearrangedData);
+    }
 
     private static void ShuffleEquipmentPatch(out Patch weaponsPatch, out Patch itemsPatch, out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
@@ -206,7 +261,7 @@ public static class MM2
     }
 
     private static void ShuffleBusterInvulnerabilityPatch(out Patch jp, out Patch na, out string spoiler, Random r = null)
-    {
+    {//this overwrites any modified damage values from weakness shuffle
         r ??= new(Util.GetSeed());
         spoiler = "Invulnerable to Mega Buster: ";
 
@@ -228,6 +283,33 @@ public static class MM2
         jp = new((int)Address.BossWeaponDamageJP, data);
 
         na = new((int)Address.BossWeaponDamageNA, data);
+    }
+
+    private static Patch ShuffleRobotMastersPatch(out string spoiler, Random r = null, bool shuffle = true, bool single = false)
+    {
+        r ??= new(Util.GetSeed());
+        spoiler = "- Robot Master Shuffle -\n";
+
+        AutoSizedArray<StageIndex> robots = new(stages, stages.Length);
+        byte[] data = new byte[robots.Length];
+
+        if (single)
+        {
+            int n = r.Next(robots.Length);
+            StageIndex robot = robots[n];
+            spoiler += $"All Robot Masters => {robot}\n";
+            for (int i = 0; i < data.Length; i++) data[i] = (byte)robot;
+        }
+        else for (int i = 0; shuffle ? (robots.Length > 0) : (i < data.Length); i++)
+            {
+                int n = r.Next(robots.Length);
+                StageIndex robot = robots[n];
+                spoiler += $"{stages[i]} => {robot}\n";
+                data[i] = (byte)robot;
+                if (shuffle) robots.RemoveAt(n);
+            }
+
+        return new((int)Address.BossIndices, data);
     }
 
     private static Patch ShuffleStagesPatch(out string spoiler, Random r = null)
@@ -347,7 +429,7 @@ public static class MM2
 
         return new((int)Address.WeaponBitMasks, data);
     }
-    
+    //remove the out modifiers from the patches?
     public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler,
         bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
         bool shuffleLevels = false,
@@ -357,7 +439,7 @@ public static class MM2
         if (seed == 0) seed = Util.GetSeed();
         Random r = new(seed);
 
-        spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
+        spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";//add pumpkin to this too?
         jp = new();
         na = new();
 
@@ -396,6 +478,16 @@ public static class MM2
             spoiler += '\n' + s;
         }
 
+        //add condition later
+        {
+            Patch robots = ShuffleRobotMastersPatch(out string s, r, true, false);//temp
+
+            jp.Add(robots, MergeMode.CombineOver);
+            na.Add(robots, MergeMode.CombineOver);
+
+            spoiler += '\n' + s;
+        }
+
         switch (weaknessShuffle)
         {
             default:
@@ -427,7 +519,16 @@ public static class MM2
                     spoiler += '\n' + s;
                     break;
                 }
-            //case 3:
+            case 3:
+                {
+                    RandomWeaknessesPatch(out Patch weaknessesJP, out Patch weaknessesNA, out string s, r, robotsOnly);
+
+                    jp.Add(weaknessesJP, MergeMode.CombineOver);
+                    na.Add(weaknessesNA, MergeMode.CombineOver);
+
+                    spoiler += '\n' + s;
+                    break;
+                }
         }
 
         if (nerfBuster)
