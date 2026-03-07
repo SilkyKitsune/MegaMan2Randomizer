@@ -8,6 +8,7 @@ public static class PatchManager
 {
     public enum GameID : int
     {
+        MM1,
         MM2,
 
         Count
