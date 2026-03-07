@@ -50,16 +50,7 @@ public partial class MainWindow : Form
 
         if (PatchManager.LoadPatches(out string errors))
         {
-            outputTextBox.Enabled = false;
-            outputButton.Enabled = false;
-            seedTextBox.Enabled = false;
-            weaknessComboBox.Enabled = false;
-            robotsOnlyCheckBox.Enabled = false;
-            nerfBusterCheckBox.Enabled = false;
-            shuffleEquipmentCheckBox.Enabled = false;
-            heatManCheckBox.Enabled = false;
-            shuffleLevelsCheckBox.Enabled = false;
-            generateButton.Enabled = false;
+            outputTextBox.Enabled = outputButton.Enabled = seedTextBox.Enabled = generateButton.Enabled = false;
             seedTextBox.Text = outputTextBox.Text = "INVALID PATCHES";//temp
             MessageBox.Show("Errors loading patches:\n" + errors, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
