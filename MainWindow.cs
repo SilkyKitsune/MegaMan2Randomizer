@@ -72,7 +72,7 @@ public partial class MainWindow : Form
     {
         bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
             robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked;
-        int weaknessShuffle = weaknessComboBox.SelectedIndex;
+        int weaknessShuffle = weaknessComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
         
         if (weaknessShuffle == 3)//temp
@@ -97,33 +97,41 @@ public partial class MainWindow : Form
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
-        IPS patchJP = new(), patchNA = new();
-        PatchManager.AddPatches(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan);
-        PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica);
-
-        if (shuffleLevels)
+        switch ((PatchManager.GameID)gameOption)
         {
-            PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.MysteryStageSelect);
-            PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.MysteryStageSelect);
+            case PatchManager.GameID.MM2:
+                {
+                    IPS patchJP = new(), patchNA = new();
+                    PatchManager.AddPatches(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan);
+                    PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica);
+
+                    if (shuffleLevels)
+                    {
+                        PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.MysteryStageSelect);
+                        PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.MysteryStageSelect);
+                    }
+
+                    if (october)
+                    {
+                        PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.HalloweenMode1);
+                        PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.HalloweenMode2);
+
+                        PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode1);
+                        PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode2);
+                    }
+
+                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
+                    patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
+                    patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
+
+                    folderPath += '\\' + (october ? "MM2R🎃 " : "MM2R ") + seed;
+                    File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
+                    patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
+                    patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
+
+                    break;
+                }
         }
-
-        if (october)
-        {
-            PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.HalloweenMode1);
-            PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.HalloweenMode2);
-
-            PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode1);
-            PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode2);
-        }
-
-        MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
-        patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
-        patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
-
-        folderPath += '\\' + (october ? "MM2R🎃 " : "MM2R ") + seed;
-        File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
-        patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
-        patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
 
         seedTextBox.Text = seed.ToString();
         generateButton.Enabled = true;
