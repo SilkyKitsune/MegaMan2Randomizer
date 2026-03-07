@@ -6,21 +6,19 @@
 IncreaseETanks.ips
 Input.asm
 MysteryStageSelect_AttributeTableEdit.ips
-MysteryStageSelect_AttributeTableEdit.nes
 MysteryStageSelect_CHREdit.ips
 MysteryStageSelect_NameTableEdit.ips
-MysteryStageSelect_NameTableEdit.nes
 MysteryStageSelect_OAMEdit.ips
 QuickSwap.asm
 ReplaceBooBeamWalls.ips
 WeaponGetScreen.asm
-Test/
-Bank B.asm
-Bank C.asm
-Bank F.asm
+
 MM2R Notes.txt
-RAM Map.txt
-ROM Map.txt
+
+*.nes
+
+Docs/
+Test/
 
 # User-specific files
 *.rsuser
