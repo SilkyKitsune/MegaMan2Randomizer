@@ -106,6 +106,8 @@ public partial class MainWindow : Form
 
         generateButton.Enabled = false;
 
+        int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
+
         IPS patchJP = new(), patchNA = new();
         PatchManager.AddPatches(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan);
         PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica);
@@ -124,8 +126,6 @@ public partial class MainWindow : Form
             PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode1);
             PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode2);
         }
-
-        int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
 
         MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
         patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
