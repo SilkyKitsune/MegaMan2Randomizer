@@ -35,4 +35,8 @@ internal enum Address : int
     CrashStageItem = 0x03C298,
 
     WeaponBitMasks = 0x03_F2_F8,
+
+    BossIndices = 0x03_F320
+
+    //snes addresses
 }
