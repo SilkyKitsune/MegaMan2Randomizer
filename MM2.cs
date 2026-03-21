@@ -6,7 +6,7 @@ namespace MM2Randomizer;
 
 public static class MM2
 {
-    private enum Address : int
+    public enum Address : int
     {
         BossWeaponDamageJP = 0x02_E933,
         BossWeaponDamageNA = 0x02_E952,
@@ -43,7 +43,7 @@ public static class MM2
         WeaponBitMasks = 0x03_F2F8,
     }
 
-    private enum Equipment : byte
+    public enum Equipment : byte
     {
         None = 0x00,
 
@@ -61,14 +61,14 @@ public static class MM2
         Item3 = LeafShield
     }
 
-    private enum Pickups : byte
+    public enum Pickups : byte
     {
         BigWeapon = 0x78,
         ETank = 0x7A,
         OneUp = 0x7E
     }
 
-    private enum StageIndex : byte
+    public enum StageIndex : byte
     {
         HeatMan =   0x00,
         AirMan =    0x01,
