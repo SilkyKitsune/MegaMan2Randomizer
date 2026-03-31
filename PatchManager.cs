@@ -40,6 +40,7 @@ public static class PatchManager
         QuickBoomerangNerf,
         ReEnterLevelsMM2,
         SplitWeaponFlagsMM2,
+        WoodManRoomFix,
 
         Count
     }
