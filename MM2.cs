@@ -144,20 +144,31 @@ public static class MM2
     },
         bossNamesWithSpaces =
     {
-        "Heat Man     ",
-        "Air Man      ",
-        "Wood Man     ",
-        "Bubble Man   ",
-        "Quick Man    ",
-        "Flash Man    ",
-        "Metal Man    ",
-        "Crash Man    ",
-        "Mecha Dragon ",
-        "Picopicokun  ",
-        "Guts Tank    ",
-        "Boobeam Trap ",
-        "Wily Machine ",
-        "Wily Alien   "
+        "Heat Man    ",
+        "Air Man     ",
+        "Wood Man    ",
+        "Bubble Man  ",
+        "Quick Man   ",
+        "Flash Man   ",
+        "Metal Man   ",
+        "Crash Man   ",
+        "Mecha Dragon",
+        "Picopicokun ",
+        "Guts Tank   ",
+        "Boobeam Trap",
+        "Wily Machine",
+        "Wily Alien  "
+    },
+        bossNamesWithSpacesShort =
+    {
+        "Heat Man  ",
+        "Air Man   ",
+        "Wood Man  ",
+        "Bubble Man",
+        "Quick Man ",
+        "Flash Man ",
+        "Metal Man ",
+        "Crash Man "
     };
 
     private static readonly byte[][] weaknessSets =
