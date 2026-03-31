@@ -590,11 +590,11 @@ public static class MM2
         {
             ShuffleEquipmentPatch(out Patch weapons, out Patch items, out string s, r, heatManNoItem2);
 
-            jp.Add(weapons, MergeMode.CombineOver);
-            jp.Add(items, MergeMode.CombineOver);
+            jp.Add(weapons, MergeMode.None);
+            jp.Add(items, MergeMode.None);
 
-            na.Add(weapons, MergeMode.CombineOver);
-            na.Add(items, MergeMode.CombineOver);
+            na.Add(weapons, MergeMode.None);
+            na.Add(items, MergeMode.None);
 
             spoiler += s;
         }
@@ -602,11 +602,11 @@ public static class MM2
         {
             Patch weapons = ShuffleWeaponsPatch(out string s, r), items = ShuffleItemsPatch(out string s_, r, heatManNoItem2);
 
-            jp.Add(weapons, MergeMode.CombineOver);
-            jp.Add(items, MergeMode.CombineOver);
+            jp.Add(weapons, MergeMode.None);
+            jp.Add(items, MergeMode.None);
 
-            na.Add(weapons, MergeMode.CombineOver);
-            na.Add(items, MergeMode.CombineOver);
+            na.Add(weapons, MergeMode.None);
+            na.Add(items, MergeMode.None);
 
             spoiler += s + '\n' + s_;
         }
@@ -615,16 +615,16 @@ public static class MM2
         {
             Patch stages = ShuffleStagesPatch(out string s, r);
 
-            jp.Add(stages, MergeMode.CombineOver);
-            na.Add(stages, MergeMode.CombineOver);
+            jp.Add(stages, MergeMode.None);
+            na.Add(stages, MergeMode.None);
 
             spoiler += '\n' + s;
         }
 
         ShuffleWeaknessesPatch(out Patch weaknessesJP, out Patch weaknessesNA, out string weaknessesSpoiler, r, weaknessShuffle, robotsOnly, nerfBuster);
 
-        jp.Add(weaknessesJP, MergeMode.CombineOver);
-        na.Add(weaknessesNA, MergeMode.CombineOver);
+        jp.Add(weaknessesJP, MergeMode.None);
+        na.Add(weaknessesNA, MergeMode.None);
 
         spoiler += '\n' + weaknessesSpoiler;
     }
