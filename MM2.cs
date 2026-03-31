@@ -89,13 +89,11 @@ public static class MM2
         CrashMan =  0x07,
 
         MechaDragonW1 =    0x08,
-        //not sure where wily 2 is
+        PicopicokunW2 =    0x09,
         GutsTankW3 =       0x0A,
         BoobeamTrapW4 =    0x0B,
         TeleporterRoomW5 = 0x0C,
         WilyAlienW6 =      0x0D,
-
-        TitleScreen = 0x09//I think this is actually because the game crashes
     }
 
     private static readonly Equipment[]
