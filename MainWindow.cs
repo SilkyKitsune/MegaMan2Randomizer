@@ -7,41 +7,6 @@ namespace MM2Randomizer;
 
 public partial class MainWindow : Form
 {
-    private const string InvalidPath = "INVALID PATH", FileName = "MM2R_", MysteryStageSelectPath = "MysteryStageSelect.ips",
-        HalloweenModePath = "HalloweenMode.ips", HalloweenModeJPPath = "HalloweenMode_JP.ips", HalloweenModeNAPath = "HalloweenMode_NA.ips";
-
-    private static readonly string[]
-        Paths =
-    {
-        "BooBeamNerf.ips",
-        "IncreaseBarSpeed.ips",
-        "KeepETanks.ips",
-        "ReEnterLevels.ips",
-        "SplitWeaponFlags.ips",//rename?
-    },
-        PathsJP =
-    {
-        "AtomicFireFix_JP.ips",
-        "FastCrashBomber_JP.ips",
-        "IncreaseMenuSpeed_JP.ips",
-        "Item1Buff_JP.ips",
-        "Item2Buff_JP.ips",
-        "Item3Buff_JP.ips",
-        "MetalBladeNerf_JP.ips",
-        "QuickBoomerangNerf_JP.ips",
-    },
-        PathsNA =
-    {
-        "AtomicFireFix_NA.ips",
-        "FastCrashBomber_NA.ips",
-        "IncreaseMenuSpeed_NA.ips",
-        "Item1Buff_NA.ips",
-        "Item2Buff_NA.ips",
-        "Item3Buff_NA.ips",
-        "MetalBladeNerf_NA.ips",
-        "QuickBoomerangNerf_NA.ips",
-    };
-
     public MainWindow()
     {
         InitializeComponent();
