@@ -111,6 +111,9 @@
     <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\WoodManRoomFix\WoodManRoomFix_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
