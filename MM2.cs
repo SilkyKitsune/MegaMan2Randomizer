@@ -10,9 +10,9 @@ public static class MM2
     {
         HeatManGraphicsPtrs =   0x00_34A6,
         AirManGraphicsPtrs =    0x00_74A6,
-        WoodManGraphicsPtrs =   0x00_B4D6,
+        WoodManGraphicsPtrs =   0x00_B4DC,
         BubbleManGraphicsPtrs = 0x00_F4A6,
-        QuickManGraphicsPtrs =  0x01_34A6,
+        QuickManGraphicsPtrs =  0x01_34B8,
         FlashManGraphicsPtrs =  0x01_74A6,
         MetalManGraphicsPtrs =  0x01_B494,
         CrashManGraphicsPtrs =  0x01_F4DC,
