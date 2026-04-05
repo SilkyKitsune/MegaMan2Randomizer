@@ -25,7 +25,6 @@ public static class MM2
         QuickBoomerangBossDamage = 0x02_E979,
         CrashBomberBossDamage =    0x02_E987,
         MetalBladeBossDamage =     0x02_E995,
-        BossWeaponDamageNA = 0x02_E952,
 
         CenterStagePtr = 0x03_40E3,
 
@@ -227,6 +226,29 @@ public static class MM2
         new byte[] { 0xAE, 0x05,  0xAF, 0x05,  0xB0, 0x05,  0xB1, 0x05,  0xB2, 0x05,  0xB3, 0x05,  0x0F, 0x30, 0x30,  0x0F, 0x30, 0x16 }, //Crash Man
     };
 
+    private static int ConvertAddressToNA(Address address) => address switch
+    {
+        Address.MegaBusterBossDamage =>      0x02_E952,
+        Address.AtomicFireBossDamage =>      0x02_E960,
+        Address.AirShooterBossDamage =>      0x02_E96E,
+        Address.LeafShieldBossDamage =>      0x02_E97C,
+        Address.BubbleLeadBossDamage =>      0x02_E98A,
+        Address.QuickBoomerangBossDamage =>  0x02_E998,
+        Address.CrashBomberBossDamage =>     0x02_E9A6,
+        Address.MetalBladeBossDamage =>      0x02_E9B4,
+
+        Address.MegaBusterEnemyDamage =>     0x03_E9A8,
+        Address.AtomicFireEnemyDamage =>     0x03_EA24,
+        Address.AirShooterEnemyDamage =>     0x03_EA9C,
+        Address.LeafShieldEnemyDamage =>     0x03_EB14,
+        Address.BubbleLeadEnemyDamage =>     0x03_EB8C,
+        Address.QuickBoomerangEnemyDamage => 0x03_EC04,
+        Address.CrashBomberEnemyDamage =>    0x03_EC7C,
+        Address.MetalBladeEnemyDamage =>     0x03_ECF4,
+
+        _ => (int)address
+    };
+
     private static string GetName(Equipment equip, bool item) => equip switch
     {
         Equipment.Item1 => item ? nameof(Equipment.Item1) : nameof(Equipment.AtomicFire),
@@ -336,7 +358,7 @@ public static class MM2
         }
 
         jp = new((int)Address.MegaBusterBossDamage, data);
-        na = new((int)Address.BossWeaponDamageNA, data);
+        na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), data);
     }
 
     private static Patch ShuffleStagesPatch(out string spoiler, Random r = null)
@@ -399,7 +421,7 @@ public static class MM2
         byte[] rearrangedData = Util.Rearrange(data);
 
         jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
-        na = new((int)Address.BossWeaponDamageNA, rearrangedData);
+        na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData);
     }
     
     [Obsolete] private static void ShuffleWeaknessSetsPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
@@ -431,7 +453,7 @@ public static class MM2
         byte[] rearrangedData = Util.Rearrange(data.ToArray());
 
         jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
-        na = new((int)Address.BossWeaponDamageNA, rearrangedData);
+        na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData);
     }
 
     private static void ShuffleWeaknessesPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, int shuffleMode = 0, bool robotsOnly = false, bool shuffleBusterInvulnerability = false)
@@ -548,7 +570,7 @@ public static class MM2
         }
 
         jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
-        na = new((int)Address.BossWeaponDamageNA, rearrangedData);
+        na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData);
     }
 
     private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
