@@ -32,7 +32,6 @@ public static class MM2
         LeftStagePtr =        0x03_4677,
 
         BossBitFlags =   0x03_C289,
-
         ItemBitFlags =   0x03_C291,
 
         NewWeaponBitFlags = 0x03_F2F8,
@@ -223,7 +222,7 @@ public static class MM2
     private static void ShuffleEquipmentPatch(out Patch weaponsPatch, out Patch itemsPatch, out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(Util.GetSeed());
-        spoiler = "";
+        spoiler = "- Weapons & Items -\n";
 
         AutoSizedArray<ushort> equips = new(weapons.Length + items.Length);
         foreach (Equipment weapon in weapons) equips.Add((byte)weapon);
@@ -243,7 +242,7 @@ public static class MM2
             ushort item = equips[n];
             equips.RemoveAt(n);
 
-            spoiler += $"{(StageIndex)i} => ";
+            spoiler += $"{bossNamesWithSpacesShort[i]} => ";
 
             byte weaponByte = 0, itemByte = 0, tempByte;
 
@@ -283,18 +282,16 @@ public static class MM2
     private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(Util.GetSeed());
-        spoiler = "";
+        spoiler = "- Items -\n";
 
         AutoSizedArray<Equipment> equips = new(items, items.Length);
         byte[] data = new byte[equips.Length];
         
-        Address address = Address.ItemBitFlags;
-
-        for (int i = 0; equips.Length > 0; i++, address++)
+        for (int i = 0; equips.Length > 0; i++)
         {
             int n = r.Next(equips.Length - (heatManNoItem2 && i == 0 ? 1 : 0));
             Equipment e = equips[n];
-            spoiler += $"{address} => {GetName(e, true)}\n";
+            spoiler += $"{bossNamesWithSpacesShort[i]} => {GetName(e, true)}\n";
             data[i] = (byte)e;
             equips.RemoveAt(n);
         }
@@ -541,17 +538,16 @@ public static class MM2
     private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
-        spoiler = "";
+        spoiler = "- Weapons -\n";
 
         AutoSizedArray<Equipment> equips = new(weapons, weapons.Length);
         byte[] data = new byte[equips.Length];
 
-        Address address = Address.BossBitFlags;
-        for (int i = 0; equips.Length > 0; i++, address++)
+        for (int i = 0; equips.Length > 0; i++)
         {
             int n = r.Next(equips.Length);
             Equipment e = equips[n];
-            spoiler += $"{address} => {GetName(e, false)}\n";
+            spoiler += $"{bossNamesWithSpacesShort[i]} => {GetName(e, false)}\n";
             data[i] = (byte)e;
             equips.RemoveAt(n);
         }
