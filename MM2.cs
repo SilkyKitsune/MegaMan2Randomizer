@@ -458,9 +458,12 @@ public static class MM2
         na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData);
     }
 
-    private static void ShuffleWeaknessesPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, int shuffleMode = 0, bool robotsOnly = false, bool shuffleBusterInvulnerability = false)
+    private static void ShuffleWeaknessesPatch(out PatchCollection jp, out PatchCollection na, out string spoiler, Random r = null, int shuffleMode = 0, bool robotsOnly = false, bool shuffleBusterInvulnerability = false)
     {
         r ??= new(Util.GetSeed());
+
+        jp = new IPS();
+        na = new IPS();
         spoiler = "";
 
         int setCount = robotsOnly ? 8 : weaknessSets.Length, weaponCount = weaknessSets[0].Length;
@@ -571,8 +574,8 @@ public static class MM2
             rearrangedData[(int)StageIndex.WilyAlienW6] = 0;
         }
 
-        jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
-        na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData);
+        jp.Add(new Patch((int)Address.MegaBusterBossDamage, rearrangedData), MergeMode.None);
+        na.Add(new Patch(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData), MergeMode.None);
     }
 
     private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
