@@ -228,6 +228,18 @@ public static class MM2
         new byte[] { 0xAE, 0x05,  0xAF, 0x05,  0xB0, 0x05,  0xB1, 0x05,  0xB2, 0x05,  0xB3, 0x05,  0x0F, 0x30, 0x30,  0x0F, 0x30, 0x16 }, //Crash Man
     };
 
+    private static readonly Address[] enemyDamageAddresses = new Address[WeaponCount]
+    {
+        Address.MegaBusterEnemyDamage,
+        Address.AtomicFireEnemyDamage,
+        Address.AirShooterEnemyDamage,
+        Address.LeafShieldEnemyDamage,
+        Address.BubbleLeadEnemyDamage,
+        Address.QuickBoomerangEnemyDamage,
+        Address.CrashBomberEnemyDamage,
+        Address.MetalBladeEnemyDamage,
+    };
+
     private static int ConvertAddressToNA(Address address) => address switch
     {
         Address.MegaBusterBossDamage =>      0x02_E952,
