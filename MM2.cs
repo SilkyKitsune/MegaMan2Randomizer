@@ -35,7 +35,7 @@ public static class MM2
 
         ItemBitFlags =   0x03_C291,
 
-        WeaponBitMasks = 0x03_F2F8,
+        NewWeaponBitFlags = 0x03_F2F8,
     }
 
     public enum Equipment : byte
@@ -276,7 +276,7 @@ public static class MM2
             itemData[i] = itemByte;
         }
 
-        weaponsPatch = new((int)Address.WeaponBitMasks, weaponData);
+        weaponsPatch = new((int)Address.NewWeaponBitFlags, weaponData);
         itemsPatch = new((int)Address.ItemBitFlags, itemData);
     }
 
@@ -556,7 +556,7 @@ public static class MM2
             equips.RemoveAt(n);
         }
 
-        return new((int)Address.WeaponBitMasks, data);
+        return new((int)Address.NewWeaponBitFlags, data);
     }
     
     public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler,
