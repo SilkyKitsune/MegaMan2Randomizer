@@ -70,8 +70,10 @@ public static class MM2
         Item3 = LeafShield
     }
 
-    public enum Pickups : byte
+    public enum ObjectType : byte
     {
+        Picopicokuns = 0x6A,
+        BoobeamTraps = 0x6D,
         BigWeapon = 0x78,
         ETank = 0x7A,
         OneUp = 0x7E
