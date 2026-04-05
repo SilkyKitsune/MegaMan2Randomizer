@@ -31,23 +31,9 @@ public static class MM2
         BottomLeftStagePtr =  0x03_4676,
         LeftStagePtr =        0x03_4677,
 
-        HeatStageWeapon =   0x03_C289,
-        AirStageWeapon =    0x03_C28A,
-        WoodStageWeapon =   0x03_C28B,
-        BubbleStageWeapon = 0x03_C28C,
-        QuickStageWeapon =  0x03_C28D,
-        FlashStageWeapon =  0x03_C28E,
-        MetalStageWeapon =  0x03_C28F,
-        CrashStageWeapon =  0x03_C290,
+        BossBitFlags =   0x03_C289,
 
-        HeatStageItem =   0x03_C291,
-        AirStageItem =    0x03_C292,
-        WoodStageItem =   0x03_C293,
-        BubbleStageItem = 0x03_C294,
-        QuickStageItem =  0x03_C295,
-        FlashStageItem =  0x03_C296,
-        MetalStageItem =  0x03_C297,
-        CrashStageItem =  0x03_C298,
+        ItemBitFlags =   0x03_C291,
 
         WeaponBitMasks = 0x03_F2F8,
     }
@@ -291,7 +277,7 @@ public static class MM2
         }
 
         weaponsPatch = new((int)Address.WeaponBitMasks, weaponData);
-        itemsPatch = new((int)Address.HeatStageItem, itemData);
+        itemsPatch = new((int)Address.ItemBitFlags, itemData);
     }
 
     private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
@@ -302,7 +288,7 @@ public static class MM2
         AutoSizedArray<Equipment> equips = new(items, items.Length);
         byte[] data = new byte[equips.Length];
         
-        Address address = Address.HeatStageItem;
+        Address address = Address.ItemBitFlags;
 
         for (int i = 0; equips.Length > 0; i++, address++)
         {
@@ -313,7 +299,7 @@ public static class MM2
             equips.RemoveAt(n);
         }
 
-        return new((int)Address.HeatStageItem, data);
+        return new((int)Address.ItemBitFlags, data);
     }
 
     [Obsolete] private static void ShuffleBusterInvulnerabilityPatch(out Patch jp, out Patch na, out string spoiler, Random r = null)
@@ -560,7 +546,7 @@ public static class MM2
         AutoSizedArray<Equipment> equips = new(weapons, weapons.Length);
         byte[] data = new byte[equips.Length];
 
-        Address address = Address.HeatStageWeapon;
+        Address address = Address.BossBitFlags;
         for (int i = 0; equips.Length > 0; i++, address++)
         {
             int n = r.Next(equips.Length);
