@@ -20,16 +20,16 @@ public static class MM2
         BossWeaponDamageJP = 0x02_E933,
         BossWeaponDamageNA = 0x02_E952,
 
-        WilyStage1Ptr = 0x03_40E3,
+        CenterStagePtr = 0x03_40E3,
 
-        BubbleStagePtr = 0x03_4670,
-        AirStagePtr =    0x03_4671,
-        QuickStagePtr =  0x03_4672,
-        WoodStagePtr =   0x03_4673,
-        CrashStagePtr =  0x03_4674,
-        FlashStagePtr =  0x03_4675,
-        MetalStagePtr =  0x03_4676,
-        HeatStagePtr =   0x03_4677,
+        TopLeftStagePtr =     0x03_4670,
+        TopStagePtr =         0x03_4671,
+        TopRightStagePtr =    0x03_4672,
+        RightStagePtr =       0x03_4673,
+        BottomRightStagePtr = 0x03_4674,
+        BottomStagePtr =      0x03_4675,
+        BottomLeftStagePtr =  0x03_4676,
+        LeftStagePtr =        0x03_4677,
 
         HeatStageWeapon =   0x03_C289,
         AirStageWeapon =    0x03_C28A,
@@ -357,7 +357,7 @@ public static class MM2
             stages.RemoveAt(n);
         }
 
-        return new((int)Address.BubbleStagePtr, data);
+        return new((int)Address.TopLeftStagePtr, data);
     }
 
     [Obsolete] private static void ShuffleWeaknessesPerBossPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
