@@ -34,6 +34,15 @@ public static class MM2
         BossBitFlags =   0x03_C289,
         ItemBitFlags =   0x03_C291,
 
+        MegaBusterEnemyDamage =     0x03_E986,
+        AtomicFireEnemyDamage =     0x03_EA02,
+        AirShooterEnemyDamage =     0x03_EA7A,
+        LeafShieldEnemyDamage =     0x03_EAF2,
+        BubbleLeadEnemyDamage =     0x03_EB6A,
+        QuickBoomerangEnemyDamage = 0x03_EBE2,
+        CrashBomberEnemyDamage =    0x03_EC5A,
+        MetalBladeEnemyDamage =     0x03_ECD2,
+
         NewWeaponBitFlags = 0x03_F2F8,
     }
 
