@@ -17,7 +17,14 @@ public static class MM2
         MetalManGraphicsPtrs =  0x01_B494,
         CrashManGraphicsPtrs =  0x01_F4DC,
 
-        BossWeaponDamageJP = 0x02_E933,
+        MegaBusterBossDamage =     0x02_E933,
+        AtomicFireBossDamage =     0x02_E941,
+        AirShooterBossDamage =     0x02_E94F,
+        LeafShieldBossDamage =     0x02_E95D,
+        BubbleLeadBossDamage =     0x02_E96B,
+        QuickBoomerangBossDamage = 0x02_E979,
+        CrashBomberBossDamage =    0x02_E987,
+        MetalBladeBossDamage =     0x02_E995,
         BossWeaponDamageNA = 0x02_E952,
 
         CenterStagePtr = 0x03_40E3,
@@ -328,7 +335,7 @@ public static class MM2
             robots.RemoveAt(n);
         }
 
-        jp = new((int)Address.BossWeaponDamageJP, data);
+        jp = new((int)Address.MegaBusterBossDamage, data);
         na = new((int)Address.BossWeaponDamageNA, data);
     }
 
@@ -391,7 +398,7 @@ public static class MM2
 
         byte[] rearrangedData = Util.Rearrange(data);
 
-        jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
+        jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
         na = new((int)Address.BossWeaponDamageNA, rearrangedData);
     }
     
@@ -423,7 +430,7 @@ public static class MM2
 
         byte[] rearrangedData = Util.Rearrange(data.ToArray());
 
-        jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
+        jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
         na = new((int)Address.BossWeaponDamageNA, rearrangedData);
     }
 
@@ -540,7 +547,7 @@ public static class MM2
             rearrangedData[(int)StageIndex.WilyAlienW6] = 0;
         }
 
-        jp = new((int)Address.BossWeaponDamageJP, rearrangedData);
+        jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
         na = new((int)Address.BossWeaponDamageNA, rearrangedData);
     }
 
