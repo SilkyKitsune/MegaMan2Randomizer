@@ -52,6 +52,7 @@ public static class MM2
         MetalBladeEnemyDamage =     0x03_ECD2,
 
         NewWeaponBitFlags = 0x03_F2F8,
+        NewBossIndices =    0x03_F320,
     }
 
     public enum Equipment : byte
@@ -231,7 +232,19 @@ public static class MM2
         new byte[] { 0xAE, 0x05,  0xAF, 0x05,  0xB0, 0x05,  0xB1, 0x05,  0xB2, 0x05,  0xB3, 0x05,  0x0F, 0x30, 0x30,  0x0F, 0x30, 0x16 }, //Crash Man
     };
 
-    private static readonly Address[] enemyDamageAddresses = new Address[WeaponCount]
+    private static readonly Address[]
+        bossGraphicsPtrAddresses =
+    {
+        Address.HeatManGraphicsPtrs,
+        Address.AirManGraphicsPtrs,
+        Address.WoodManGraphicsPtrs,
+        Address.BubbleManGraphicsPtrs,
+        Address.QuickManGraphicsPtrs,
+        Address.FlashManGraphicsPtrs,
+        Address.MetalManGraphicsPtrs,
+        Address.CrashManGraphicsPtrs,
+    },
+        enemyDamageAddresses = new Address[WeaponCount]
     {
         Address.MegaBusterEnemyDamage,
         Address.AtomicFireEnemyDamage,
@@ -378,6 +391,41 @@ public static class MM2
         na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), data);
     }
 
+    private static PatchCollection ShuffleRobotMastersPatch(out string spoiler, Random r = null, bool shuffle = true, bool single = false)
+    {
+        r ??= new(Util.GetSeed());
+        spoiler = "- Robot Master Shuffle -\n";
+
+        IPS patch = new();
+
+        AutoSizedArray<StageIndex> robots = new(stages, stages.Length);
+        byte[] robotIndices = new byte[robots.Length];
+        patch.Add(new Patch((int)Address.NewBossIndices, robotIndices), MergeMode.None);
+
+        if (single)
+        {
+            int n = r.Next(robots.Length);
+            StageIndex robot = robots[n];
+            spoiler += $"All Robot Masters => {bossNames[(int)robot]}\n";
+            for (int i = 0; i < robotIndices.Length; i++)
+            {
+                robotIndices[i] = (byte)robot;
+                patch.Add(new Patch((int)bossGraphicsPtrAddresses[i], robotMasterGraphicsPtrs[(int)robot]), MergeMode.None);
+            }
+        }
+        else for (int i = 0; shuffle ? (robots.Length > 0) : (i < robotIndices.Length); i++)
+            {
+                int n = r.Next(robots.Length);
+                StageIndex robot = robots[n];
+                spoiler += $"{bossNamesWithSpacesShort[i]} => {bossNames[(int)robot]}\n";
+                robotIndices[i] = (byte)robot;
+                patch.Add(new Patch((int)bossGraphicsPtrAddresses[i], robotMasterGraphicsPtrs[(int)robot]), MergeMode.None);
+                if (shuffle) robots.RemoveAt(n);
+            }
+
+        return patch;
+    }
+    
     private static Patch ShuffleStagesPatch(out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
