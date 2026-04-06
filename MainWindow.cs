@@ -36,7 +36,7 @@ public partial class MainWindow : Form
     private void GenerateButton()
     {
         bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
-            robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked;
+            robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked, october = this.october;
         int weaknessShuffle = weaknessComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
         
@@ -61,6 +61,12 @@ public partial class MainWindow : Form
         generateButton.Enabled = false;
 
         int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
+
+        if (seedText.ToLower() == "halloween")
+        {
+            october = true;
+            seed = 0;
+        }
 
         switch ((PatchManager.GameID)gameOption)
         {
