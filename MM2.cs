@@ -664,8 +664,8 @@ public static class MM2
     public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler,
         bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
         bool shuffleLevels = false,
-        int weaknessShuffle = 0, bool robotsOnly = false,
-        bool nerfBuster = false)
+        int robotMasterShuffle = 0,
+        int weaknessShuffle = 0, bool robotsOnly = false, bool nerfBuster = false)
     {
         if (seed == 0) seed = Util.GetSeed();
         Random r = new(seed);
@@ -705,6 +705,16 @@ public static class MM2
 
             jp.Add(stages, MergeMode.None);
             na.Add(stages, MergeMode.None);
+
+            spoiler += '\n' + s;
+        }
+
+        if (robotMasterShuffle != 0)
+        {
+            PatchCollection robots = ShuffleRobotMastersPatch(out string s, r, robotMasterShuffle == 1, robotMasterShuffle == 3);
+
+            jp.Add(robots, MergeMode.None);
+            na.Add(robots, MergeMode.None);
 
             spoiler += '\n' + s;
         }

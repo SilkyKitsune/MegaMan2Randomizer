@@ -98,7 +98,7 @@ public partial class MainWindow : Form
                         PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode2);
                     }
 
-                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, weaknessShuffle, robotsOnly, nerfBuster);
+                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, 0, weaknessShuffle, robotsOnly, nerfBuster);
                     patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
 
