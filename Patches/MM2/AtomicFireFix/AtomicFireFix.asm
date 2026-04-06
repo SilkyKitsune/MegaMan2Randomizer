@@ -5,18 +5,18 @@
 LDA $B3           ; A5 B3       ;                   ;             ; 0x02_E667    ; 0x02_E66A    ; $A657          ; $A65A          ; load boss index
 CMP #$00          ; C9 00       ;                   ;             ; 0x02_E669    ; 0x02_E66C    ; $A659          ; $A65C          ; compare against heat man index
 BNE $03           ; D0 03       ;                   ;             ; 0x02_E66B    ; 0x02_E66E    ; $A65B          ; $A65E          ; branch to $A660
-JMP $A903         ; 4C 03 A9    ; JMP $A91B         ; 4C 1B A9    ; 0x02_E66D    ; 0x02_E670    ; $A65D          ; $A660          ; jump to fully restore boss health, this additional check is necessary since normally atomic uses two different damage tables
+JMP $A903         ; 4C 03 A9    ; JMP $A91B         ; 4C 1B A9    ; 0x02_E66D    ; 0x02_E670    ; $A65D          ; $A660          ; jump to fully restore boss health, this additional check is necessary since normally atomic fire uses two different damage tables
 LDA $0421         ; AD 21 04    ;                   ;             ; 0x02_E670    ; 0x02_E673    ; $A660          ; $A663          ; 
 AND #$08          ; 29 08       ;                   ;             ; 0x02_E673    ; 0x02_E676    ; $A663          ; $A666          ; 
 BNE $4B           ; D0 4B       ; BNE $4E           ; D0 4E       ; 0x02_E675    ; 0x02_E678    ; $A665          ; $A668          ; branch to $A6B2
 LDY $B3           ; A4 B3       ;                   ;             ; 0x02_E677    ; 0x02_E67A    ; $A667          ; $A66A          ;
-LDA $A931,Y       ; B9 31 A9    ; LDA $A950,Y       ; B9 50 A9    ; 0x02_E679    ; 0x02_E67C    ; $A669          ; $A66C          ; load from atomice fire damage values
+LDA $A931,Y       ; B9 31 A9    ; LDA $A950,Y       ; B9 50 A9    ; 0x02_E679    ; 0x02_E67C    ; $A669          ; $A66C          ; load from atomic fire damage values
 BEQ $44           ; F0 44       ; BEQ $47           ; F0 47       ; 0x02_E67C    ; 0x02_E67F    ; $A66C          ; $A66F          ; branch to $A6B2/$A6B8
 LDA $04E0,X       ; BD E0 04    ;                   ;             ; 0x02_E67E    ; 0x02_E681    ; $A66E          ; $A671          ;
 CMP #$02          ; C9 02       ;                   ;             ; 0x02_E681    ; 0x02_E684    ; $A671          ; $A674          ;
 BCC $12           ; 90 12       ;                   ;             ; 0x02_E683    ; 0x02_E686    ; $A673          ; $A676          ; branch to $A687/$A68A
 BEQ $05           ; F0 05       ;                   ;             ; 0x02_E685    ; 0x02_E688    ; $A675          ; $A678          ; branch to $A67C/$A67F
-LDA $A931,Y       ; B9 31 A9    ; LDA $A950,Y       ; B9 50 A9    ; 0x02_E687    ; 0x02_E68A    ; $A677          ; $A67A          ; load from atomice fire damage values (fully charged projectile)
+LDA $A931,Y       ; B9 31 A9    ; LDA $A950,Y       ; B9 50 A9    ; 0x02_E687    ; 0x02_E68A    ; $A677          ; $A67A          ; load from atomic fire damage values (fully charged projectile)
 BNE $0E           ; D0 0E       ;                   ;             ; 0x02_E68A    ; 0x02_E68D    ; $A67A          ; $A67D          ; branch to $A68A/$A68D
 CLC               ; 18          ;                   ;             ; 0x02_E68C    ; 0x02_E68F    ; $A67C          ; $A67F          ;
 LDA $A923,Y       ; B9 23 A9    ; LDA $A942,Y       ; B9 42 A9    ; 0x02_E68D    ; 0x02_E690    ; $A67D          ; $A680          ; load from mega buster damage values (half charged projectile)
