@@ -12,6 +12,7 @@ public partial class MainWindow : Form
         InitializeComponent();
         weaknessComboBox.SelectedIndex = 0;
         robotsOnlyCheckBox.Enabled = true;//temp, idk why winforms isn't setting this true
+        bossComboBox.SelectedIndex = 0;
 
         if (PatchManager.LoadPatches(out string errors))
         {
@@ -37,7 +38,7 @@ public partial class MainWindow : Form
     {
         bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
             robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked, october = this.october;
-        int weaknessShuffle = weaknessComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
+        int weaknessShuffle = weaknessComboBox.SelectedIndex, robotMasterShuffle = bossComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
         
         if (weaknessShuffle == 3)//temp
@@ -98,7 +99,7 @@ public partial class MainWindow : Form
                         PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode2);
                     }
 
-                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, 0, weaknessShuffle, robotsOnly, nerfBuster);
+                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, robotMasterShuffle, weaknessShuffle, robotsOnly, nerfBuster);
                     patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
 

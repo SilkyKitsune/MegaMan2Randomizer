@@ -46,6 +46,8 @@
             MM1Tab = new System.Windows.Forms.TabPage();
             tempLabel = new System.Windows.Forms.Label();
             MM2Tab = new System.Windows.Forms.TabPage();
+            bossLabel = new System.Windows.Forms.Label();
+            bossComboBox = new System.Windows.Forms.ComboBox();
             tabControl.SuspendLayout();
             MM1Tab.SuspendLayout();
             MM2Tab.SuspendLayout();
@@ -205,6 +207,8 @@
             // 
             // MM2Tab
             // 
+            MM2Tab.Controls.Add(bossComboBox);
+            MM2Tab.Controls.Add(bossLabel);
             MM2Tab.Controls.Add(weaknessLabel);
             MM2Tab.Controls.Add(robotsOnlyCheckBox);
             MM2Tab.Controls.Add(heatManCheckBox);
@@ -219,6 +223,25 @@
             MM2Tab.TabIndex = 1;
             MM2Tab.Text = "Mega Man 2";
             MM2Tab.UseVisualStyleBackColor = true;
+            // 
+            // bossLabel
+            // 
+            bossLabel.AutoSize = true;
+            bossLabel.Location = new System.Drawing.Point(6, 172);
+            bossLabel.Name = "bossLabel";
+            bossLabel.Size = new System.Drawing.Size(118, 15);
+            bossLabel.TabIndex = 15;
+            bossLabel.Text = "Robot Master Shuffle";
+            // 
+            // bossComboBox
+            // 
+            bossComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            bossComboBox.FormattingEnabled = true;
+            bossComboBox.Items.AddRange(new object[] { "None", "Shuffle", "Random", "Single Random" });
+            bossComboBox.Location = new System.Drawing.Point(6, 190);
+            bossComboBox.Name = "bossComboBox";
+            bossComboBox.Size = new System.Drawing.Size(360, 23);
+            bossComboBox.TabIndex = 16;
             // 
             // MainWindow
             // 
@@ -262,5 +285,7 @@
         private System.Windows.Forms.TabPage MM1Tab;
         private System.Windows.Forms.TabPage MM2Tab;
         private System.Windows.Forms.Label tempLabel;
+        private System.Windows.Forms.Label bossLabel;
+        private System.Windows.Forms.ComboBox bossComboBox;
     }
 }
