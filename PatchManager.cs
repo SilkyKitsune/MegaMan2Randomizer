@@ -39,6 +39,7 @@ public static class PatchManager
         MysteryStageSelect,
         QuickBoomerangNerf,
         ReEnterLevelsMM2,
+        SplitBossIndicesMM2,
         SplitWeaponFlagsMM2,
         WoodManRoomFix,
 
