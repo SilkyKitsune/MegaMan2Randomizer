@@ -24,6 +24,9 @@
     <None Update="Patches\MM1\SplitWeaponFlagsMM1\SplitWeaponFlagsMM1_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM1\SplitWeaponFlagsMM1\SplitWeaponFlagsMM1_N.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\AtomicFireFix\AtomicFireFix_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -23,6 +23,8 @@ public static class PatchManager
 
     public enum PatchID : int
     {
+        SplitWeaponFlagsMM1,
+
         AtomicFireFix,
         BooBeamNerf,
         FastCrashBomber,
@@ -150,6 +152,7 @@ public static class PatchManager
         }
 
         errors +=
+            ValidatePatches(GameID.MM1, PatchID.SplitWeaponFlagsMM1, PatchID.AtomicFireFix, VersionID.Japan, VersionID.NorthAmerica) +
             ValidatePatches(GameID.MM2, PatchID.AtomicFireFix, PatchID.Count, VersionID.Japan, VersionID.NorthAmerica);
 
         return errors.Length > 0;
