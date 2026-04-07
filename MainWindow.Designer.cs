@@ -44,7 +44,6 @@
             robotsOnlyCheckBox = new System.Windows.Forms.CheckBox();
             tabControl = new System.Windows.Forms.TabControl();
             MM1Tab = new System.Windows.Forms.TabPage();
-            tempLabel = new System.Windows.Forms.Label();
             MM2Tab = new System.Windows.Forms.TabPage();
             bossLabel = new System.Windows.Forms.Label();
             bossComboBox = new System.Windows.Forms.ComboBox();
@@ -187,7 +186,6 @@
             // 
             // MM1Tab
             // 
-            MM1Tab.Controls.Add(tempLabel);
             MM1Tab.Location = new System.Drawing.Point(4, 24);
             MM1Tab.Name = "MM1Tab";
             MM1Tab.Padding = new System.Windows.Forms.Padding(3);
@@ -195,15 +193,6 @@
             MM1Tab.TabIndex = 0;
             MM1Tab.Text = "Mega Man 1";
             MM1Tab.UseVisualStyleBackColor = true;
-            // 
-            // tempLabel
-            // 
-            tempLabel.AutoSize = true;
-            tempLabel.Location = new System.Drawing.Point(6, 3);
-            tempLabel.Name = "tempLabel";
-            tempLabel.Size = new System.Drawing.Size(178, 15);
-            tempLabel.TabIndex = 0;
-            tempLabel.Text = "No setting yet but coming soon!";
             // 
             // MM2Tab
             // 
@@ -284,7 +273,6 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage MM1Tab;
         private System.Windows.Forms.TabPage MM2Tab;
-        private System.Windows.Forms.Label tempLabel;
         private System.Windows.Forms.Label bossLabel;
         private System.Windows.Forms.ComboBox bossComboBox;
     }
