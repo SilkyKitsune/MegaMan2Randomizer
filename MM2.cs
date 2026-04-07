@@ -279,6 +279,53 @@ public static class MM2
         _ => (int)address
     };
 
+    private static int[] ConvertAddressToSNES(Address address) => address switch
+    {
+        Address.HeatManGraphicsPtrs =>   new int[1] { 0x00_B496 },
+        Address.AirManGraphicsPtrs =>    new int[1] { 0x01_3496 },
+        Address.WoodManGraphicsPtrs =>   new int[1] { 0x01_B4CC },
+        Address.BubbleManGraphicsPtrs => new int[1] { 0x02_3496 },
+        Address.QuickManGraphicsPtrs =>  new int[1] { 0x02_B4A8 },
+        Address.FlashManGraphicsPtrs =>  new int[1] { 0x03_3496 },
+        Address.MetalManGraphicsPtrs =>  new int[1] { 0x03_B484 },
+        Address.CrashManGraphicsPtrs =>  new int[1] { 0x04_34CC },
+
+        Address.MegaBusterBossDamage =>     new int[1] { 0x06_2942 },
+        Address.AtomicFireBossDamage =>     new int[1] { 0x06_2950 },
+        Address.AirShooterBossDamage =>     new int[1] { 0x06_295E },
+        Address.LeafShieldBossDamage =>     new int[1] { 0x06_296C },
+        Address.BubbleLeadBossDamage =>     new int[1] { 0x06_297A },
+        Address.QuickBoomerangBossDamage => new int[1] { 0x06_2988 },
+        Address.CrashBomberBossDamage =>    new int[1] { 0x06_2996 },
+        Address.MetalBladeBossDamage =>     new int[1] { 0x06_29A4 },
+
+        Address.TopLeftStagePtr =>     new int[1] { 0x07_0660 },
+        Address.TopStagePtr =>         new int[1] { 0x07_0661 },
+        Address.TopRightStagePtr =>    new int[1] { 0x07_0662 },
+        Address.RightStagePtr =>       new int[1] { 0x07_0663 },
+        Address.BottomRightStagePtr => new int[1] { 0x07_0664 },
+        Address.BottomStagePtr =>      new int[1] { 0x07_0665 },
+        Address.BottomLeftStagePtr =>  new int[1] { 0x07_0666 },
+        Address.LeftStagePtr =>        new int[1] { 0x07_0667 },
+
+        Address.BossBitFlags => Util.RepeatedSNESAddress(0x00_4279),
+        Address.ItemBitFlags => Util.RepeatedSNESAddress(0x00_4281),
+
+        Address.MegaBusterEnemyDamage =>     Util.RepeatedSNESAddress(0x00_6998),
+        Address.AtomicFireEnemyDamage =>     Util.RepeatedSNESAddress(0x00_6A14),
+        Address.AirShooterEnemyDamage =>     Util.RepeatedSNESAddress(0x00_6A8C),
+        Address.LeafShieldEnemyDamage =>     Util.RepeatedSNESAddress(0x00_6B04),
+        Address.BubbleLeadEnemyDamage =>     Util.RepeatedSNESAddress(0x00_6B7C),
+        Address.QuickBoomerangEnemyDamage => Util.RepeatedSNESAddress(0x00_6BF4),
+        Address.CrashBomberEnemyDamage =>    Util.RepeatedSNESAddress(0x00_6C6C),
+        Address.MetalBladeEnemyDamage =>     Util.RepeatedSNESAddress(0x00_6CE4),
+
+        Address.NewWeaponBitFlags => Util.RepeatedSNESAddress(0x00_72E8),
+        Address.NewBossIndices =>    Util.RepeatedSNESAddress(0x00_7310),
+
+        _ => new int[1] { (int)address }
+    };
+
     private static string GetName(Equipment equip, bool item) => equip switch
     {
         Equipment.Item1 => item ? nameof(Equipment.Item1) : nameof(Equipment.AtomicFire),
