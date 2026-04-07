@@ -21,4 +21,16 @@ public static class Util
 
         return newData;
     }
+
+    public static int[] RepeatedSNESAddress(int address) => new int[0xF]
+    {
+        0x00_0000 + address, 0x00_8000 + address,
+        0x01_0000 + address, 0x01_8000 + address,
+        0x02_0000 + address, 0x02_8000 + address,
+        0x03_0000 + address, 0x03_8000 + address,
+        0x04_0000 + address, 0x04_8000 + address,
+        0x05_0000 + address, 0x05_8000 + address,
+        0x06_0000 + address,
+        0x07_0000 + address, 0x07_8000 + address,
+    };
 }
