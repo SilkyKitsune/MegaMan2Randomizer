@@ -73,9 +73,20 @@ public partial class MainWindow : Form
         {
             case PatchManager.GameID.MM1:
                 {
-                    MessageBox.Show("Mega Man 1 randomization is currently not available", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    generateButton.Enabled = true;
-                    return;
+                    IPS patchJP = new(), patchNA = new();
+                    PatchManager.AddPatches(patchJP, MergeMode.None, PatchManager.GameID.MM1, PatchManager.VersionID.Japan);
+                    PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM1, PatchManager.VersionID.NorthAmerica);
+
+                    MM1.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler);
+                    patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
+                    patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
+
+                    folderPath += "\\MM1R " + seed;
+                    File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
+                    patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
+                    patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
+
+                    break;
                 }
 
             case PatchManager.GameID.MM2:

@@ -201,9 +201,9 @@
             tempLabel.AutoSize = true;
             tempLabel.Location = new System.Drawing.Point(6, 3);
             tempLabel.Name = "tempLabel";
-            tempLabel.Size = new System.Drawing.Size(82, 15);
+            tempLabel.Size = new System.Drawing.Size(178, 15);
             tempLabel.TabIndex = 0;
-            tempLabel.Text = "Coming soon!";
+            tempLabel.Text = "No setting yet but coming soon!";
             // 
             // MM2Tab
             // 
