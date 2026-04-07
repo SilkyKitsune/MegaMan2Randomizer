@@ -19,6 +19,7 @@ public static class PatchManager
         None = '\0',
         Japan = 'J',
         NorthAmerica = 'N',
+        SuperNintendo = 'S',
     }
 
     public enum PatchID : int
