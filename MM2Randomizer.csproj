@@ -150,16 +150,16 @@
     <None Update="Patches\MM2\ReEnterLevelsMM2\ReEnterLevelsMM2_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_S.ips">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Patches\MM2\SplitWeaponFlagsMM2\SplitWeaponFlagsMM2_JN.ips">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_N.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\SplitWeaponFlagsMM2\SplitWeaponFlagsMM2_JN.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\SplitWeaponFlagsMM2\SplitWeaponFlagsMM2_S.ips">
