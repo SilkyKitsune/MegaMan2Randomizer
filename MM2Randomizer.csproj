@@ -33,7 +33,13 @@
     <None Update="Patches\MM2\AtomicFireFix\AtomicFireFix_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\AtomicFireFix\AtomicFireFix_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\BooBeamNerf\BooBeamNerf_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\BooBeamNerf\BooBeamNerf_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\CrashScreen\CrashScreen_JN.ips">
@@ -45,7 +51,13 @@
     <None Update="Patches\MM2\FastCrashBomber\FastCrashBomber_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\FastCrashBomber\FastCrashBomber_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\HalloweenMode\HalloweenMode1_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\HalloweenMode\HalloweenMode1_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\HalloweenMode\HalloweenMode2_J.ips">
@@ -54,7 +66,13 @@
     <None Update="Patches\MM2\HalloweenMode\HalloweenMode2_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\HalloweenMode\HalloweenMode2_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\IncreaseBarSpeed\IncreaseBarSpeed_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\IncreaseBarSpeed\IncreaseBarSpeed_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\IncreaseMenuSpeed\IncreaseMenuSpeed_J.ips">
@@ -63,10 +81,16 @@
     <None Update="Patches\MM2\IncreaseMenuSpeed\IncreaseMenuSpeed_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\IncreaseMenuSpeed\IncreaseMenuSpeed_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\Item1Buff\Item1Buff_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\Item1Buff\Item1Buff_N.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\Item1Buff\Item1Buff_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\Item2Buff\Item2Buff_J.ips">
@@ -75,13 +99,22 @@
     <None Update="Patches\MM2\Item2Buff\Item2Buff_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\Item2Buff\Item2Buff_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\Item3Buff\Item3Buff_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\Item3Buff\Item3Buff_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\Item3Buff\Item3Buff_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\KeepETanks\KeepETanks_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\KeepETanks\KeepETanks_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\MetalBladeNerf\MetalBladeNerf_J.ips">
@@ -90,10 +123,16 @@
     <None Update="Patches\MM2\MetalBladeNerf\MetalBladeNerf_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\MetalBladeNerf\MetalBladeNerf_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\MM2RTitle\MM2RTitle_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\MysteryStageSelect\MysteryStageSelect_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\MysteryStageSelect\MysteryStageSelect_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\QuickBoomerangNerf\QuickBoomerangNerf_J.ips">
@@ -102,7 +141,16 @@
     <None Update="Patches\MM2\QuickBoomerangNerf\QuickBoomerangNerf_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\QuickBoomerangNerf\QuickBoomerangNerf_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\ReEnterLevelsMM2\ReEnterLevelsMM2_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\ReEnterLevelsMM2\ReEnterLevelsMM2_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Patches\MM2\SplitWeaponFlagsMM2\SplitWeaponFlagsMM2_JN.ips">
@@ -114,7 +162,13 @@
     <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_N.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\SplitWeaponFlagsMM2\SplitWeaponFlagsMM2_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\WoodManRoomFix\WoodManRoomFix_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\WoodManRoomFix\WoodManRoomFix_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
