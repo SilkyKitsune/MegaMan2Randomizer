@@ -341,7 +341,7 @@ public static class MM2
         byte[] weaponData = new byte[weapons.Length], itemData = new byte[items.Length];
 
         if (shuffleTogether)
-         {
+        {
             spoiler = "- Weapons & Items -\n";
              
             AutoSizedArray<ushort> equips = new(weapons.Length + items.Length);
@@ -349,9 +349,9 @@ public static class MM2
             foreach (Equipment item in items) equips.Add((ushort)(0x0100 | (byte)item));
              
             for (int i = 0; equips.Length > 0; i++)
-             {
+            {
                 int h = heatManNoItem2 && i == 0 ? 1 : 0;
-                 
+                
                 int n = r.Next(equips.Length - h);
                 ushort weapon = equips[n];
                 equips.RemoveAt(n);
@@ -359,11 +359,11 @@ public static class MM2
                 n = r.Next(equips.Length - h);
                 ushort item = equips[n];
                 equips.RemoveAt(n);
-                 
+                
                 spoiler += $"{bossNamesWithSpacesShort[i]} => ";
-                 
+                
                 byte weaponByte = 0, itemByte = 0, tempByte;
-                 
+                
                 bool weaponIsItem = weapon > byte.MaxValue, itemIsItem = item > byte.MaxValue;
                 if (weaponIsItem)
                 {
@@ -376,7 +376,7 @@ public static class MM2
                     weaponByte |= tempByte;
                 }
                 spoiler += GetName((Equipment)tempByte, weaponIsItem) + ',' + ' ';
-                 
+                
                 if (itemIsItem)
                 {
                     tempByte = (byte)(item & byte.MaxValue);
@@ -393,29 +393,29 @@ public static class MM2
                 itemData[i] = itemByte;
             }
         }
-         else
-           {
+        else
+        {
             spoiler = "- Weapons -\n";
             AutoSizedArray<Equipment> equips = new(weapons, weapons.Length);
             for (int i = 0; equips.Length > 0; i++)
-             {
+            {
                 int n = r.Next(equips.Length);
                 Equipment e = equips[n];
                 spoiler += $"{bossNamesWithSpacesShort[i]} => {GetName(e, false)}\n";
                 weaponData[i] = (byte)e;
                 equips.RemoveAt(n);
-             }
- 
+            }
+            
             spoiler += "\n- Items -\n";
             equips = new(items, items.Length);
             for (int i = 0; equips.Length > 0; i++)
-             {
+            {
                 int n = r.Next(equips.Length - (heatManNoItem2 && i == 0 ? 1 : 0));
                 Equipment e = equips[n];
                 spoiler += $"{bossNamesWithSpacesShort[i]} => {GetName(e, true)}\n";
                 itemData[i] = (byte)e;
                 equips.RemoveAt(n);
-             }
+            }
         }
 
         jpna = new IPS();
