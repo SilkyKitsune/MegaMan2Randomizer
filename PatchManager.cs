@@ -44,6 +44,7 @@ public static class PatchManager
         ReEnterLevelsMM2,
         SplitBossIndicesMM2,
         SplitWeaponFlagsMM2,
+        SplitWilyMachineWeaknesses,
         WoodManRoomFix,
 
         Count
