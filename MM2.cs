@@ -334,7 +334,7 @@ public static class MM2
         _ => equip.ToString()
     };
 
-    private static void ShuffleEquipmentPatch(out PatchCollection jpna, out string spoiler, Random r = null, bool shuffleTogether = false, bool heatManNoItem2 = false)
+    private static void ShuffleEquipmentPatch(out PatchCollection jpna, out PatchCollection snes, out string spoiler, Random r = null, bool shuffleTogether = false, bool heatManNoItem2 = false)
     {
         r ??= new(Util.GetSeed());
 
@@ -421,6 +421,10 @@ public static class MM2
         jpna = new IPS();
         jpna.Add(new Patch((int)Address.NewWeaponBitFlags, weaponData), MergeMode.None);
         jpna.Add(new Patch((int)Address.ItemBitFlags, itemData), MergeMode.None);
+
+        snes = new IPS();
+        foreach (int address in ConvertAddressToSNES(Address.NewWeaponBitFlags)) snes.Add(new Patch(address, weaponData), MergeMode.None);
+        foreach (int address in ConvertAddressToSNES(Address.ItemBitFlags)) snes.Add(new Patch(address, itemData), MergeMode.None);
     }
 
     [Obsolete] private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
@@ -763,10 +767,10 @@ public static class MM2
         jp = new();
         na = new();
 
-        ShuffleEquipmentPatch(out PatchCollection equipment, out string equipmentSpoiler, r, shuffleAllEquipment, heatManNoItem2);
+        ShuffleEquipmentPatch(out PatchCollection equipmentJPNA, out PatchCollection equipmentSNES, out string equipmentSpoiler, r, shuffleAllEquipment, heatManNoItem2);
 
-        jp.Add(equipment, MergeMode.None);
-        na.Add(equipment, MergeMode.None);
+        jp.Add(equipmentJPNA, MergeMode.None);
+        na.Add(equipmentJPNA, MergeMode.None);
 
         spoiler += equipmentSpoiler;
 
