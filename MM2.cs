@@ -633,6 +633,7 @@ public static class MM2
 
                         spoiler += $"{bossNamesWithSpaces[i]} => {bossNames[n]}\n";
 
+                        data[i] = new byte[weaknessSet.Length];
                         weaknessSet.CopyTo(data[i], 0);
 
                         weaknessSets.RemoveAt(n);
@@ -683,12 +684,13 @@ public static class MM2
                 }*/
         }
 
-        for (int i = setCount; i < weaknessSets.Length; i++)
+        for (int i = setCount; i < BossCount; i++)
         {
             byte[] weaknessSet = weaknessSets[i], data_ = data[i] = new byte[weaknessSet.Length];
             weaknessSet.CopyTo(data_, 0);
         }
 
+        byte[] picopicokunWeaknesses = data[(int)StageIndex.PicopicokunW2], boobeamtrapWeaknesses = data[(int)StageIndex.BoobeamTrapW4];
         if (shuffleBusterInvulnerability)
         {
             spoiler += "\nInvulnerable to Mega Buster: ";
@@ -704,11 +706,22 @@ public static class MM2
             }
 
             if (data[(int)StageIndex.MechaDragonW1][0] != 0xFF)    data[(int)StageIndex.MechaDragonW1][0] = 0;
-            if (data[(int)StageIndex.PicopicokunW2][0] != 0xFF)    data[(int)StageIndex.PicopicokunW2][0] = 0;
+            if (picopicokunWeaknesses[0] != 0xFF)                  picopicokunWeaknesses[0] = 0;
             if (data[(int)StageIndex.GutsTankW3][0] != 0xFF)       data[(int)StageIndex.GutsTankW3][0] = 0;
-            if (data[(int)StageIndex.BoobeamTrapW4][0] != 0xFF)    data[(int)StageIndex.BoobeamTrapW4][0] = 0;
+            if (boobeamtrapWeaknesses[0] != 0xFF)                  boobeamtrapWeaknesses[0] = 0;
             if (data[(int)StageIndex.TeleporterRoomW5][0] != 0xFF) data[(int)StageIndex.TeleporterRoomW5][0] = 0;
             if (data[(int)StageIndex.WilyAlienW6][0] != 0xFF)      data[(int)StageIndex.WilyAlienW6][0] = 0;
+        }
+
+        for (int i = 0; i < WeaponCount; i++)
+        {
+            Address addressJP = enemyDamageAddresses[i];
+            jp.Add(new Patch((int)addressJP + (int)ObjectType.Picopicokuns, new byte[] { picopicokunWeaknesses[i] }), MergeMode.None);
+            jp.Add(new Patch((int)addressJP + (int)ObjectType.BoobeamTraps, new byte[] { boobeamtrapWeaknesses[i] }), MergeMode.None);
+
+            int addressNA = ConvertAddressToNA(addressJP);
+            na.Add(new Patch(addressNA + (int)ObjectType.Picopicokuns, new byte[] { picopicokunWeaknesses[i] }), MergeMode.None);
+            na.Add(new Patch(addressNA + (int)ObjectType.BoobeamTraps, new byte[] { boobeamtrapWeaknesses[i] }), MergeMode.None);
         }
 
         byte[] rearrangedData = Util.Rearrange(data);
