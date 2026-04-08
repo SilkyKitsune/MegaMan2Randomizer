@@ -334,61 +334,88 @@ public static class MM2
         _ => equip.ToString()
     };
 
-    private static void ShuffleEquipmentPatch(out PatchCollection jpna, out string spoiler, Random r = null, bool heatManNoItem2 = false)
+    private static void ShuffleEquipmentPatch(out PatchCollection jpna, out string spoiler, Random r = null, bool shuffleTogether = false, bool heatManNoItem2 = false)
     {
         r ??= new(Util.GetSeed());
 
         byte[] weaponData = new byte[weapons.Length], itemData = new byte[items.Length];
 
-        spoiler = "- Weapons & Items -\n";
-
-        AutoSizedArray<ushort> equips = new(weapons.Length + items.Length);
-        foreach (Equipment weapon in weapons) equips.Add((byte)weapon);
-        foreach (Equipment item in items) equips.Add((ushort)(0x0100 | (byte)item));
-
-        for (int i = 0; equips.Length > 0; i++)
-        {
-            int h = heatManNoItem2 && i == 0 ? 1 : 0;
-
-            int n = r.Next(equips.Length - h);
-            ushort weapon = equips[n];
-            equips.RemoveAt(n);
-            
-            n = r.Next(equips.Length - h);
-            ushort item = equips[n];
-            equips.RemoveAt(n);
-
-            spoiler += $"{bossNamesWithSpacesShort[i]} => ";
-
-            byte weaponByte = 0, itemByte = 0, tempByte;
-
-            bool weaponIsItem = weapon > byte.MaxValue, itemIsItem = item > byte.MaxValue;
-            if (weaponIsItem)
-            {
-                tempByte = (byte)(weapon & byte.MaxValue);
-                itemByte |= tempByte;
+        if (shuffleTogether)
+         {
+            spoiler = "- Weapons & Items -\n";
+             
+            AutoSizedArray<ushort> equips = new(weapons.Length + items.Length);
+            foreach (Equipment weapon in weapons) equips.Add((byte)weapon);
+            foreach (Equipment item in items) equips.Add((ushort)(0x0100 | (byte)item));
+             
+            for (int i = 0; equips.Length > 0; i++)
+             {
+                int h = heatManNoItem2 && i == 0 ? 1 : 0;
+                 
+                int n = r.Next(equips.Length - h);
+                ushort weapon = equips[n];
+                equips.RemoveAt(n);
+                
+                n = r.Next(equips.Length - h);
+                ushort item = equips[n];
+                equips.RemoveAt(n);
+                 
+                spoiler += $"{bossNamesWithSpacesShort[i]} => ";
+                 
+                byte weaponByte = 0, itemByte = 0, tempByte;
+                 
+                bool weaponIsItem = weapon > byte.MaxValue, itemIsItem = item > byte.MaxValue;
+                if (weaponIsItem)
+                {
+                    tempByte = (byte)(weapon & byte.MaxValue);
+                    itemByte |= tempByte;
+                }
+                else
+                {
+                    tempByte = (byte)weapon;
+                    weaponByte |= tempByte;
+                }
+                spoiler += GetName((Equipment)tempByte, weaponIsItem) + ',' + ' ';
+                 
+                if (itemIsItem)
+                {
+                    tempByte = (byte)(item & byte.MaxValue);
+                    itemByte |= tempByte;
+                }
+                else
+                {
+                    tempByte = (byte)item;
+                    weaponByte |= tempByte;
+                }
+                spoiler += GetName((Equipment)tempByte, itemIsItem) + '\n';
+                
+                weaponData[i] = weaponByte;
+                itemData[i] = itemByte;
             }
-            else
-            {
-                tempByte = (byte)weapon;
-                weaponByte |= tempByte;
-            }
-            spoiler += GetName((Equipment)tempByte, weaponIsItem) + ',' + ' ';
-
-            if (itemIsItem)
-            {
-                tempByte = (byte)(item & byte.MaxValue);
-                itemByte |= tempByte;
-            }
-            else
-            {
-                tempByte = (byte)item;
-                weaponByte |= tempByte;
-            }
-            spoiler += GetName((Equipment)tempByte, itemIsItem) + '\n';
-
-            weaponData[i] = weaponByte;
-            itemData[i] = itemByte;
+        }
+         else
+           {
+            spoiler = "- Weapons -\n";
+            AutoSizedArray<Equipment> equips = new(weapons, weapons.Length);
+            for (int i = 0; equips.Length > 0; i++)
+             {
+                int n = r.Next(equips.Length);
+                Equipment e = equips[n];
+                spoiler += $"{bossNamesWithSpacesShort[i]} => {GetName(e, false)}\n";
+                weaponData[i] = (byte)e;
+                equips.RemoveAt(n);
+             }
+ 
+            spoiler += "\n- Items -\n";
+            equips = new(items, items.Length);
+            for (int i = 0; equips.Length > 0; i++)
+             {
+                int n = r.Next(equips.Length - (heatManNoItem2 && i == 0 ? 1 : 0));
+                Equipment e = equips[n];
+                spoiler += $"{bossNamesWithSpacesShort[i]} => {GetName(e, true)}\n";
+                itemData[i] = (byte)e;
+                equips.RemoveAt(n);
+             }
         }
 
         jpna = new IPS();
@@ -396,7 +423,7 @@ public static class MM2
         jpna.Add(new Patch((int)Address.ItemBitFlags, itemData), MergeMode.None);
     }
 
-    private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
+    [Obsolete] private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(Util.GetSeed());
         spoiler = "- Items -\n";
@@ -690,7 +717,7 @@ public static class MM2
         na.Add(new Patch(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData), MergeMode.None);
     }
 
-    private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
+    [Obsolete] private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
         spoiler = "- Weapons -\n";
@@ -723,27 +750,12 @@ public static class MM2
         jp = new();
         na = new();
 
-        if (shuffleAllEquipment)
-        {
-            ShuffleEquipmentPatch(out PatchCollection equipment, out string s, r, heatManNoItem2);
+        ShuffleEquipmentPatch(out PatchCollection equipment, out string equipmentSpoiler, r, shuffleAllEquipment, heatManNoItem2);
 
-            jp.Add(equipment, MergeMode.None);
-            na.Add(equipment, MergeMode.None);
+        jp.Add(equipment, MergeMode.None);
+        na.Add(equipment, MergeMode.None);
 
-            spoiler += s;
-        }
-        else
-        {
-            Patch weapons = ShuffleWeaponsPatch(out string s, r), items = ShuffleItemsPatch(out string s_, r, heatManNoItem2);
-
-            jp.Add(weapons, MergeMode.None);
-            jp.Add(items, MergeMode.None);
-
-            na.Add(weapons, MergeMode.None);
-            na.Add(items, MergeMode.None);
-
-            spoiler += s + '\n' + s_;
-        }
+        spoiler += equipmentSpoiler;
 
         if (shuffleLevels)
         {
