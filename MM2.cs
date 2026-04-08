@@ -633,7 +633,7 @@ public static class MM2
 
                         spoiler += $"{bossNamesWithSpaces[i]} => {bossNames[n]}\n";
 
-                        data[i] = weaknessSet;
+                        weaknessSet.CopyTo(data[i], 0);
 
                         weaknessSets.RemoveAt(n);
                         bossNames.RemoveAt(n);
@@ -689,8 +689,6 @@ public static class MM2
             weaknessSet.CopyTo(data_, 0);
         }
 
-        byte[] rearrangedData = Util.Rearrange(data);
-
         if (shuffleBusterInvulnerability)
         {
             spoiler += "\nInvulnerable to Mega Buster: ";
@@ -701,17 +699,19 @@ public static class MM2
                 int n = r.Next(robots.Length);
                 int robot = (int)robots[n];
                 spoiler += i < 3 ? bossNames[robot] + ", " : bossNames[robot];
-                rearrangedData[robot] = 0;
+                if (data[robot][0] != 0xFF) data[robot][0] = 0;
                 robots.RemoveAt(n);
             }
 
-            rearrangedData[(int)StageIndex.MechaDragonW1] = 0;
-            rearrangedData[(int)StageIndex.PicopicokunW2] = 0;
-            rearrangedData[(int)StageIndex.GutsTankW3] = 0;
-            rearrangedData[(int)StageIndex.BoobeamTrapW4] = 0;
-            rearrangedData[(int)StageIndex.TeleporterRoomW5] = 0;
-            rearrangedData[(int)StageIndex.WilyAlienW6] = 0;
+            if (data[(int)StageIndex.MechaDragonW1][0] != 0xFF)    data[(int)StageIndex.MechaDragonW1][0] = 0;
+            if (data[(int)StageIndex.PicopicokunW2][0] != 0xFF)    data[(int)StageIndex.PicopicokunW2][0] = 0;
+            if (data[(int)StageIndex.GutsTankW3][0] != 0xFF)       data[(int)StageIndex.GutsTankW3][0] = 0;
+            if (data[(int)StageIndex.BoobeamTrapW4][0] != 0xFF)    data[(int)StageIndex.BoobeamTrapW4][0] = 0;
+            if (data[(int)StageIndex.TeleporterRoomW5][0] != 0xFF) data[(int)StageIndex.TeleporterRoomW5][0] = 0;
+            if (data[(int)StageIndex.WilyAlienW6][0] != 0xFF)      data[(int)StageIndex.WilyAlienW6][0] = 0;
         }
+
+        byte[] rearrangedData = Util.Rearrange(data);
 
         jp.Add(new Patch((int)Address.MegaBusterBossDamage, rearrangedData), MergeMode.None);
         na.Add(new Patch(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData), MergeMode.None);
