@@ -337,13 +337,14 @@ public static class MM2
     private static void ShuffleEquipmentPatch(out PatchCollection jpna, out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(Util.GetSeed());
+
+        byte[] weaponData = new byte[weapons.Length], itemData = new byte[items.Length];
+
         spoiler = "- Weapons & Items -\n";
 
         AutoSizedArray<ushort> equips = new(weapons.Length + items.Length);
         foreach (Equipment weapon in weapons) equips.Add((byte)weapon);
         foreach (Equipment item in items) equips.Add((ushort)(0x0100 | (byte)item));
-
-        byte[] weaponData = new byte[weapons.Length], itemData = new byte[items.Length];
 
         for (int i = 0; equips.Length > 0; i++)
         {
