@@ -611,12 +611,13 @@ public static class MM2
         na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData);
     }
 
-    private static void ShuffleWeaknessesPatch(out PatchCollection jp, out PatchCollection na, out string spoiler, Random r = null, int shuffleMode = 0, bool robotsOnly = false, bool shuffleBusterInvulnerability = false)
+    private static void ShuffleWeaknessesPatch(out PatchCollection jp, out PatchCollection na, out PatchCollection snes, out string spoiler, Random r = null, int shuffleMode = 0, bool robotsOnly = false, bool shuffleBusterInvulnerability = false)
     {
         r ??= new(Util.GetSeed());
 
         jp = new IPS();
         na = new IPS();
+        snes = new IPS();
         spoiler = "";
 
         int setCount = robotsOnly ? 8 : BossCount;
@@ -729,19 +730,28 @@ public static class MM2
 
         for (int i = 0; i < WeaponCount; i++)
         {
+            byte[] picopicokun = new byte[1] { picopicokunWeaknesses[i] }, boobeamtrap = new byte[1] { boobeamtrapWeaknesses[i] };
+
             Address addressJP = enemyDamageAddresses[i];
-            jp.Add(new Patch((int)addressJP + (int)ObjectType.Picopicokuns, new byte[] { picopicokunWeaknesses[i] }), MergeMode.None);
-            jp.Add(new Patch((int)addressJP + (int)ObjectType.BoobeamTraps, new byte[] { boobeamtrapWeaknesses[i] }), MergeMode.None);
+            jp.Add(new Patch((int)addressJP + (int)ObjectType.Picopicokuns, picopicokun), MergeMode.None);
+            jp.Add(new Patch((int)addressJP + (int)ObjectType.BoobeamTraps, boobeamtrap), MergeMode.None);
 
             int addressNA = ConvertAddressToNA(addressJP);
-            na.Add(new Patch(addressNA + (int)ObjectType.Picopicokuns, new byte[] { picopicokunWeaknesses[i] }), MergeMode.None);
-            na.Add(new Patch(addressNA + (int)ObjectType.BoobeamTraps, new byte[] { boobeamtrapWeaknesses[i] }), MergeMode.None);
+            na.Add(new Patch(addressNA + (int)ObjectType.Picopicokuns, picopicokun), MergeMode.None);
+            na.Add(new Patch(addressNA + (int)ObjectType.BoobeamTraps, boobeamtrap), MergeMode.None);
+
+            foreach (int addressSNES in ConvertAddressToSNES(addressJP))
+            {
+                snes.Add(new Patch(addressSNES + (int)ObjectType.Picopicokuns, picopicokun), MergeMode.None);
+                snes.Add(new Patch(addressSNES + (int)ObjectType.BoobeamTraps, boobeamtrap), MergeMode.None);
+            }
         }
 
         byte[] rearrangedData = Util.Rearrange(data);
 
         jp.Add(new Patch((int)Address.MegaBusterBossDamage, rearrangedData), MergeMode.None);
         na.Add(new Patch(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData), MergeMode.None);
+        snes.Add(new Patch(ConvertAddressToSNES(Address.MegaBusterBossDamage)[0], rearrangedData), MergeMode.None);
     }
 
     [Obsolete] private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
@@ -804,7 +814,7 @@ public static class MM2
             spoiler += '\n' + s;
         }
 
-        ShuffleWeaknessesPatch(out Patch weaknessesJP, out Patch weaknessesNA, out string weaknessesSpoiler, r, weaknessShuffle, robotsOnly, nerfBuster);
+        ShuffleWeaknessesPatch(out PatchCollection weaknessesJP, out PatchCollection weaknessesNA, out PatchCollection weaknessesSNES, out string weaknessesSpoiler, r, weaknessShuffle, robotsOnly, nerfBuster);
 
         jp.Add(weaknessesJP, MergeMode.None);
         na.Add(weaknessesNA, MergeMode.None);
