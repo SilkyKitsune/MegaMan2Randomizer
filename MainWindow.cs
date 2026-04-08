@@ -61,12 +61,12 @@ public partial class MainWindow : Form
 
         generateButton.Enabled = false;
 
-        int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : 0);
+        int seed = int.TryParse(seedText, out int i) ? i : (!string.IsNullOrEmpty(seedText) ? seedText.GetHashCode() : -1);
 
         if (seedText.ToLower() == "halloween")
         {
             october = true;
-            seed = 0;
+            seed = -1;
         }
 
         switch ((PatchManager.GameID)gameOption)

@@ -756,7 +756,7 @@ public static class MM2
         int robotMasterShuffle = 0,
         int weaknessShuffle = 0, bool robotsOnly = false, bool nerfBuster = false)
     {
-        if (seed == 0) seed = Util.GetSeed();
+        if (seed < 0) seed = Util.GetSeed();
         Random r = new(seed);
 
         spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
