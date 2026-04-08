@@ -471,26 +471,32 @@ public static class MM2
         na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), data);
     }
 
-    private static PatchCollection ShuffleRobotMastersPatch(out string spoiler, Random r = null, bool shuffle = true, bool single = false)
+    private static void ShuffleRobotMastersPatch(out PatchCollection jpna, out PatchCollection snes, out string spoiler, Random r = null, bool shuffle = true, bool single = false)
     {
         r ??= new(Util.GetSeed());
         spoiler = "- Robot Master Shuffle -\n";
 
-        IPS patch = new();
+        jpna = new IPS();
+        snes = new IPS();
 
         AutoSizedArray<StageIndex> robots = new(stages, stages.Length);
         byte[] robotIndices = new byte[robots.Length];
-        patch.Add(new Patch((int)Address.NewBossIndices, robotIndices), MergeMode.None);
+        jpna.Add(new Patch((int)Address.NewBossIndices, robotIndices), MergeMode.None);
+        foreach (int address in ConvertAddressToSNES(Address.NewBossIndices)) snes.Add(new Patch(address, robotIndices), MergeMode.None);
 
         if (single)
         {
             int n = r.Next(robots.Length);
             StageIndex robot = robots[n];
             spoiler += $"All Robot Masters => {bossNames[(int)robot]}\n";
+            byte[] bossGraphicsPtrs = robotMasterGraphicsPtrs[(int)robot];
             for (int i = 0; i < robotIndices.Length; i++)
             {
                 robotIndices[i] = (byte)robot;
-                patch.Add(new Patch((int)bossGraphicsPtrAddresses[i], robotMasterGraphicsPtrs[(int)robot]), MergeMode.None);
+
+                Address bossGraphicsPtrAddress = bossGraphicsPtrAddresses[i];
+                jpna.Add(new Patch((int)bossGraphicsPtrAddress, bossGraphicsPtrs), MergeMode.None);
+                snes.Add(new Patch(ConvertAddressToSNES(bossGraphicsPtrAddress)[0], bossGraphicsPtrs), MergeMode.None);
             }
         }
         else for (int i = 0; shuffle ? (robots.Length > 0) : (i < robotIndices.Length); i++)
@@ -499,11 +505,14 @@ public static class MM2
                 StageIndex robot = robots[n];
                 spoiler += $"{bossNamesWithSpacesShort[i]} => {bossNames[(int)robot]}\n";
                 robotIndices[i] = (byte)robot;
-                patch.Add(new Patch((int)bossGraphicsPtrAddresses[i], robotMasterGraphicsPtrs[(int)robot]), MergeMode.None);
+
+                Address bossGraphicsPtrAddress = bossGraphicsPtrAddresses[i];
+                byte[] bossGraphicsPtrs = robotMasterGraphicsPtrs[(int)robot];
+                jpna.Add(new Patch((int)bossGraphicsPtrAddress, bossGraphicsPtrs), MergeMode.None);
+                snes.Add(new Patch(ConvertAddressToSNES(bossGraphicsPtrAddress)[0], bossGraphicsPtrs), MergeMode.None);
+
                 if (shuffle) robots.RemoveAt(n);
             }
-
-        return patch;
     }
     
     private static Patch ShuffleStagesPatch(out string spoiler, Random r = null)
@@ -786,10 +795,10 @@ public static class MM2
 
         if (robotMasterShuffle != 0)
         {
-            PatchCollection robots = ShuffleRobotMastersPatch(out string s, r, robotMasterShuffle == 1, robotMasterShuffle == 3);
+            ShuffleRobotMastersPatch(out PatchCollection robotsJPNA, out PatchCollection robotsSNES, out string s, r, robotMasterShuffle == 1, robotMasterShuffle == 3);
 
-            jp.Add(robots, MergeMode.None);
-            na.Add(robots, MergeMode.None);
+            jp.Add(robotsJPNA, MergeMode.None);
+            na.Add(robotsJPNA, MergeMode.None);
 
             spoiler += '\n' + s;
         }
