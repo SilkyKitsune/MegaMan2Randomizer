@@ -515,7 +515,7 @@ public static class MM2
             }
     }
     
-    private static Patch ShuffleStagesPatch(out string spoiler, Random r = null)
+    private static void ShuffleStagesPatch(out Patch jpna, out Patch snes, out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
         spoiler = "";
@@ -532,7 +532,8 @@ public static class MM2
             stages.RemoveAt(n);
         }
 
-        return new((int)Address.TopLeftStagePtr, data);
+        jpna = new((int)Address.TopLeftStagePtr, data);
+        snes = new(ConvertAddressToSNES(Address.TopLeftStagePtr)[0], data);
     }
 
     [Obsolete] private static void ShuffleWeaknessesPerBossPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
@@ -785,10 +786,10 @@ public static class MM2
 
         if (shuffleLevels)
         {
-            Patch stages = ShuffleStagesPatch(out string s, r);
+            ShuffleStagesPatch(out Patch stagesJPNA, out Patch stagesSNES, out string s, r);
 
-            jp.Add(stages, MergeMode.None);
-            na.Add(stages, MergeMode.None);
+            jp.Add(stagesJPNA, MergeMode.None);
+            na.Add(stagesJPNA, MergeMode.None);
 
             spoiler += '\n' + s;
         }
