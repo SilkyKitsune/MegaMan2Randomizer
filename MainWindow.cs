@@ -91,14 +91,16 @@ public partial class MainWindow : Form
 
             case PatchManager.GameID.MM2:
                 {
-                    IPS patchJP = new(), patchNA = new();
+                    IPS patchJP = new(), patchNA = new(), patchSNES = new();
                     PatchManager.AddPatches(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan);
                     PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica);
+                    PatchManager.AddPatches(patchSNES, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.SuperNintendo);
 
                     if (shuffleLevels)
                     {
                         PatchManager.AddPatch(patchJP, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.Japan, PatchManager.PatchID.MysteryStageSelect);
                         PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.MysteryStageSelect);
+                        PatchManager.AddPatch(patchSNES, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.SuperNintendo, PatchManager.PatchID.MysteryStageSelect);
                     }
 
                     if (october)
@@ -108,16 +110,21 @@ public partial class MainWindow : Form
 
                         PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode1);
                         PatchManager.AddPatch(patchNA, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.NorthAmerica, PatchManager.PatchID.HalloweenMode2);
+
+                        PatchManager.AddPatch(patchSNES, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.SuperNintendo, PatchManager.PatchID.HalloweenMode1);
+                        PatchManager.AddPatch(patchSNES, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.SuperNintendo, PatchManager.PatchID.HalloweenMode2);
                     }
 
-                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, robotMasterShuffle, weaknessShuffle, robotsOnly, nerfBuster);
+                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out IPS shuffledPatchSNES, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, robotMasterShuffle, weaknessShuffle, robotsOnly, nerfBuster);
                     patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
+                    patchSNES.Add(shuffledPatchSNES, MergeMode.CombineOver);
 
                     folderPath += '\\' + (october ? "MM2R🎃 " : "MM2R ") + seed;
                     File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
                     patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
                     patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
+                    patchSNES.WritePatch(folderPath + $"({PatchManager.VersionID.SuperNintendo})");
 
                     break;
                 }

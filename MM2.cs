@@ -774,7 +774,7 @@ public static class MM2
         return new((int)Address.NewWeaponBitFlags, data);
     }
     
-    public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler,
+    public static void Generate(ref int seed, out IPS jp, out IPS na, out IPS snes, out string spoiler,
         bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
         bool shuffleLevels = false,
         int robotMasterShuffle = 0,
@@ -786,11 +786,13 @@ public static class MM2
         spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
         jp = new();
         na = new();
+        snes = new();
 
         ShuffleEquipmentPatch(out PatchCollection equipmentJPNA, out PatchCollection equipmentSNES, out string equipmentSpoiler, r, shuffleAllEquipment, heatManNoItem2);
 
         jp.Add(equipmentJPNA, MergeMode.None);
         na.Add(equipmentJPNA, MergeMode.None);
+        snes.Add(equipmentSNES, MergeMode.None);
 
         spoiler += equipmentSpoiler;
 
@@ -800,6 +802,7 @@ public static class MM2
 
             jp.Add(stagesJPNA, MergeMode.None);
             na.Add(stagesJPNA, MergeMode.None);
+            snes.Add(stagesSNES, MergeMode.None);
 
             spoiler += '\n' + s;
         }
@@ -810,6 +813,7 @@ public static class MM2
 
             jp.Add(robotsJPNA, MergeMode.None);
             na.Add(robotsJPNA, MergeMode.None);
+            snes.Add(robotsSNES, MergeMode.None);
 
             spoiler += '\n' + s;
         }
@@ -818,6 +822,7 @@ public static class MM2
 
         jp.Add(weaknessesJP, MergeMode.None);
         na.Add(weaknessesNA, MergeMode.None);
+        snes.Add(weaknessesSNES, MergeMode.None);
 
         spoiler += '\n' + weaknessesSpoiler;
     }
