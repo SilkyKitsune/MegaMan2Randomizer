@@ -1,7 +1,5 @@
-; Just fyi idk if this will work in an assembler, it was hand assembled/disassembled
+; Large gaps between addresses are indicated by a line of periods -> '.'
 
-; This includes all the times a LDA/STA opcode is called for the address $009A
-; Gaps in code are indicated by a line of periods -> '.'
 Instructions JP      ; Bytes JP ; File Addr JP ; Comments
 --------------------------------------------------------------------------------------------------------------------------------------------
 LDA $9A              ; A5 9A    ; 0x03_403B    ; load boss bitfield, ???
