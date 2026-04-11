@@ -119,7 +119,7 @@ RTS               ; 60          ; $C84A   ; 0x03_C85A                           
 
 
 ; New Instructions
-; -----------------------------------------------------
+; --------------------------------------------------------------                          ; --------------------------------------------------------------
 JMP $F32C         ; 4C 2C F3    ; $8394   ; 0x03_83A4 ; jump to new instructions                            ;             ;         ;
 
 ;......................................................                                   ;......................................................
@@ -153,10 +153,9 @@ STA $B3           ; 85 B3       ; $F326   ; 0x03_F336 ; write to boss index     
 PLX               ; FA          ; $F328   ; 0x03_F338                                                       ;             ;         ;
 JMP $C809         ; 4C 09 C8    ; $F329   ; 0x03_F339                                     JMP $C80C         ; 4C 0C C8    ;         ;
 
-LDX $BA           ; A6 BA       ; $F32C   ; 0x03_F33C ; load teleporter index?                              ;             ;         ;
-STX $C3           ; 86 C3       ; $F32E   ; 0x03_F33E ; store original boss index                           ;             ;         ;
-DEC $C3           ; C6 C3       ; $F330   ; 0x03_F340                                                       ;             ;         ;
-LDA $F30F,X       ; BD 0F F3    ; $F332   ; 0x03_F342 ; load new boss index                                 ;             ;         ;
-STA $B3           ; 85 B3       ; $F335   ; 0x03_F345 ; write to boss index                                 ;             ;         ;
-LDA $83D6,X       ; BD D6 83    ; $F337   ; 0x03_F347                                                       ;             ;         ;
-JMP $8397         ; 4C 97 83    ; $F33A   ; 0x03_F34A                                                       ;             ;         ;
+STX $C3           ; 86 C3       ; $F32C   ; 0x03_F33C ; store original boss index                           ;             ;         ;
+DEC $C3           ; C6 C3       ; $F32E   ; 0x03_F33E                                                       ;             ;         ;
+LDA $F30F,X       ; BD 0F F3    ; $F330   ; 0x03_F340 ; load new boss index                                 ;             ;         ;
+STA $B3           ; 85 B3       ; $F333   ; 0x03_F343 ; write to boss index                                 ;             ;         ;
+LDA $83D6,X       ; BD D6 83    ; $F335   ; 0x03_F345                                                       ;             ;         ;
+JMP $8397         ; 4C 97 83    ; $F338   ; 0x03_F348                                                       ;             ;         ;
