@@ -159,3 +159,62 @@ LDA $F30F,X       ; BD 0F F3    ; $F330   ; 0x03_F340 ; load new boss index     
 STA $B3           ; 85 B3       ; $F333   ; 0x03_F343 ; write to boss index                                 ;             ;         ;
 LDA $83D6,X       ; BD D6 83    ; $F335   ; 0x03_F345                                                       ;             ;         ;
 JMP $8397         ; 4C 97 83    ; $F338   ; 0x03_F348                                                       ;             ;         ;
+
+
+
+; New Instructions (SNES)
+; --------------------------------------------------------------
+JSL $BF804B       ; 22 4B 80 BF ; $8F8394 ; 0x07_8394 ; jump to new instructions
+NOP               ; EA          ; $8F8398 ; 0x07_8398 ; NOP to fill unused byte
+
+;......................................................
+
+NOP               ; EA          ; $8F83CD ; 0x07_83CD ; NOP to fill unused bytes
+NOP               ; EA          ; $8F83CE ; 0x07_83CE ;
+NOP               ; EA          ; $8F83CF ; 0x07_83CF ;
+NOP               ; EA          ; $8F83D0 ; 0x07_83D0 ;
+NOP               ; EA          ; $8F83D1 ; 0x07_83D1 ;
+NOP               ; EA          ; $8F83D2 ; 0x07_83D2 ;
+
+;......................................................
+
+LDX $C3           ; A6 C3       ; $8F8426 ; 0x07_8426 ; load original boss index
+
+;......................................................
+
+LDX $C3           ; A6 C3       ; $8F8464 ; 0x07_8464 ; load original boss index
+
+;......................................................
+
+JSL $BF8040       ; 22 40 80 BF ; $80C808 ; 0x00_4808 ; jump to new instructions
+;                               ; $81C808 ; 0x00_C808 ; this jump instruction is duplicated in all these locations
+;                               ; $82C808 ; 0x01_4808
+;                               ; $83C808 ; 0x01_C808
+;                               ; $84C808 ; 0x02_4808
+;                               ; $85C808 ; 0x02_C808
+;                               ; $86C808 ; 0x03_4808
+;                               ; $87C808 ; 0x03_C808
+;                               ; $88C808 ; 0x04_4808
+;                               ; $89C808 ; 0x04_C808
+;                               ; $8AC808 ; 0x05_4808
+;                               ; $8BC808 ; 0x05_C808
+;                               ; $8CC808 ; 0x06_4808
+;                               ; $8EC808 ; 0x07_4808
+;                               ; $8FC808 ; 0x07_C808
+
+;......................................................
+
+PHX               ; DA          ; $BF8040 ; 0x1F_8040
+LDX $2A           ; A6 2A       ; $BF8041 ; 0x1F_8041 ; load stage index
+LDA $BF8030,X     ; BF 30 80 BF ; $BF8043 ; 0x1F_8043 ; load new boss index
+STA $B3           ; 85 B3       ; $BF8047 ; 0x1F_8047 ; write to boss index
+PLX               ; FA          ; $BF8049 ; 0x1F_8049
+RTL               ; 6B          ; $BF804A ; 0x1F_804A
+
+STX $C3           ; 86 C3       ; $BF804B ; 0x1F_804B ; store original boss index
+DEC $C3           ; C6 C3       ; $BF804D ; 0x1F_804D
+LDA $BF802F,X     ; BF 2F 80 BF ; $BF804F ; 0x1F_804F ; load new boss index
+STA $B3           ; 85 B3       ; $BF8053 ; 0x1F_8053 ; write to boss index
+LDA $83D6,X       ; BD D6 83    ; $BF8055 ; 0x1F_8055
+STA $FE           ; 85 FE       ; $BF8058 ; 0x1F_8058
+RTL               ; 6B          ; $BF805A ; 0x1F_805A

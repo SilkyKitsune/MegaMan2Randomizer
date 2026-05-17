@@ -214,3 +214,54 @@ ORA $99           ; 05 99       ; $F2F3   ; 0x03_F303 ; OR with new weapon bitfi
 STA $99           ; 85 99       ; $F2F5   ; 0x03_F305 ; write to new weapon bitfield
 LDA $C279,X       ; BD 79 C2    ; $F2F7   ; 0x03_F307 ; load boss bitflag
 JMP $C23C         ; 4C 3C C2    ; $F2F9   ; 0x03_F309
+
+
+
+; New Instructions (SNES)
+; --------------------------------------------------------------
+LDA #$00          ; A9 00       ; $8E80DC ; 0x07_00DC ; this one is ReEnterLevels.ips
+
+;......................................................
+
+LDA $99           ; A5 99       ; $8E91EF ; 0x07_11EF
+
+;......................................................
+
+LDA $99           ; A5 99       ; $8E91FA ; 0x07_11FA
+
+;......................................................
+
+LDA $99           ; A5 99       ; $8E93AF ; 0x07_13AF
+
+;......................................................
+
+LDA $99           ; A5 99       ; $8E93C2 ; 0x07_13C2
+
+;......................................................
+
+JSL $BF8010       ; 22 10 80 BF ; $80C239 ; 0x00_4239 ; jump to new instructions
+NOP               ; EA          ; $80C23D ; 0x00_423D ; NOP to fill unused byte
+
+;                               ; $81C239 ; 0x00_C239 ; this jump instruction is duplicated in all these locations
+;                               ; $82C239 ; 0x01_4239
+;                               ; $83C239 ; 0x01_C239
+;                               ; $84C239 ; 0x02_4239
+;                               ; $85C239 ; 0x02_C239
+;                               ; $86C239 ; 0x03_4239
+;                               ; $87C239 ; 0x03_C239
+;                               ; $88C239 ; 0x04_4239
+;                               ; $89C239 ; 0x04_C239
+;                               ; $8AC239 ; 0x05_4239
+;                               ; $8BC239 ; 0x05_C239
+;                               ; $8CC239 ; 0x06_4239
+;                               ; $8EC239 ; 0x07_4239
+;                               ; $8FC239 ; 0x07_C239
+
+;......................................................
+
+LDA $BF8008,X     ; BF 08 80 BF ; $BF8010 ; 0x1F_8010 ; load new weapon bitflag
+ORA $99           ; 05 99       ; $BF8014 ; 0x1F_8014 ; OR with new weapon bitfield
+STA $99           ; 85 99       ; $BF8016 ; 0x1F_8016 ; write to new weapon bitfield
+LDA $C279,X       ; BD 79 C2    ; $BF8018 ; 0x1F_8018 ; load boss bitflag
+ORA $9A           ; 05 9A       ; $BF801B ; 0x1F_801B ; OR with boss bitfield
+RTL               ; 6B          ; $BF801D ; 0x1F_801D
