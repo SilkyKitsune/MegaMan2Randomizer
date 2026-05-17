@@ -38,7 +38,7 @@ public partial class MainWindow : Form
         bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
             robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked, october = this.october;
         int weaknessShuffle = weaknessComboBox.SelectedIndex, robotMasterShuffle = bossComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
-        string folderPath = outputTextBox.Text, seedText = seedTextBox.Text;
+        string folderPath = outputTextBox.Text, seedText = seedTextBox.Text, seedName = string.Empty;
         
         if (weaknessShuffle == 3)//temp
         {
@@ -80,7 +80,7 @@ public partial class MainWindow : Form
                     patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
 
-                    folderPath += "\\MM1R " + seed;
+                    folderPath += '\\' + (seedName = "MM1R " + seed);
                     File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
                     patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
                     patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
@@ -119,16 +119,17 @@ public partial class MainWindow : Form
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
                     patchSNES.Add(shuffledPatchSNES, MergeMode.CombineOver);
 
-                    folderPath += '\\' + (october ? "MM2R🎃 " : "MM2R ") + seed;
+                    folderPath += '\\' + (seedName = (october ? "MM2R🎃 " : "MM2R ") + seed);
                     File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
                     patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
                     patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
-                    patchSNES.WritePatch(folderPath + $"({PatchManager.VersionID.SuperNintendo})");
+                    patchSNES.WritePatch(folderPath + $" ({PatchManager.VersionID.SuperNintendo})");
 
                     break;
                 }
         }
 
+        MessageBox.Show($"Seed {seedName} successfully generated\nSaved to " + folderPath, "Success", MessageBoxButtons.OK, MessageBoxIcon.None);
         seedTextBox.Text = seed.ToString();
         generateButton.Enabled = true;
     }
