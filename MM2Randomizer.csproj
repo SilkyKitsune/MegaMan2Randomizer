@@ -45,6 +45,9 @@
     <None Update="Patches\MM2\CrashScreen\CrashScreen_JN.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\DisableSaveRAMMM2\DisableSaveRAMMM2_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\FastCrashBomber\FastCrashBomber_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
