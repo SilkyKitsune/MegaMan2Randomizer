@@ -167,11 +167,11 @@
             // robotsOnlyCheckBox
             // 
             robotsOnlyCheckBox.AutoSize = true;
-            robotsOnlyCheckBox.Location = new System.Drawing.Point(6, 50);
+            robotsOnlyCheckBox.Location = new System.Drawing.Point(26, 50);
             robotsOnlyCheckBox.Name = "robotsOnlyCheckBox";
-            robotsOnlyCheckBox.Size = new System.Drawing.Size(257, 19);
+            robotsOnlyCheckBox.Size = new System.Drawing.Size(191, 19);
             robotsOnlyCheckBox.TabIndex = 14;
-            robotsOnlyCheckBox.Text = "Shuffle Castle Boss Weaknesses with Robots";
+            robotsOnlyCheckBox.Text = "Shuffle Castle Boss Weaknesses";
             robotsOnlyCheckBox.UseVisualStyleBackColor = true;
             // 
             // tabControl

@@ -11,7 +11,6 @@ public partial class MainWindow : Form
     {
         InitializeComponent();
         weaknessComboBox.SelectedIndex = 0;
-        robotsOnlyCheckBox.Enabled = true;//temp, idk why winforms isn't setting this true
         bossComboBox.SelectedIndex = 0;
 
         if (PatchManager.LoadPatches(out string errors))
