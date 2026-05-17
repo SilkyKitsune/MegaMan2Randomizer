@@ -320,8 +320,8 @@ public static class MM2
         Address.CrashBomberEnemyDamage =>    Util.RepeatedSNESAddress(0x00_6C6C),
         Address.MetalBladeEnemyDamage =>     Util.RepeatedSNESAddress(0x00_6CE4),
 
-        Address.NewWeaponBitFlags => Util.RepeatedSNESAddress(0x00_72E8),
-        Address.NewBossIndices =>    Util.RepeatedSNESAddress(0x00_7310),
+        Address.NewWeaponBitFlags => new int[1] { 0x1F_8008 },
+        Address.NewBossIndices =>    new int[1] { 0x1F_8030 },
 
         _ => new int[1] { (int)address }
     };
