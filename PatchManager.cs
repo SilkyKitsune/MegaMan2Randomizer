@@ -79,7 +79,8 @@ public static class PatchManager
 
     private static readonly AutoSizedArray<CompoundID> dontExist = new(new CompoundID[]
     {
-        new(GameID.MM2, VersionID.NorthAmerica, PatchID.MM2RTitle)
+        new(GameID.MM2, VersionID.NorthAmerica, PatchID.MM2RTitle),
+        new(GameID.MM2, VersionID.SuperNintendo, PatchID.MM2RTitle),
     });
 
     private static readonly LookupTable<CompoundID, IPS> patchTable = new(0x80);
