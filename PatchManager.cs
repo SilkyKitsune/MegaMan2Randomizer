@@ -28,6 +28,7 @@ public static class PatchManager
 
         AtomicFireFix,
         BooBeamNerf,
+        DisableSaveRAMMM2,
         FastCrashBomber,
         HalloweenMode1,
         HalloweenMode2,
@@ -79,6 +80,9 @@ public static class PatchManager
 
     private static readonly AutoSizedArray<CompoundID> dontExist = new(new CompoundID[]
     {
+        new(GameID.MM2, VersionID.Japan, PatchID.DisableSaveRAMMM2),
+        new(GameID.MM2, VersionID.NorthAmerica, PatchID.DisableSaveRAMMM2),
+
         new(GameID.MM2, VersionID.NorthAmerica, PatchID.MM2RTitle),
         new(GameID.MM2, VersionID.SuperNintendo, PatchID.MM2RTitle),
     });
