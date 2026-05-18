@@ -161,7 +161,7 @@ public static class MM1
         _ => (int)address
     };
 
-    private static void ShuffleEquipmentPatch(out string spoiler, out Patch weaponsPatch, out Patch magnetBeamPatch, Random r = null)
+    private static void ShuffleEquipmentPatch(out PatchCollection jpna, out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
         spoiler = "";
@@ -177,11 +177,13 @@ public static class MM1
             data[i] = (byte)e;
             equips.RemoveAt(n);
         }
-        weaponsPatch = new((int)Address.NewWeaponBitFlags, data);
 
         Equipment e_ = equips[0];
         spoiler += $"Magnet Beam  => {e_}\n";
-        magnetBeamPatch = new((int)Address.NewMagnetBeamBitFlag, new byte[1] { (byte)e_ });
+
+        jpna = new IPS();
+        jpna.Add(new Patch((int)Address.NewWeaponBitFlags, data), MergeMode.None);
+        jpna.Add(new Patch((int)Address.NewMagnetBeamBitFlag, new byte[1] { (byte)e_ }), MergeMode.None);
     }
 
     public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler)
@@ -193,13 +195,10 @@ public static class MM1
         jp = new();
         na = new();
 
-        ShuffleEquipmentPatch(out string s, out Patch weaponsPatch, out Patch magnetBeamPatch, r);
+        ShuffleEquipmentPatch(out PatchCollection equipmentJPNA, out string s, r);
 
-        jp.Add(weaponsPatch, MergeMode.None);
-        jp.Add(magnetBeamPatch, MergeMode.None);
-
-        na.Add(weaponsPatch, MergeMode.None);
-        na.Add(magnetBeamPatch, MergeMode.None);
+        jp.Add(equipmentJPNA, MergeMode.None);
+        na.Add(equipmentJPNA, MergeMode.None);
 
         spoiler += s;
 
