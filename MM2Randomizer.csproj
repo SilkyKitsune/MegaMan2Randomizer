@@ -21,6 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Patches\MM1\MagnetBeamBuff\MagnetBeamBuff_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM1\MagnetBeamBuff\MagnetBeamBuff_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM1\SplitWeaponFlagsMM1\SplitWeaponFlagsMM1_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

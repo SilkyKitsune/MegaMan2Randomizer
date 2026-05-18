@@ -24,6 +24,7 @@ public static class PatchManager
 
     public enum PatchID : int
     {
+        MagnetBeamBuff,
         SplitWeaponFlagsMM1,
 
         AtomicFireFix,
@@ -159,7 +160,7 @@ public static class PatchManager
         }
 
         errors +=
-            ValidatePatches(GameID.MM1, PatchID.SplitWeaponFlagsMM1, PatchID.AtomicFireFix, VersionID.Japan, VersionID.NorthAmerica) +
+            ValidatePatches(GameID.MM1, PatchID.MagnetBeamBuff, PatchID.AtomicFireFix, VersionID.Japan, VersionID.NorthAmerica) +
             ValidatePatches(GameID.MM2, PatchID.AtomicFireFix, PatchID.Count, VersionID.Japan, VersionID.NorthAmerica, VersionID.SuperNintendo);
 
         return errors.Length > 0;
