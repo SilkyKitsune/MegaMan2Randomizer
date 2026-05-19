@@ -159,6 +159,12 @@
     <None Update="Patches\MM2\ReEnterLevelsMM2\ReEnterLevelsMM2_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Patches\MM2\RemoveBooBeamCrashWalls\RemoveBooBeamCrashWalls_JN.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Patches\MM2\RemoveBooBeamCrashWalls\RemoveBooBeamCrashWalls_S.ips">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Patches\MM2\SplitBossIndicesMM2\SplitBossIndicesMM2_J.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
