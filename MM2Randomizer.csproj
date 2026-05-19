@@ -42,12 +42,6 @@
     <None Update="Patches\MM2\AtomicFireFix\AtomicFireFix_S.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Patches\MM2\BooBeamNerf\BooBeamNerf_JN.ips">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Patches\MM2\BooBeamNerf\BooBeamNerf_S.ips">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Patches\MM2\CrashScreen\CrashScreen_JN.ips">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

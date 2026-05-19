@@ -28,7 +28,6 @@ public static class PatchManager
         SplitWeaponFlagsMM1,
 
         AtomicFireFix,
-        BooBeamNerf,
         DisableSaveRAMMM2,
         FastCrashBomber,
         HalloweenMode1,
