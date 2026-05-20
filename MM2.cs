@@ -125,7 +125,8 @@ public static class MM2
         Equipment.Item2,
     };
 
-    private static readonly StageIndex[] stages =
+    private static readonly StageIndex[]
+        robotStages =
     {
         StageIndex.HeatMan,
         StageIndex.AirMan,
@@ -456,7 +457,7 @@ public static class MM2
         for (int i = 0; i < 8; i++) data[i] = weaknessSets[i][0];
         for (int i = 8; i < data.Length; i++) data[i] = 0;
 
-        AutoSizedArray<StageIndex> robots = new(stages, stages.Length);
+        AutoSizedArray<StageIndex> robots = new(robotStages, robotStages.Length);
 
         for (int i = 0; i < 4; i++)
         {
@@ -479,7 +480,7 @@ public static class MM2
         jpna = new IPS();
         snes = new IPS();
 
-        AutoSizedArray<StageIndex> robots = new(stages, stages.Length);
+        AutoSizedArray<StageIndex> robots = new(robotStages, robotStages.Length);
         byte[] robotIndices = new byte[robots.Length];
         jpna.Add(new Patch((int)Address.NewBossIndices, robotIndices), MergeMode.None);
         foreach (int address in ConvertAddressToSNES(Address.NewBossIndices)) snes.Add(new Patch(address, robotIndices), MergeMode.None);
@@ -520,16 +521,16 @@ public static class MM2
         r ??= new(Util.GetSeed());
         spoiler = "";
 
-        AutoSizedArray<StageIndex> stages = new(MM2.stages, MM2.stages.Length);
-        byte[] data = new byte[stages.Length];
+        AutoSizedArray<StageIndex> robotStages = new(MM2.robotStages, MM2.robotStages.Length);
+        byte[] data = new byte[robotStages.Length];
 
-        for (int i = 0; stages.Length > 0; i++)
+        for (int i = 0; robotStages.Length > 0; i++)
         {
-            int n = r.Next(stages.Length);
-            StageIndex si = stages[n];
+            int n = r.Next(robotStages.Length);
+            StageIndex si = robotStages[n];
             spoiler += $"{(StagePosition)i} => {si}\n";
             data[i] = (byte)si;
-            stages.RemoveAt(n);
+            robotStages.RemoveAt(n);
         }
 
         jpna = new((int)Address.TopLeftStagePtr, data);
@@ -710,7 +711,7 @@ public static class MM2
         {
             spoiler += "\nInvulnerable to Mega Buster: ";
 
-            AutoSizedArray<StageIndex> robots = new(stages, stages.Length);
+            AutoSizedArray<StageIndex> robots = new(robotStages, robotStages.Length);
             for (int i = 0; i < 4; i++)
             {
                 int n = r.Next(robots.Length);
