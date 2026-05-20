@@ -135,7 +135,35 @@ public static class MM2
         StageIndex.QuickMan,
         StageIndex.FlashMan,
         StageIndex.MetalMan,
-        StageIndex.CrashMan
+        StageIndex.CrashMan,
+
+    },
+        castleStages =
+    {
+        StageIndex.MechaDragonW1,
+        StageIndex.PicopicokunW2,
+        StageIndex.GutsTankW3,
+        StageIndex.BoobeamTrapW4,
+        StageIndex.TeleporterRoomW5,
+        StageIndex.WilyAlienW6,
+    },
+        allStages =
+    {
+        StageIndex.HeatMan,
+        StageIndex.AirMan,
+        StageIndex.WoodMan,
+        StageIndex.BubbleMan,
+        StageIndex.QuickMan,
+        StageIndex.FlashMan,
+        StageIndex.MetalMan,
+        StageIndex.CrashMan,
+
+        StageIndex.MechaDragonW1,
+        StageIndex.PicopicokunW2,
+        StageIndex.GutsTankW3,
+        StageIndex.BoobeamTrapW4,
+        StageIndex.TeleporterRoomW5,
+        StageIndex.WilyAlienW6,
     };
 
     private static readonly string[] bossNames =
