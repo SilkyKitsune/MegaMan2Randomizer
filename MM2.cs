@@ -64,7 +64,7 @@ public static class MM2
         LeafShield =     0x04,
         BubbleLead =     0x08,
         QuickBoomerang = 0x10,
-        FlashStopper =   0x20,
+        TimeStopper =    0x20,
         MetalBlade =     0x40,
         CrashBomber =    0x80,
 
@@ -109,7 +109,7 @@ public static class MM2
         Equipment.LeafShield,
         Equipment.BubbleLead,
         Equipment.QuickBoomerang,
-        Equipment.FlashStopper,
+        Equipment.TimeStopper,
         Equipment.MetalBlade,
         Equipment.CrashBomber
     },
