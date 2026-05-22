@@ -68,7 +68,8 @@ public static class MM1
         Equipment.MagnetBeam
     };
 
-    private static readonly StageIndex[] stages =
+    private static readonly StageIndex[]
+        robotStages =
     {
         StageIndex.CutMan,
         StageIndex.IceMan,
