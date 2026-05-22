@@ -564,8 +564,7 @@ RTS               ; 60          ; $C882   ; 0x01_C892                           
 
 
 ; New Instructions
-; -----------------------------------------------------
-
+; --------------------------------------------------------------                          ; --------------------------------------------------------------
 LDA $FB           ; A5 FB       ; $B11F   ; 0x01_B12F ; load weapon bitfield                                ;             ; $B127   ; 0x01_B137
 
 ; ...................................................                                     ; ...................................................
@@ -608,3 +607,63 @@ STA $FB           ; 85 FB       ; $FF17   ; 0x01_FF27 ; write to weapon bitfield
 LDA #$80          ; A9 80       ; $FF19   ; 0x01_FF29 ; load magnet beam bitflag again                      ;             ;         ;
 ORA $5D           ; 05 5D       ; $FF1B   ; 0x01_FF2B ; OR with boss bitfield                               ;             ;         ;
 JMP $C877         ; 4C 77 C8    ; $FF1D   ; 0x01_FF2D                                                       ;             ;         ;
+
+
+
+; New Instructions (SNES)
+; --------------------------------------------------------------
+LDA $FB           ; A5 FB       ; $CFB127 ; 0x27_B127 ; load weapon bitfield
+
+; ...................................................
+
+LDA $FB           ; A5 FB       ; $CFB19B ; 0x27_B19B ; load weapon bitfield
+
+; ...................................................
+
+LDA $FB           ; A5 FB       ; $CFB29C ; 0x27_B29C ; load weapon bitfield
+
+; ...................................................
+
+LDA $FB           ; A5 FB       ; $CFB2B0 ; 0x27_B2B0 ; load weapon bitfield
+
+; ...................................................
+
+LDA $FB           ; A5 FB       ; $CFB413 ; 0x27_B413 ; load weapon bitfield
+
+; ...................................................
+
+JSL $FF8006       ; 22 06 80 FF ; $C3C125 ; 0x21_C125 ; jump to new instructions
+NOP               ; EA          ; $C3C129 ; 0x21_C129 ; OR with boss bitfield
+
+;                               ; $C5C125 ; 0x22_C125 ; this jump instruction is duplicated in all these locations
+;                               ; $C7C125 ; 0x23_C125
+;                               ; $C9C125 ; 0x24_C125
+;                               ; $CBC125 ; 0x25_C125
+;                               ; $CDC125 ; 0x26_C125
+;                               ; $CFC125 ; 0x27_C125
+
+; ...................................................
+
+JSL $FF8014       ; 22 14 80 FF ; $C3C873 ; 0x21_C873 ; jump to new instructions
+;                               ; $C5C873 ; 0x22_C873 ; this jump instruction is duplicated in all these locations
+;                               ; $C7C873 ; 0x23_C873
+;                               ; $C9C873 ; 0x24_C873
+;                               ; $CBC873 ; 0x25_C873
+;                               ; $CDC873 ; 0x26_C873
+;                               ; $CFC873 ; 0x27_C873
+
+; ...................................................
+
+LDA $FF8000,X     ; BF 00 80 FF ; $FF8006 ; 0x3F_8006 ; load weapon bitflag
+ORA $FB           ; 05 FB       ; $FF800A ; 0x3F_800A ; OR with weapon bitfield
+STA $FB           ; 85 FB       ; $FF800C ; 0x3F_800C ; write to weapon bitfield
+LDA $C148,X       ; BD 48 C1    ; $FF800E ; 0x3F_800E ; load boss bitflag
+ORA $5D           ; 05 5D       ; $FF8011 ; 0x3F_8011 ; OR with boss bitfield
+RTL               ; 6B          ; $FF8013 ; 0x3F_8013
+
+LDA #$80          ; A9 80       ; $FF8014 ; 0x3F_8014 ; load magnet beam bitflag
+ORA $FB           ; 05 FB       ; $FF8016 ; 0x3F_8016 ; OR with weapon bitfield
+STA $FB           ; 85 FB       ; $FF8018 ; 0x3F_8018 ; write to weapon bitfield
+LDA #$80          ; A9 80       ; $FF801A ; 0x3F_801A ; load magnet beam bitflag again
+ORA $5D           ; 05 5D       ; $FF801C ; 0x3F_801C ; OR with boss bitfield
+RTL               ; 6B          ; $FF801E ; 0x3F_801E
