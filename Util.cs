@@ -22,7 +22,7 @@ public static class Util
         return newData;
     }
 
-    public static int[] RepeatedSNESAddress(int address) => new int[0xF]
+    public static int[] RepeatedSNESAddressMM2(int address) => new int[0xF]
     {
         0x00_0000 + address, 0x00_8000 + address,
         0x01_0000 + address, 0x01_8000 + address,
