@@ -72,18 +72,21 @@ public partial class MainWindow : Form
         {
             case PatchManager.GameID.MM1:
                 {
-                    IPS patchJP = new(), patchNA = new();
+                    IPS patchJP = new(), patchNA = new(), patchSNES = new();
                     PatchManager.AddPatches(patchJP, MergeMode.None, PatchManager.GameID.MM1, PatchManager.VersionID.Japan);
                     PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM1, PatchManager.VersionID.NorthAmerica);
+                    PatchManager.AddPatches(patchSNES, MergeMode.None, PatchManager.GameID.MM1, PatchManager.VersionID.SuperNintendo);
 
-                    MM1.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out string spoiler);
+                    MM1.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out IPS shuffledPatchSNES, out string spoiler);
                     patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
+                    patchSNES.Add(shuffledPatchSNES, MergeMode.CombineOver);
 
                     folderPath += '\\' + (seedName = "MM1R " + seed);
                     File.WriteAllText(folderPath + " (Spoiler).txt", spoiler);
                     patchJP.WritePatch(folderPath + $" ({PatchManager.VersionID.Japan})");
                     patchNA.WritePatch(folderPath + $" ({PatchManager.VersionID.NorthAmerica})");
+                    patchSNES.WritePatch(folderPath + $" ({PatchManager.VersionID.SuperNintendo})");
 
                     break;
                 }

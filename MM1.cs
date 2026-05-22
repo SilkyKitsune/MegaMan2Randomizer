@@ -243,7 +243,7 @@ public static class MM1
         foreach (int address in ConvertAddressToSNES(Address.NewMagnetBeamBitFlag)) snes.Add(new Patch(address, data_), MergeMode.None);
     }
 
-    public static void Generate(ref int seed, out IPS jp, out IPS na, out string spoiler)
+    public static void Generate(ref int seed, out IPS jp, out IPS na, out IPS snes, out string spoiler)
     {
         if (seed < 0) seed = Util.GetSeed();
         Random r = new(seed);
@@ -251,11 +251,13 @@ public static class MM1
         spoiler = $"--- MM1R Spoiler Log ---\nSeed: {seed}\n";
         jp = new();
         na = new();
+        snes = new();
 
-        ShuffleEquipmentPatch(out PatchCollection equipmentJPNA, out string s, r);
+        ShuffleEquipmentPatch(out PatchCollection equipmentJPNA, out PatchCollection equipmentSNES, out string s, r);
 
         jp.Add(equipmentJPNA, MergeMode.None);
         na.Add(equipmentJPNA, MergeMode.None);
+        snes.Add(equipmentSNES, MergeMode.None);
 
         spoiler += '\n' + s;
 
@@ -265,5 +267,6 @@ public static class MM1
 
         jp.Add(new Patch((int)Address.CutManWeaponDamage, ws_), MergeMode.None);
         na.Add(new Patch(ConvertAddressToNA(Address.CutManWeaponDamage), ws_), MergeMode.None);
+        foreach (int address in ConvertAddressToSNES(Address.CutManWeaponDamage)) snes.Add(new Patch(address, ws_), MergeMode.None);
     }
 }
