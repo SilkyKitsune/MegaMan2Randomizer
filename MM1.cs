@@ -220,7 +220,7 @@ public static class MM1
         if (seed < 0) seed = Util.GetSeed();
         Random r = new(seed);
 
-        spoiler = $"--- MM1R Spoiler Log ---\nSeed: {seed}\n\n";
+        spoiler = $"--- MM1R Spoiler Log ---\nSeed: {seed}\n";
         jp = new();
         na = new();
 
@@ -229,12 +229,13 @@ public static class MM1
         jp.Add(equipmentJPNA, MergeMode.None);
         na.Add(equipmentJPNA, MergeMode.None);
 
-        spoiler += s;
+        spoiler += '\n' + s;
 
-        AutoSizedArray<byte> ws = new(weaknessSets.Length * weaknessSets[0].Length);
+        AutoSizedArray<byte> ws = new(BossCount * WeaponCount);
         ws.AddConcat(weaknessSets);
+        byte[] ws_ = ws.ToArray();
 
-        jp.Add(new Patch((int)Address.CutManWeaponDamage, ws.ToArray()), MergeMode.None);
-        na.Add(new Patch(ConvertAddressToNA(Address.CutManWeaponDamage), ws.ToArray()), MergeMode.None);
+        jp.Add(new Patch((int)Address.CutManWeaponDamage, ws_), MergeMode.None);
+        na.Add(new Patch(ConvertAddressToNA(Address.CutManWeaponDamage), ws_), MergeMode.None);
     }
 }
