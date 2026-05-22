@@ -76,7 +76,28 @@ public static class MM1
         StageIndex.BombMan,
         StageIndex.FireMan,
         StageIndex.ElecMan,
-        StageIndex.GutsMan
+        StageIndex.GutsMan,
+    },
+        castleStages =
+    {
+        StageIndex.YellowDevilW1,
+        StageIndex.CopyRobotW2,
+        StageIndex.CWU01P_W3,
+        StageIndex.WilyMachineW4,
+    },
+        allStages =
+    {
+        StageIndex.CutMan,
+        StageIndex.IceMan,
+        StageIndex.BombMan,
+        StageIndex.FireMan,
+        StageIndex.ElecMan,
+        StageIndex.GutsMan,
+
+        StageIndex.YellowDevilW1,
+        StageIndex.CopyRobotW2,
+        StageIndex.CWU01P_W3,
+        StageIndex.WilyMachineW4,
     };
 
     private static readonly string[]
