@@ -190,6 +190,29 @@ public static class MM1
         _ => (int)address
     };
 
+    private static int[] ConvertAddressToSNES(Address address) => address switch
+    {
+        Address.BossBitFlags =>      Util.RepeatedSNESAddressMM1(0x21_C148),
+        Address.MagnetBeamBitFlag => Util.RepeatedSNESAddressMM1(0x21_C874),
+
+        Address.CutManWeaponDamage =>        Util.RepeatedSNESAddressMM1(0x21_FDEE),
+        Address.IceManWeaponDamage =>        Util.RepeatedSNESAddressMM1(0x21_FDF6),
+        Address.BombManWeaponDamage =>       Util.RepeatedSNESAddressMM1(0x21_FDFE),
+        Address.FireManWeaponDamage =>       Util.RepeatedSNESAddressMM1(0x21_FE06),
+        Address.ElecManWeaponDamage =>       Util.RepeatedSNESAddressMM1(0x21_FE0E),
+        Address.GutsManWeaponDamage =>       Util.RepeatedSNESAddressMM1(0x21_FE16),
+        Address.YellowDevilWeaponDamage =>   Util.RepeatedSNESAddressMM1(0x21_FE1E),
+        Address.CopyRobotWeaponDamage =>     Util.RepeatedSNESAddressMM1(0x21_FE26),
+        Address.CWU01PWeaponDamage =>        Util.RepeatedSNESAddressMM1(0x21_FE2E),
+        Address.WilyMachineV1WeaponDamage => Util.RepeatedSNESAddressMM1(0x21_FE36),
+        Address.WilyMachineV2WeaponDamage => Util.RepeatedSNESAddressMM1(0x21_FE3E),
+
+        Address.NewWeaponBitFlags =>    new int[1] { 0x3F_8000 },
+        Address.NewMagnetBeamBitFlag => new int[1] { 0x3F_8015 },
+
+        _ => new int[1] { (int)address }
+    };
+
     private static void ShuffleEquipmentPatch(out PatchCollection jpna, out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
