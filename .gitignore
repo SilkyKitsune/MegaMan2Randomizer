@@ -5,10 +5,10 @@
 
 IncreaseETanks.ips
 Input.asm
-MysteryStageSelect_AttributeTableEdit.ips
-MysteryStageSelect_CHREdit.ips
-MysteryStageSelect_NameTableEdit.ips
-MysteryStageSelect_OAMEdit.ips
+*_AttributeTableEdit*
+*_CHREdit*
+*_NameTableEdit*
+*_OAMEdit*
 QuickSwap.asm
 WeaponGetScreen.asm
 
