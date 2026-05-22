@@ -6,23 +6,24 @@ namespace MM2Randomizer;
 
 public static class MM1
 {
-    public const int BossCount = 0x0A, WeaponCount = 0x08;
+    public const int BossCount = 0x0B, WeaponCount = 0x08;
 
     public enum Address : int
     {
         BossBitFlags =      0x01_C158,
         MagnetBeamBitFlag = 0x01_C884,
 
-        CutManWeaponDamage =      0x01_FE32, //$FE22
-        IceManWeaponDamage =      0x01_FE3A,
-        BombManWeaponDamage =     0x01_FE42,
-        FireManWeaponDamage =     0x01_FE4A,
-        ElecManWeaponDamage =     0x01_FE52,
-        GutsManWeaponDamage =     0x01_FE5A,
-        YellowDevilWeaponDamage = 0x01_FE62,
-        CopyRobotWeaponDamage =   0x01_FE6A,
-        CWU01PWeaponDamage =      0x01_FE72,
-        WilyMachineWeaponDamage = 0x01_FE7A,
+        CutManWeaponDamage =        0x01_FE32, //$FE22
+        IceManWeaponDamage =        0x01_FE3A,
+        BombManWeaponDamage =       0x01_FE42,
+        FireManWeaponDamage =       0x01_FE4A,
+        ElecManWeaponDamage =       0x01_FE52,
+        GutsManWeaponDamage =       0x01_FE5A,
+        YellowDevilWeaponDamage =   0x01_FE62,
+        CopyRobotWeaponDamage =     0x01_FE6A,
+        CWU01PWeaponDamage =        0x01_FE72,
+        WilyMachineV1WeaponDamage = 0x01_FE7A,
+        WilyMachineV2WeaponDamage = 0x01_FE82,
 
         NewWeaponBitFlags =    0x01_FF10,
         NewMagnetBeamBitFlag = 0x01_FF24,
@@ -112,20 +113,22 @@ public static class MM1
         "Yellow Devil",
         "Copy Robot",
         "CWU-01P",
-        "Wily Machine",
+        "Wily Machine V1",
+        "Wily Machine V2",
     },
         bossNamesWithSpaces =
     {
-        "Cut Man     ",
-        "Ice Man     ",
-        "Bomb Man    ",
-        "Fire Man    ",
-        "Elec Man    ",
-        "Guts Man    ",
-        "Yellow Devil",
-        "Copy Robot  ",
-        "CWU-01P     ",
-        "Wily Machine",
+        "Cut Man        ",
+        "Ice Man        ",
+        "Bomb Man       ",
+        "Fire Man       ",
+        "Elec Man       ",
+        "Guts Man       ",
+        "Yellow Devil   ",
+        "Copy Robot     ",
+        "CWU-01P        ",
+        "Wily Machine V1",
+        "Wily Machine V2",
     },
         bossNamesWithSpacesShort =
     {
@@ -150,7 +153,8 @@ public static class MM1
         new byte[WeaponCount] { 0x02, 0x04, 0x00, 0x00, 0x04, 0x07, 0x00, 0x00 }, //Yellow Devil W1
         new byte[WeaponCount] { 0x02, 0x02, 0x00, 0x0A, 0x04, 0x04, 0x00, 0x01 }, //Copy Robot W2 (temp magnet beam value)
         new byte[WeaponCount] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, //CWU-01P W3
-        new byte[WeaponCount] { 0x01, 0x01, 0x01, 0x01, 0x04, 0x01, 0x01, 0x00 }, //Wily Machine W4 (might only be phase 1)
+        new byte[WeaponCount] { 0x01, 0x01, 0x01, 0x01, 0x04, 0x01, 0x01, 0x00 }, //Wily Machine Phase 1 W4
+        new byte[WeaponCount] { 0x01, 0x01, 0x00, 0x01, 0x01, 0x01, 0x01, 0x00 }, //Wily Machine Phase 2 W4
     },
         weaknessSetsVanilla = new byte[BossCount][]
     {
@@ -164,21 +168,24 @@ public static class MM1
         new byte[WeaponCount] { 0x02, 0x02, 0x00, 0x00, 0x02, 0x04, 0x00, 0x00 }, //Yellow Devil W1
         new byte[WeaponCount] { 0x01, 0x01, 0x00, 0x02, 0x02, 0x02, 0x00, 0x00 }, //Copy Robot W2
         new byte[WeaponCount] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, //CWU-01P W3
-        new byte[WeaponCount] { 0x01, 0x01, 0x01, 0x01, 0x04, 0x01, 0x01, 0x00 }, //Wily Machine W4 (might only be phase 1)
+        new byte[WeaponCount] { 0x01, 0x01, 0x01, 0x01, 0x04, 0x01, 0x01, 0x00 }, //Wily Machine Phase 1 W4
+        new byte[WeaponCount] { 0x01, 0x01, 0x00, 0x01, 0x01, 0x01, 0x01, 0x00 }, //Wily Machine Phase 2 W4
+
     };
 
     private static int ConvertAddressToNA(Address address) => address switch
     {
-        Address.CutManWeaponDamage =>      0x01_FDFE,
-        Address.IceManWeaponDamage =>      0x01_FE06,
-        Address.BombManWeaponDamage =>     0x01_FE0E,
-        Address.FireManWeaponDamage =>     0x01_FE16,
-        Address.ElecManWeaponDamage =>     0x01_FE1E,
-        Address.GutsManWeaponDamage =>     0x01_FE26,
-        Address.YellowDevilWeaponDamage => 0x01_FE2E,
-        Address.CopyRobotWeaponDamage =>   0x01_FE36,
-        Address.CWU01PWeaponDamage =>      0x01_FE3E,
-        Address.WilyMachineWeaponDamage => 0x01_FE46,
+        Address.CutManWeaponDamage =>        0x01_FDFE,
+        Address.IceManWeaponDamage =>        0x01_FE06,
+        Address.BombManWeaponDamage =>       0x01_FE0E,
+        Address.FireManWeaponDamage =>       0x01_FE16,
+        Address.ElecManWeaponDamage =>       0x01_FE1E,
+        Address.GutsManWeaponDamage =>       0x01_FE26,
+        Address.YellowDevilWeaponDamage =>   0x01_FE2E,
+        Address.CopyRobotWeaponDamage =>     0x01_FE36,
+        Address.CWU01PWeaponDamage =>        0x01_FE3E,
+        Address.WilyMachineV1WeaponDamage => 0x01_FE46,
+        Address.WilyMachineV2WeaponDamage => 0x01_FE4E,
 
         _ => (int)address
     };
