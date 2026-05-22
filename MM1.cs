@@ -51,10 +51,10 @@ public static class MM1
         ElecMan = 0x04,
         GutsMan = 0x05,
 
-        //YellowDevilW1 = ?,
-        //CopyRobotW2 = ?,
-        //CWU01P_W3 = ?,
-        //W4 = ?
+        YellowDevilW1 = 0x06,
+        CopyRobotW2 =   0x07,
+        CWU01P_W3 =     0x08,
+        WilyMachineW4 = 0x09,
     }
 
     private static readonly Equipment[] equipment =
