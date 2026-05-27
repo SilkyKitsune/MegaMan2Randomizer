@@ -252,6 +252,57 @@ public static class MM1
         _ => new int[1] { (int)address }
     };
 
+    private static void ShuffleWeaknessesPatch(out PatchCollection jp, out PatchCollection na, out PatchCollection snes, out string spoiler, Random r = null, int shuffleMode = 0, bool robotsOnly = false)
+    {
+        r ??= new(Util.GetSeed());
+
+        jp = new IPS();
+        na = new IPS();
+        snes = new IPS();
+
+        byte[][] newWeaknessSets = Util.ShuffleWeaknesses(out spoiler, r, shuffleMode, robotsOnly ? 6 : BossCount, weaknessSets);
+        
+        int i = 0;
+        if (shuffleMode == 1)
+        {
+            spoiler += "\n                                      P    C    I    B    F    E    G    M\n";
+            foreach (string s in Util.TableToStrings(newWeaknessSets))
+            {
+                int index = -1;
+                byte[] newWeaknessSet = newWeaknessSets[i];
+                while (++index < weaknessSets.Length) if (ICollection<byte>.Equivalent(newWeaknessSet, weaknessSets[index])) break;
+
+                spoiler += bossNamesWithSpaces[i++] + " => " + bossNamesWithSpaces[index] + s + '\n';
+            }
+        }
+        else
+        {
+            spoiler += "\n                   P    C    I    B    F    E    G    M\n";
+            foreach (string s in Util.TableToStrings(newWeaknessSets)) spoiler += bossNamesWithSpaces[i++] + s + '\n';
+        }
+        spoiler = spoiler.Replace("255", " -1");
+
+        byte[] cwu01pWeaknesses = newWeaknessSets[(int)StageIndex.CWU01P_W3];
+        for (i = 0; i < enemyDamageAddresses.Length; i++)//test
+        {
+            byte[] weakness = new byte[1] { cwu01pWeaknesses[i] };
+            Address addressJP = enemyDamageAddresses[i];
+
+            jp.Add(new Patch((int)addressJP + (int)ObjectType.CWU01P, weakness), MergeMode.None);
+            na.Add(new Patch(ConvertAddressToNA(addressJP) + (int)ObjectType.CWU01P, weakness), MergeMode.None);
+            foreach (int addressSNES in ConvertAddressToSNES(addressJP))
+                snes.Add(new Patch(addressSNES + (int)ObjectType.CWU01P, weakness), MergeMode.None);
+        }
+
+        AutoSizedArray<byte> ws = new(BossCount * WeaponCount);
+        ws.AddConcat(newWeaknessSets);
+        byte[] ws_ = ws.ToArray();
+
+        jp.Add(new Patch((int)Address.CutManWeaponDamage, ws_), MergeMode.None);
+        na.Add(new Patch(ConvertAddressToNA(Address.CutManWeaponDamage), ws_), MergeMode.None);
+        foreach (int address in ConvertAddressToSNES(Address.CutManWeaponDamage)) snes.Add(new Patch(address, ws_), MergeMode.None);
+    }
+
     private static void ShuffleEquipmentPatch(out PatchCollection jpna, out PatchCollection snes, out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
@@ -282,7 +333,8 @@ public static class MM1
         foreach (int address in ConvertAddressToSNES(Address.NewMagnetBeamBitFlag)) snes.Add(new Patch(address, data_), MergeMode.None);
     }
 
-    public static void Generate(ref int seed, out IPS jp, out IPS na, out IPS snes, out string spoiler)
+    public static void Generate(ref int seed, out IPS jp, out IPS na, out IPS snes, out string spoiler,
+        int weaknessShuffle = 0, bool robotsOnly = false)
     {
         if (seed < 0) seed = Util.GetSeed();
         Random r = new(seed);
@@ -300,12 +352,12 @@ public static class MM1
 
         spoiler += '\n' + s;
 
-        AutoSizedArray<byte> ws = new(BossCount * WeaponCount);
-        ws.AddConcat(weaknessSets);
-        byte[] ws_ = ws.ToArray();
+        ShuffleWeaknessesPatch(out PatchCollection weaknessesJP, out PatchCollection weaknessesNA, out PatchCollection weaknessesSNES, out s, r, weaknessShuffle, robotsOnly);
 
-        jp.Add(new Patch((int)Address.CutManWeaponDamage, ws_), MergeMode.None);
-        na.Add(new Patch(ConvertAddressToNA(Address.CutManWeaponDamage), ws_), MergeMode.None);
-        foreach (int address in ConvertAddressToSNES(Address.CutManWeaponDamage)) snes.Add(new Patch(address, ws_), MergeMode.None);
+        jp.Add(weaknessesJP, MergeMode.None);
+        na.Add(weaknessesNA, MergeMode.None);
+        snes.Add(weaknessesSNES, MergeMode.None);
+
+        spoiler += '\n' + s;
     }
 }
