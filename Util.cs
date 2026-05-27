@@ -44,4 +44,35 @@ public static class Util
         0x06_0000 + address,
         0x07_0000 + address, 0x07_8000 + address,
     };
+
+    public static string[] TableToStrings<T>(T[][] arrays)
+    {
+        if (arrays == null || arrays.Length == 0) return null;
+
+        string[] strings = new string[arrays.Length];
+
+        int i = 0;
+        foreach (T[] array in arrays)
+        {
+            if (array == null || array.Length == 0) continue;
+
+            string s = "";
+            foreach (T value in array) if (value != null)
+                {
+                    string valueString = value.ToString();
+                    s += valueString.Length switch
+                    {
+                        1 => "    ",
+                        2 => "   ",
+                        3 => "  ",
+                        4 => " ",
+                        _ => string.Empty
+                    } + valueString;
+                }
+
+            strings[i++] = s;
+        }
+
+        return i == strings.Length ? strings : strings[..i];
+    }
 }
