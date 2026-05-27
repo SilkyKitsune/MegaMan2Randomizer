@@ -19,6 +19,8 @@ public static class MM2
         MetalManGraphicsPtrs =  0x01_B494,
         CrashManGraphicsPtrs =  0x01_F4DC,
 
+        TimeStopperBossDamage = 0x02_C049,
+
         MegaBusterBossDamage =     0x02_E933,
         AtomicFireBossDamage =     0x02_E941,
         AirShooterBossDamage =     0x02_E94F,
@@ -319,6 +321,8 @@ public static class MM2
         Address.FlashManGraphicsPtrs =>  new int[1] { 0x03_3496 },
         Address.MetalManGraphicsPtrs =>  new int[1] { 0x03_B484 },
         Address.CrashManGraphicsPtrs =>  new int[1] { 0x04_34CC },
+
+        Address.TimeStopperBossDamage => new int[1] { 0x06_0039 },
 
         Address.MegaBusterBossDamage =>     new int[1] { 0x06_2942 },
         Address.AtomicFireBossDamage =>     new int[1] { 0x06_2950 },
