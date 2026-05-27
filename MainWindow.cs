@@ -13,6 +13,7 @@ public partial class MainWindow : Form
         weaknessMM1ComboBox.SelectedIndex = 0;
         weaknessComboBox.SelectedIndex = 0;
         bossComboBox.SelectedIndex = 0;
+        timeStopperComboBox.SelectedIndex = 0;
 
         if (PatchManager.LoadPatches(out string errors))
         {
@@ -32,16 +33,18 @@ public partial class MainWindow : Form
 
     private void outputButton_Click(object sender, EventArgs e) => OutputFolderButton();
 
-    private void weaknessComboBox_SelectedIndexChanged(object sender, EventArgs e) => WeaknessShuffleIndex();
+    private void weaknessComboBox_SelectedIndexChanged(object sender, EventArgs e) => UpdateControls();//rename
 
     private void GenerateButton()
     {
         bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
             robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked, october = this.october,
             robotsOnlyMM1 = !robotsOnlyMM1CheckBox.Checked;
-        int weaknessShuffleMM1 = weaknessMM1ComboBox.SelectedIndex, weaknessShuffle = weaknessComboBox.SelectedIndex, robotMasterShuffle = bossComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
+        int weaknessShuffleMM1 = weaknessMM1ComboBox.SelectedIndex, weaknessShuffle = weaknessComboBox.SelectedIndex, robotMasterShuffle = bossComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex,
+            timeStopperShuffle = timeStopperComboBox.SelectedIndex, minBossCount = (int)bossCountMinNumericUpDown.Value, maxBossCount = (int)bossCountMaxNumericUpDown.Value,
+            minDamage = (int)damageMinNumericUpDown.Value, maxDamage = (int)damageMaxNumericUpDown.Value;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text, seedName = string.Empty;
-        
+
         if (string.IsNullOrEmpty(folderPath))
         {
             MessageBox.Show("No output folder path specified", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -113,7 +116,12 @@ public partial class MainWindow : Form
                         PatchManager.AddPatch(patchSNES, MergeMode.None, PatchManager.GameID.MM2, PatchManager.VersionID.SuperNintendo, PatchManager.PatchID.HalloweenMode2);
                     }
 
-                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out IPS shuffledPatchSNES, out string spoiler, shuffleAllEquipment, heatManNoItem2, shuffleLevels, robotMasterShuffle, weaknessShuffle, robotsOnly, nerfBuster);
+                    MM2.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out IPS shuffledPatchSNES, out string spoiler,
+                        shuffleAllEquipment, heatManNoItem2,
+                        shuffleLevels,
+                        robotMasterShuffle,
+                        weaknessShuffle, robotsOnly, nerfBuster,
+                        timeStopperShuffle, minBossCount, maxBossCount, minDamage, maxDamage);
                     patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
                     patchSNES.Add(shuffledPatchSNES, MergeMode.CombineOver);
@@ -138,10 +146,20 @@ public partial class MainWindow : Form
         folderBrowserDialog.ShowDialog();
         outputTextBox.Text = folderBrowserDialog.SelectedPath;
     }
-    
-    private void WeaknessShuffleIndex()
+
+    private void UpdateControls()
     {
         robotsOnlyMM1CheckBox.Enabled = weaknessMM1ComboBox.SelectedIndex != 0;
         robotsOnlyCheckBox.Enabled = weaknessComboBox.SelectedIndex != 0;
+
+        bool timeStopperEnabled = timeStopperComboBox.SelectedIndex != 0;
+        bossCountMinNumericUpDown.Enabled = timeStopperEnabled;
+        bossCountMaxNumericUpDown.Enabled = timeStopperEnabled;
+        damageMinNumericUpDown.Enabled = timeStopperEnabled;
+        damageMaxNumericUpDown.Enabled = timeStopperEnabled;
+
+        int minBossCount = (int)bossCountMinNumericUpDown.Value, minDamage = (int)damageMinNumericUpDown.Value;
+        if (minBossCount > (int)bossCountMaxNumericUpDown.Value) bossCountMaxNumericUpDown.Value = minBossCount;
+        if (minDamage > (int)damageMaxNumericUpDown.Value) damageMaxNumericUpDown.Value = minDamage;
     }
 }

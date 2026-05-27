@@ -48,17 +48,31 @@
             weaknessMM1ComboBox = new System.Windows.Forms.ComboBox();
             weaknessMM1Label = new System.Windows.Forms.Label();
             MM2Tab = new System.Windows.Forms.TabPage();
-            bossLabel = new System.Windows.Forms.Label();
+            damage2Label = new System.Windows.Forms.Label();
+            bossCount2Label = new System.Windows.Forms.Label();
+            damageMaxNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            damageMinNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            damageLabel = new System.Windows.Forms.Label();
+            bossCountLabel = new System.Windows.Forms.Label();
+            bossCountMaxNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            bossCountMinNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            timeStopperComboBox = new System.Windows.Forms.ComboBox();
+            timeStopperLabel = new System.Windows.Forms.Label();
             bossComboBox = new System.Windows.Forms.ComboBox();
+            bossLabel = new System.Windows.Forms.Label();
             tabControl.SuspendLayout();
             MM1Tab.SuspendLayout();
             MM2Tab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)damageMaxNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)damageMinNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bossCountMaxNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bossCountMinNumericUpDown).BeginInit();
             SuspendLayout();
             // 
             // outputLabel
             // 
             outputLabel.AutoSize = true;
-            outputLabel.Location = new System.Drawing.Point(12, 265);
+            outputLabel.Location = new System.Drawing.Point(12, 380);
             outputLabel.Name = "outputLabel";
             outputLabel.Size = new System.Drawing.Size(81, 15);
             outputLabel.TabIndex = 1;
@@ -66,7 +80,7 @@
             // 
             // outputButton
             // 
-            outputButton.Location = new System.Drawing.Point(383, 283);
+            outputButton.Location = new System.Drawing.Point(383, 398);
             outputButton.Name = "outputButton";
             outputButton.Size = new System.Drawing.Size(25, 23);
             outputButton.TabIndex = 5;
@@ -77,7 +91,7 @@
             // seedLabel
             // 
             seedLabel.AutoSize = true;
-            seedLabel.Location = new System.Drawing.Point(12, 309);
+            seedLabel.Location = new System.Drawing.Point(12, 424);
             seedLabel.Name = "seedLabel";
             seedLabel.Size = new System.Drawing.Size(89, 15);
             seedLabel.TabIndex = 4;
@@ -85,7 +99,7 @@
             // 
             // outputTextBox
             // 
-            outputTextBox.Location = new System.Drawing.Point(12, 283);
+            outputTextBox.Location = new System.Drawing.Point(12, 398);
             outputTextBox.Name = "outputTextBox";
             outputTextBox.Size = new System.Drawing.Size(365, 23);
             outputTextBox.TabIndex = 3;
@@ -101,14 +115,14 @@
             // 
             // seedTextBox
             // 
-            seedTextBox.Location = new System.Drawing.Point(12, 327);
+            seedTextBox.Location = new System.Drawing.Point(12, 442);
             seedTextBox.Name = "seedTextBox";
             seedTextBox.Size = new System.Drawing.Size(315, 23);
             seedTextBox.TabIndex = 6;
             // 
             // generateButton
             // 
-            generateButton.Location = new System.Drawing.Point(333, 327);
+            generateButton.Location = new System.Drawing.Point(333, 442);
             generateButton.Name = "generateButton";
             generateButton.Size = new System.Drawing.Size(75, 23);
             generateButton.TabIndex = 8;
@@ -139,6 +153,8 @@
             // heatManCheckBox
             // 
             heatManCheckBox.AutoSize = true;
+            heatManCheckBox.Checked = true;
+            heatManCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             heatManCheckBox.Location = new System.Drawing.Point(5, 125);
             heatManCheckBox.Name = "heatManCheckBox";
             heatManCheckBox.Size = new System.Drawing.Size(196, 19);
@@ -163,7 +179,7 @@
             weaknessComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "Random Balanced", "Random Random" });
             weaknessComboBox.Location = new System.Drawing.Point(6, 21);
             weaknessComboBox.Name = "weaknessComboBox";
-            weaknessComboBox.Size = new System.Drawing.Size(360, 23);
+            weaknessComboBox.Size = new System.Drawing.Size(380, 23);
             weaknessComboBox.TabIndex = 13;
             weaknessComboBox.SelectedIndexChanged += weaknessComboBox_SelectedIndexChanged;
             // 
@@ -184,7 +200,7 @@
             tabControl.Location = new System.Drawing.Point(12, 12);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new System.Drawing.Size(400, 250);
+            tabControl.Size = new System.Drawing.Size(400, 365);
             tabControl.TabIndex = 15;
             // 
             // MM1Tab
@@ -195,7 +211,7 @@
             MM1Tab.Location = new System.Drawing.Point(4, 24);
             MM1Tab.Name = "MM1Tab";
             MM1Tab.Padding = new System.Windows.Forms.Padding(3);
-            MM1Tab.Size = new System.Drawing.Size(392, 222);
+            MM1Tab.Size = new System.Drawing.Size(392, 337);
             MM1Tab.TabIndex = 0;
             MM1Tab.Text = "Mega Man 1";
             MM1Tab.UseVisualStyleBackColor = true;
@@ -232,6 +248,17 @@
             // 
             // MM2Tab
             // 
+            MM2Tab.AutoScroll = true;
+            MM2Tab.Controls.Add(damage2Label);
+            MM2Tab.Controls.Add(bossCount2Label);
+            MM2Tab.Controls.Add(damageMaxNumericUpDown);
+            MM2Tab.Controls.Add(damageMinNumericUpDown);
+            MM2Tab.Controls.Add(damageLabel);
+            MM2Tab.Controls.Add(bossCountLabel);
+            MM2Tab.Controls.Add(bossCountMaxNumericUpDown);
+            MM2Tab.Controls.Add(bossCountMinNumericUpDown);
+            MM2Tab.Controls.Add(timeStopperComboBox);
+            MM2Tab.Controls.Add(timeStopperLabel);
             MM2Tab.Controls.Add(bossComboBox);
             MM2Tab.Controls.Add(bossLabel);
             MM2Tab.Controls.Add(weaknessLabel);
@@ -244,10 +271,118 @@
             MM2Tab.Location = new System.Drawing.Point(4, 24);
             MM2Tab.Name = "MM2Tab";
             MM2Tab.Padding = new System.Windows.Forms.Padding(3);
-            MM2Tab.Size = new System.Drawing.Size(392, 222);
+            MM2Tab.Size = new System.Drawing.Size(392, 337);
             MM2Tab.TabIndex = 1;
             MM2Tab.Text = "Mega Man 2";
             MM2Tab.UseVisualStyleBackColor = true;
+            // 
+            // damage2Label
+            // 
+            damage2Label.AutoSize = true;
+            damage2Label.Location = new System.Drawing.Point(151, 294);
+            damage2Label.Name = "damage2Label";
+            damage2Label.Size = new System.Drawing.Size(18, 15);
+            damage2Label.TabIndex = 26;
+            damage2Label.Text = "to";
+            // 
+            // bossCount2Label
+            // 
+            bossCount2Label.AutoSize = true;
+            bossCount2Label.Location = new System.Drawing.Point(151, 265);
+            bossCount2Label.Name = "bossCount2Label";
+            bossCount2Label.Size = new System.Drawing.Size(18, 15);
+            bossCount2Label.TabIndex = 25;
+            bossCount2Label.Text = "to";
+            // 
+            // damageMaxNumericUpDown
+            // 
+            damageMaxNumericUpDown.Location = new System.Drawing.Point(175, 292);
+            damageMaxNumericUpDown.Maximum = new decimal(new int[] { 4, 0, 0, 0 });
+            damageMaxNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            damageMaxNumericUpDown.Name = "damageMaxNumericUpDown";
+            damageMaxNumericUpDown.Size = new System.Drawing.Size(40, 23);
+            damageMaxNumericUpDown.TabIndex = 24;
+            damageMaxNumericUpDown.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            damageMaxNumericUpDown.ValueChanged += weaknessComboBox_SelectedIndexChanged;
+            // 
+            // damageMinNumericUpDown
+            // 
+            damageMinNumericUpDown.Location = new System.Drawing.Point(105, 292);
+            damageMinNumericUpDown.Maximum = new decimal(new int[] { 4, 0, 0, 0 });
+            damageMinNumericUpDown.Name = "damageMinNumericUpDown";
+            damageMinNumericUpDown.Size = new System.Drawing.Size(40, 23);
+            damageMinNumericUpDown.TabIndex = 23;
+            damageMinNumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            damageMinNumericUpDown.ValueChanged += weaknessComboBox_SelectedIndexChanged;
+            // 
+            // damageLabel
+            // 
+            damageLabel.AutoSize = true;
+            damageLabel.Location = new System.Drawing.Point(15, 294);
+            damageLabel.Name = "damageLabel";
+            damageLabel.Size = new System.Drawing.Size(84, 15);
+            damageLabel.TabIndex = 22;
+            damageLabel.Text = "Damage Dealt:";
+            // 
+            // bossCountLabel
+            // 
+            bossCountLabel.AutoSize = true;
+            bossCountLabel.Location = new System.Drawing.Point(6, 265);
+            bossCountLabel.Name = "bossCountLabel";
+            bossCountLabel.Size = new System.Drawing.Size(93, 15);
+            bossCountLabel.TabIndex = 21;
+            bossCountLabel.Text = "Bosses Affected:";
+            // 
+            // bossCountMaxNumericUpDown
+            // 
+            bossCountMaxNumericUpDown.Location = new System.Drawing.Point(175, 263);
+            bossCountMaxNumericUpDown.Maximum = new decimal(new int[] { 4, 0, 0, 0 });
+            bossCountMaxNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            bossCountMaxNumericUpDown.Name = "bossCountMaxNumericUpDown";
+            bossCountMaxNumericUpDown.Size = new System.Drawing.Size(40, 23);
+            bossCountMaxNumericUpDown.TabIndex = 20;
+            bossCountMaxNumericUpDown.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            bossCountMaxNumericUpDown.ValueChanged += weaknessComboBox_SelectedIndexChanged;
+            // 
+            // bossCountMinNumericUpDown
+            // 
+            bossCountMinNumericUpDown.Location = new System.Drawing.Point(105, 263);
+            bossCountMinNumericUpDown.Maximum = new decimal(new int[] { 4, 0, 0, 0 });
+            bossCountMinNumericUpDown.Name = "bossCountMinNumericUpDown";
+            bossCountMinNumericUpDown.Size = new System.Drawing.Size(40, 23);
+            bossCountMinNumericUpDown.TabIndex = 19;
+            bossCountMinNumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            bossCountMinNumericUpDown.ValueChanged += weaknessComboBox_SelectedIndexChanged;
+            // 
+            // timeStopperComboBox
+            // 
+            timeStopperComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            timeStopperComboBox.FormattingEnabled = true;
+            timeStopperComboBox.Items.AddRange(new object[] { "Vanilla", "Robot Masters", "All Bosses" });
+            timeStopperComboBox.Location = new System.Drawing.Point(6, 234);
+            timeStopperComboBox.Name = "timeStopperComboBox";
+            timeStopperComboBox.Size = new System.Drawing.Size(380, 23);
+            timeStopperComboBox.TabIndex = 18;
+            timeStopperComboBox.SelectedIndexChanged += weaknessComboBox_SelectedIndexChanged;
+            // 
+            // timeStopperLabel
+            // 
+            timeStopperLabel.AutoSize = true;
+            timeStopperLabel.Location = new System.Drawing.Point(3, 216);
+            timeStopperLabel.Name = "timeStopperLabel";
+            timeStopperLabel.Size = new System.Drawing.Size(117, 15);
+            timeStopperLabel.TabIndex = 17;
+            timeStopperLabel.Text = "Time Stopper Shuffle";
+            // 
+            // bossComboBox
+            // 
+            bossComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            bossComboBox.FormattingEnabled = true;
+            bossComboBox.Items.AddRange(new object[] { "None", "Shuffle", "Random", "Single Random" });
+            bossComboBox.Location = new System.Drawing.Point(6, 190);
+            bossComboBox.Name = "bossComboBox";
+            bossComboBox.Size = new System.Drawing.Size(380, 23);
+            bossComboBox.TabIndex = 16;
             // 
             // bossLabel
             // 
@@ -258,21 +393,11 @@
             bossLabel.TabIndex = 15;
             bossLabel.Text = "Robot Master Shuffle";
             // 
-            // bossComboBox
-            // 
-            bossComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            bossComboBox.FormattingEnabled = true;
-            bossComboBox.Items.AddRange(new object[] { "None", "Shuffle", "Random", "Single Random" });
-            bossComboBox.Location = new System.Drawing.Point(6, 190);
-            bossComboBox.Name = "bossComboBox";
-            bossComboBox.Size = new System.Drawing.Size(360, 23);
-            bossComboBox.TabIndex = 16;
-            // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(424, 366);
+            ClientSize = new System.Drawing.Size(424, 475);
             Controls.Add(tabControl);
             Controls.Add(generateButton);
             Controls.Add(outputLabel);
@@ -287,6 +412,10 @@
             MM1Tab.PerformLayout();
             MM2Tab.ResumeLayout(false);
             MM2Tab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)damageMaxNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)damageMinNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bossCountMaxNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bossCountMinNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -314,5 +443,15 @@
         private System.Windows.Forms.CheckBox robotsOnlyMM1CheckBox;
         private System.Windows.Forms.ComboBox weaknessMM1ComboBox;
         private System.Windows.Forms.Label weaknessMM1Label;
+        private System.Windows.Forms.NumericUpDown damageMaxNumericUpDown;
+        private System.Windows.Forms.NumericUpDown damageMinNumericUpDown;
+        private System.Windows.Forms.Label damageLabel;
+        private System.Windows.Forms.Label bossCountLabel;
+        private System.Windows.Forms.NumericUpDown bossCountMaxNumericUpDown;
+        private System.Windows.Forms.NumericUpDown bossCountMinNumericUpDown;
+        private System.Windows.Forms.ComboBox timeStopperComboBox;
+        private System.Windows.Forms.Label timeStopperLabel;
+        private System.Windows.Forms.Label damage2Label;
+        private System.Windows.Forms.Label bossCount2Label;
     }
 }
