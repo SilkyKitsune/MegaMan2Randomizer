@@ -697,16 +697,16 @@ public static class MM2
             int i = 0;
             spoiler += "\n                                P    H    A    W    B    Q    C    M\n";
             foreach (string s in Util.TableToStrings(newWeaknessesSets))
-                {
+            {
                 int index = -1;
                 byte[] newWeaknessSet = newWeaknessesSets[i];
                 while (++index < weaknessSets.Length) if (ICollection<byte>.Equivalent(newWeaknessSet, weaknessSets[index])) break;
 
                 spoiler += bossNamesWithSpaces[i++] + " => " + bossNamesWithSpaces[index] + s + '\n';
-                    }
-                }
+            }
+        }
         else
-                {
+        {
             int i = 0;
             spoiler += "\n                P    H    A    W    B    Q    C    M\n";
             foreach (string s in Util.TableToStrings(newWeaknessesSets)) spoiler += bossNamesWithSpaces[i++] + s + '\n';
@@ -783,7 +783,7 @@ public static class MM2
         return new((int)Address.NewWeaponBitFlags, data);
     }
 #endif
-    
+
     public static void Generate(ref int seed, out IPS jp, out IPS na, out IPS snes, out string spoiler,
         bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
         bool shuffleLevels = false,

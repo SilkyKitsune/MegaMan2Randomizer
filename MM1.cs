@@ -81,7 +81,7 @@ public static class MM1
         Equipment.FireStorm,
         Equipment.MagnetBeam
     };
-
+    
     private static readonly StageIndex[]
         robotStages =
     {
@@ -220,7 +220,7 @@ public static class MM1
 
         _ => (int)address
     };
-
+    
     private static int[] ConvertAddressToSNES(Address address) => address switch
     {
         Address.BossBitFlags =>      Util.RepeatedSNESAddressMM1(0x21_C148),
