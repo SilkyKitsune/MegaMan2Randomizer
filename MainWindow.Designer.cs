@@ -44,6 +44,9 @@
             robotsOnlyCheckBox = new System.Windows.Forms.CheckBox();
             tabControl = new System.Windows.Forms.TabControl();
             MM1Tab = new System.Windows.Forms.TabPage();
+            robotsOnlyMM1CheckBox = new System.Windows.Forms.CheckBox();
+            weaknessMM1ComboBox = new System.Windows.Forms.ComboBox();
+            weaknessMM1Label = new System.Windows.Forms.Label();
             MM2Tab = new System.Windows.Forms.TabPage();
             bossLabel = new System.Windows.Forms.Label();
             bossComboBox = new System.Windows.Forms.ComboBox();
@@ -186,6 +189,9 @@
             // 
             // MM1Tab
             // 
+            MM1Tab.Controls.Add(robotsOnlyMM1CheckBox);
+            MM1Tab.Controls.Add(weaknessMM1ComboBox);
+            MM1Tab.Controls.Add(weaknessMM1Label);
             MM1Tab.Location = new System.Drawing.Point(4, 24);
             MM1Tab.Name = "MM1Tab";
             MM1Tab.Padding = new System.Windows.Forms.Padding(3);
@@ -193,6 +199,36 @@
             MM1Tab.TabIndex = 0;
             MM1Tab.Text = "Mega Man 1";
             MM1Tab.UseVisualStyleBackColor = true;
+            // 
+            // robotsOnlyMM1CheckBox
+            // 
+            robotsOnlyMM1CheckBox.AutoSize = true;
+            robotsOnlyMM1CheckBox.Location = new System.Drawing.Point(26, 50);
+            robotsOnlyMM1CheckBox.Name = "robotsOnlyMM1CheckBox";
+            robotsOnlyMM1CheckBox.Size = new System.Drawing.Size(191, 19);
+            robotsOnlyMM1CheckBox.TabIndex = 2;
+            robotsOnlyMM1CheckBox.Text = "Shuffle Castle Boss Weaknesses";
+            robotsOnlyMM1CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // weaknessMM1ComboBox
+            // 
+            weaknessMM1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            weaknessMM1ComboBox.FormattingEnabled = true;
+            weaknessMM1ComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "Random Balanced", "Random Random" });
+            weaknessMM1ComboBox.Location = new System.Drawing.Point(6, 21);
+            weaknessMM1ComboBox.Name = "weaknessMM1ComboBox";
+            weaknessMM1ComboBox.Size = new System.Drawing.Size(380, 23);
+            weaknessMM1ComboBox.TabIndex = 1;
+            weaknessMM1ComboBox.SelectedIndexChanged += weaknessComboBox_SelectedIndexChanged;
+            // 
+            // weaknessMM1Label
+            // 
+            weaknessMM1Label.AutoSize = true;
+            weaknessMM1Label.Location = new System.Drawing.Point(6, 3);
+            weaknessMM1Label.Name = "weaknessMM1Label";
+            weaknessMM1Label.Size = new System.Drawing.Size(99, 15);
+            weaknessMM1Label.TabIndex = 0;
+            weaknessMM1Label.Text = "Weakness Shuffle";
             // 
             // MM2Tab
             // 
@@ -275,5 +311,8 @@
         private System.Windows.Forms.TabPage MM2Tab;
         private System.Windows.Forms.Label bossLabel;
         private System.Windows.Forms.ComboBox bossComboBox;
+        private System.Windows.Forms.CheckBox robotsOnlyMM1CheckBox;
+        private System.Windows.Forms.ComboBox weaknessMM1ComboBox;
+        private System.Windows.Forms.Label weaknessMM1Label;
     }
 }

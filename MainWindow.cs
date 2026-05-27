@@ -10,6 +10,7 @@ public partial class MainWindow : Form
     public MainWindow()
     {
         InitializeComponent();
+        weaknessMM1ComboBox.SelectedIndex = 0;
         weaknessComboBox.SelectedIndex = 0;
         bossComboBox.SelectedIndex = 0;
 
@@ -36,8 +37,9 @@ public partial class MainWindow : Form
     private void GenerateButton()
     {
         bool shuffleAllEquipment = shuffleEquipmentCheckBox.Checked, heatManNoItem2 = heatManCheckBox.Checked, shuffleLevels = shuffleLevelsCheckBox.Checked,
-            robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked, october = this.october;
-        int weaknessShuffle = weaknessComboBox.SelectedIndex, robotMasterShuffle = bossComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
+            robotsOnly = !robotsOnlyCheckBox.Checked, nerfBuster = nerfBusterCheckBox.Checked, october = this.october,
+            robotsOnlyMM1 = !robotsOnlyMM1CheckBox.Checked;
+        int weaknessShuffleMM1 = weaknessMM1ComboBox.SelectedIndex, weaknessShuffle = weaknessComboBox.SelectedIndex, robotMasterShuffle = bossComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text, seedName = string.Empty;
         
         if (string.IsNullOrEmpty(folderPath))
@@ -71,7 +73,7 @@ public partial class MainWindow : Form
                     PatchManager.AddPatches(patchNA, MergeMode.None, PatchManager.GameID.MM1, PatchManager.VersionID.NorthAmerica);
                     PatchManager.AddPatches(patchSNES, MergeMode.None, PatchManager.GameID.MM1, PatchManager.VersionID.SuperNintendo);
 
-                    MM1.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out IPS shuffledPatchSNES, out string spoiler);
+                    MM1.Generate(ref seed, out IPS shuffledPatchJP, out IPS shuffledPatchNA, out IPS shuffledPatchSNES, out string spoiler, weaknessShuffleMM1, robotsOnlyMM1);
                     patchJP.Add(shuffledPatchJP, MergeMode.CombineOver);
                     patchNA.Add(shuffledPatchNA, MergeMode.CombineOver);
                     patchSNES.Add(shuffledPatchSNES, MergeMode.CombineOver);
@@ -137,5 +139,9 @@ public partial class MainWindow : Form
         outputTextBox.Text = folderBrowserDialog.SelectedPath;
     }
     
-    private void WeaknessShuffleIndex() => robotsOnlyCheckBox.Enabled = weaknessComboBox.SelectedIndex != 0;
+    private void WeaknessShuffleIndex()
+    {
+        robotsOnlyMM1CheckBox.Enabled = weaknessMM1ComboBox.SelectedIndex != 0;
+        robotsOnlyCheckBox.Enabled = weaknessComboBox.SelectedIndex != 0;
+    }
 }
