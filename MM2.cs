@@ -572,6 +572,39 @@ public static class MM2
         snes = new(ConvertAddressToSNES(Address.TopLeftStagePtr)[0], data);
     }
 
+    private static void ShuffleTimeStopperPatch(out Patch jpna, out Patch snes, out string spoiler, Random r = null, bool robotsOnly = false, int minBossCount = 1, int maxBossCount = 1, int minDamage = 1, int maxDamage = 1)
+    {
+        int bossCount = (minBossCount < 0 ? minBossCount = 0 : minBossCount) == (maxBossCount < minBossCount ? maxBossCount = minBossCount : maxBossCount) ?
+            minBossCount : r.Next(minBossCount, maxBossCount + 1);
+
+        bool variableDamage = (minDamage < 1 ? minDamage = 1 : minDamage) != (maxDamage < minDamage ? maxDamage = minDamage : maxDamage);
+
+        byte[] data = new byte[BossCount];
+
+        if (bossCount == 0 || (!variableDamage && minDamage == 0)) spoiler = string.Empty;
+        else
+        {
+            r ??= new(Util.GetSeed());
+            spoiler = "Vulvernable to Time Stopper: ";
+
+            AutoSizedArray<StageIndex> stages = robotsOnly ?
+                new(robotStages, robotStages.Length) :
+                new(allStages, allStages.Length);
+
+            for (int i = 0; i < bossCount && stages.Length > 0;)
+            {
+                int n = r.Next(stages.Length), damage = variableDamage ? r.Next(minDamage, maxDamage + 1) : minDamage;
+                StageIndex stage = stages[n];
+                data[(int)stage] = (byte)damage;
+                spoiler += stage + (++i < bossCount ? $" ({damage}), " : $" ({damage})");
+                stages.RemoveAt(n);
+            }
+        }
+        
+        jpna = new((int)Address.TimeStopperBossDamage, data);
+        snes = new(ConvertAddressToSNES(Address.TimeStopperBossDamage)[0], data);
+    }
+
 #if DEBUG
     [Obsolete] private static void ShuffleWeaknessesPerBossPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
     {
@@ -755,7 +788,8 @@ public static class MM2
         bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
         bool shuffleLevels = false,
         int robotMasterShuffle = 0,
-        int weaknessShuffle = 0, bool robotsOnly = false, bool nerfBuster = false)
+        int weaknessShuffle = 0, bool robotsOnly = true, bool nerfBuster = false,
+        int timeStopperShuffle = 0, int timeStopperMinBossCount = 1, int timeStopperMaxBossCount = 2, int timeStopperMinDamage = 1, int timeStopperMaxDamage = 2)
     {
         if (seed < 0) seed = Util.GetSeed();
         Random r = new(seed);
@@ -802,5 +836,17 @@ public static class MM2
         snes.Add(weaknessesSNES, MergeMode.None);
 
         spoiler += '\n' + weaknessesSpoiler;
+
+        if (timeStopperShuffle != 0)
+        {
+            ShuffleTimeStopperPatch(out Patch timeStopperJPNA, out Patch timeStopperSNES, out string timeStopperSpoiler, r, timeStopperShuffle == 1,
+                timeStopperMinBossCount, timeStopperMaxBossCount, timeStopperMinDamage, timeStopperMaxDamage);
+
+            jp.Add(timeStopperJPNA, MergeMode.None);
+            na.Add(timeStopperJPNA, MergeMode.None);
+            snes.Add(timeStopperSNES, MergeMode.None);
+
+            spoiler += '\n' + timeStopperSpoiler;
+        }
     }
 }
