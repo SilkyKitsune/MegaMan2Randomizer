@@ -13,7 +13,15 @@ public static class MM1
         BossBitFlags =      0x01_C158,
         MagnetBeamBitFlag = 0x01_C884,
 
-        CutManWeaponDamage =        0x01_FE32, //$FE22
+        MegaBusterEnemyDamage =    0x01_FC95,
+        RollingCutterEnemyDamage = 0x01_FCD0,
+        IceSlasherEnemyDamage =    0x01_FD0B,
+        HyperBombEnemyDamage =     0x01_FD46,
+        FireStormEnemyDamage =     0x01_FD81,
+        ThunderBeamEnemyDamage =   0x01_FDBC,
+        SuperArmEnemyDamage =      0x01_FDF7,
+
+        CutManWeaponDamage =        0x01_FE32,
         IceManWeaponDamage =        0x01_FE3A,
         BombManWeaponDamage =       0x01_FE42,
         FireManWeaponDamage =       0x01_FE4A,
@@ -175,11 +183,29 @@ public static class MM1
         new byte[WeaponCount] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, //CWU-01P W3
         new byte[WeaponCount] { 0x01, 0x01, 0x01, 0x01, 0x04, 0x01, 0x01, 0x00 }, //Wily Machine Phase 1 W4
         new byte[WeaponCount] { 0x01, 0x01, 0x00, 0x01, 0x01, 0x01, 0x01, 0x00 }, //Wily Machine Phase 2 W4
+    };
 
+    private static readonly Address[] enemyDamageAddresses = new Address[WeaponCount - 1]
+    {
+        Address.MegaBusterEnemyDamage,
+        Address.RollingCutterEnemyDamage,
+        Address.IceSlasherEnemyDamage,
+        Address.HyperBombEnemyDamage,
+        Address.FireStormEnemyDamage,
+        Address.ThunderBeamEnemyDamage,
+        Address.SuperArmEnemyDamage,
     };
 
     private static int ConvertAddressToNA(Address address) => address switch
     {
+        Address.MegaBusterEnemyDamage =>    0x01_FC61,
+        Address.RollingCutterEnemyDamage => 0x01_FC9C,
+        Address.IceSlasherEnemyDamage =>    0x01_FCD7,
+        Address.HyperBombEnemyDamage =>     0x01_FD12,
+        Address.FireStormEnemyDamage =>     0x01_FD4D,
+        Address.ThunderBeamEnemyDamage =>   0x01_FD88,
+        Address.SuperArmEnemyDamage =>      0x01_FDC3,
+
         Address.CutManWeaponDamage =>        0x01_FDFE,
         Address.IceManWeaponDamage =>        0x01_FE06,
         Address.BombManWeaponDamage =>       0x01_FE0E,
@@ -199,6 +225,14 @@ public static class MM1
     {
         Address.BossBitFlags =>      Util.RepeatedSNESAddressMM1(0x21_C148),
         Address.MagnetBeamBitFlag => Util.RepeatedSNESAddressMM1(0x21_C874),
+
+        Address.MegaBusterEnemyDamage =>    Util.RepeatedSNESAddressMM1(0x21_FC51),
+        Address.RollingCutterEnemyDamage => Util.RepeatedSNESAddressMM1(0x21_FC8C),
+        Address.IceSlasherEnemyDamage =>    Util.RepeatedSNESAddressMM1(0x21_FCC7),
+        Address.HyperBombEnemyDamage =>     Util.RepeatedSNESAddressMM1(0x21_FD02),
+        Address.FireStormEnemyDamage =>     Util.RepeatedSNESAddressMM1(0x21_FD3D),
+        Address.ThunderBeamEnemyDamage =>   Util.RepeatedSNESAddressMM1(0x21_FD78),
+        Address.SuperArmEnemyDamage =>      Util.RepeatedSNESAddressMM1(0x21_FDB3),
 
         Address.CutManWeaponDamage =>        Util.RepeatedSNESAddressMM1(0x21_FDEE),
         Address.IceManWeaponDamage =>        Util.RepeatedSNESAddressMM1(0x21_FDF6),
