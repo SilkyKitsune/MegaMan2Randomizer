@@ -157,7 +157,7 @@
             // 
             weaknessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             weaknessComboBox.FormattingEnabled = true;
-            weaknessComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "Random (Coming soon)" });
+            weaknessComboBox.Items.AddRange(new object[] { "None", "Boss Sets", "Per Boss", "Random Balanced", "Random Random" });
             weaknessComboBox.Location = new System.Drawing.Point(6, 21);
             weaknessComboBox.Name = "weaknessComboBox";
             weaknessComboBox.Size = new System.Drawing.Size(360, 23);

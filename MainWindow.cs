@@ -40,12 +40,6 @@ public partial class MainWindow : Form
         int weaknessShuffle = weaknessComboBox.SelectedIndex, robotMasterShuffle = bossComboBox.SelectedIndex, gameOption = tabControl.SelectedIndex;
         string folderPath = outputTextBox.Text, seedText = seedTextBox.Text, seedName = string.Empty;
         
-        if (weaknessShuffle == 3)//temp
-        {
-            MessageBox.Show("Selected weakness shuffle option is currently not available", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return;
-        }
-
         if (string.IsNullOrEmpty(folderPath))
         {
             MessageBox.Show("No output folder path specified", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
