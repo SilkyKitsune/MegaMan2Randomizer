@@ -166,7 +166,8 @@ public static class MM2
         StageIndex.WilyAlienW6,
     };
 
-    private static readonly string[] bossNames =
+    private static readonly string[]
+        bossNames =
     {
         "Heat Man",
         "Air Man",
@@ -456,6 +457,7 @@ public static class MM2
         foreach (int address in ConvertAddressToSNES(Address.ItemBitFlags)) snes.Add(new Patch(address, itemData), MergeMode.None);
     }
 
+#if DEBUG
     [Obsolete] private static Patch ShuffleItemsPatch(out string spoiler, Random r = null, bool heatManNoItem2 = false)
     {
         r ??= new(Util.GetSeed());
@@ -499,6 +501,7 @@ public static class MM2
         jp = new((int)Address.MegaBusterBossDamage, data);
         na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), data);
     }
+#endif
 
     private static void ShuffleRobotMastersPatch(out PatchCollection jpna, out PatchCollection snes, out string spoiler, Random r = null, bool shuffle = true, bool single = false)
     {
@@ -565,6 +568,7 @@ public static class MM2
         snes = new(ConvertAddressToSNES(Address.TopLeftStagePtr)[0], data);
     }
 
+#if DEBUG
     [Obsolete] private static void ShuffleWeaknessesPerBossPatch(out Patch jp, out Patch na, out string spoiler, Random r = null, bool robotsOnly = false)
     {
         r ??= new(Util.GetSeed());
@@ -639,6 +643,7 @@ public static class MM2
         jp = new((int)Address.MegaBusterBossDamage, rearrangedData);
         na = new(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData);
     }
+#endif
 
     private static void ShuffleWeaknessesPatch(out PatchCollection jp, out PatchCollection na, out PatchCollection snes, out string spoiler, Random r = null, int shuffleMode = 0, bool robotsOnly = false, bool shuffleBusterInvulnerability = false)
     {
@@ -783,6 +788,7 @@ public static class MM2
         snes.Add(new Patch(ConvertAddressToSNES(Address.MegaBusterBossDamage)[0], rearrangedData), MergeMode.None);
     }
 
+#if DEBUG
     [Obsolete] private static Patch ShuffleWeaponsPatch(out string spoiler, Random r = null)
     {
         r ??= new(Util.GetSeed());
@@ -802,6 +808,7 @@ public static class MM2
 
         return new((int)Address.NewWeaponBitFlags, data);
     }
+#endif
     
     public static void Generate(ref int seed, out IPS jp, out IPS na, out IPS snes, out string spoiler,
         bool shuffleAllEquipment = false, bool heatManNoItem2 = false,
@@ -812,7 +819,7 @@ public static class MM2
         if (seed < 0) seed = Util.GetSeed();
         Random r = new(seed);
 
-        spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n\n";
+        spoiler = $"--- MM2R Spoiler Log ---\nSeed: {seed}\n";//add pumpkin to this too?
         jp = new();
         na = new();
         snes = new();
@@ -823,7 +830,7 @@ public static class MM2
         na.Add(equipmentJPNA, MergeMode.None);
         snes.Add(equipmentSNES, MergeMode.None);
 
-        spoiler += equipmentSpoiler;
+        spoiler += '\n' + equipmentSpoiler;
 
         if (shuffleLevels)
         {
