@@ -132,12 +132,12 @@ public static class MM1
     },
         bossNamesWithSpacesShort =
     {
-        "Cut Man ",
-        "Ice Man ",
-        "Bomb Man",
-        "Fire Man",
-        "Elec Man",
-        "Guts Man",
+        "Cut Man    ",
+        "Ice Man    ",
+        "Bomb Man   ",
+        "Fire Man   ",
+        "Elec Man   ",
+        "Guts Man   ",
     };
 
     private static readonly byte[][]
@@ -221,17 +221,17 @@ public static class MM1
         AutoSizedArray<Equipment> equips = new(equipment, equipment.Length);
         byte[] data = new byte[equips.Length - 1];
 
-        for (int i = 0; equips.Length > 1; i++)//update mm2 spoiler to be like this
+        for (int i = 0; equips.Length > 1; i++)
         {
             int n = r.Next(equips.Length);
             Equipment e = equips[n];
-            spoiler += $"{bossNamesWithSpaces[i]} => {e}\n";
+            spoiler += $"{bossNamesWithSpacesShort[i]} => {e}\n";
             data[i] = (byte)e;
             equips.RemoveAt(n);
         }
 
         Equipment e_ = equips[0];
-        spoiler += $"Magnet Beam  => {e_}\n";
+        spoiler += $"Magnet Beam => {e_}\n";
         byte[] data_ = new byte[1] { (byte)e_ };
 
         jpna = new IPS();
