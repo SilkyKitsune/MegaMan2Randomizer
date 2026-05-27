@@ -43,6 +43,11 @@ public static class MM1
         MagnetBeam =    0x80,
     }
 
+    public enum ObjectType : byte
+    {
+        CWU01P = 0x3A,
+    }
+
     public enum StageIndex : byte
     {
         CutMan =  0x00,
