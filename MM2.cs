@@ -652,94 +652,31 @@ public static class MM2
         jp = new IPS();
         na = new IPS();
         snes = new IPS();
-        spoiler = "";
 
-        int setCount = robotsOnly ? 8 : BossCount;
-        byte[][] data = new byte[weaknessSets.Length][];
+        byte[][] newWeaknessesSets = Util.ShuffleWeaknesses(out spoiler, r, shuffleMode, robotsOnly ? 8 : BossCount, weaknessSets);
 
-        switch (shuffleMode)
+        if (shuffleMode == 1)
         {
-            default: //"vanilla"
+            int i = 0;
+            spoiler += "\n                                P    H    A    W    B    Q    C    M\n";
+            foreach (string s in Util.TableToStrings(newWeaknessesSets))
                 {
-                    for (int i = 0; i < setCount; i++)
-                    {
-                        byte[] weaknessSet = weaknessSets[i], data_ = data[i] = new byte[weaknessSet.Length];
-                        weaknessSet.CopyTo(data_, 0);
+                int index = -1;
+                byte[] newWeaknessSet = newWeaknessesSets[i];
+                while (++index < weaknessSets.Length) if (ICollection<byte>.Equivalent(newWeaknessSet, weaknessSets[index])) break;
+
+                spoiler += bossNamesWithSpaces[i++] + " => " + bossNamesWithSpaces[index] + s + '\n';
                     }
-                    break;
                 }
-            case 1: //boss sets
+        else
                 {
-                    spoiler += "- Boss Sets Weakness Shuffle -\n";
-
-                    AutoSizedArray<byte[]> weaknessSets = new(MM2.weaknessSets[..setCount], setCount);
-                    AutoSizedArray<string> bossNames = new(MM2.bossNames[..setCount], setCount);
-
-                    for (int i = 0; weaknessSets.Length > 0; i++)
-                    {
-                        int n = r.Next(weaknessSets.Length);
-                        byte[] weaknessSet = weaknessSets[n];
-
-                        spoiler += $"{bossNamesWithSpaces[i]} => {bossNames[n]}\n";
-
-                        data[i] = new byte[weaknessSet.Length];
-                        weaknessSet.CopyTo(data[i], 0);
-
-                        weaknessSets.RemoveAt(n);
-                        bossNames.RemoveAt(n);
-                    }
-                    break;
-                }
-            case 2: //per boss
-                {
-                    spoiler += "- Per Boss Weakness Shuffle -\n" +
-                        "                P    H    A    W    B    Q    C    M\n";
-
-                    for (int i = 0; i < setCount; i++)
-                    {
-                        AutoSizedArray<byte> weaknessSet = new(weaknessSets[i], WeaponCount);
-                        byte[] data_ = data[i] = new byte[WeaponCount];
-                        spoiler += bossNamesWithSpaces[i];
-
-                        for (int j = 0; weaknessSet.Length > 0; j++)
-                        {
-                            int n = r.Next(weaknessSet.Length);
-                            byte weakness = weaknessSet[n];
-
-                            data_[j] = weakness;
-                            weaknessSet.RemoveAt(n);
-
-                            string weaknessStr = ((sbyte)weakness).ToString();
-                            spoiler += weaknessStr.Length switch
-                            {
-                                1 => "    ",
-                                2 => "   ",
-                                3 => "  ",
-                                4 => ' ',
-                                _ => string.Empty
-                            } + weaknessStr;
-                        }
-                        spoiler += '\n';
-                    }
-                    break;
-                }
-            /*case 3: //random balanced
-                {
-                    break;
-                }*/
-            /*case 4: //random random
-                {
-                    break;
-                }*/
+            int i = 0;
+            spoiler += "\n                P    H    A    W    B    Q    C    M\n";
+            foreach (string s in Util.TableToStrings(newWeaknessesSets)) spoiler += bossNamesWithSpaces[i++] + s + '\n';
         }
+        spoiler = spoiler.Replace("255", " -1");
 
-        for (int i = setCount; i < BossCount; i++)
-        {
-            byte[] weaknessSet = weaknessSets[i], data_ = data[i] = new byte[weaknessSet.Length];
-            weaknessSet.CopyTo(data_, 0);
-        }
-
-        byte[] picopicokunWeaknesses = data[(int)StageIndex.PicopicokunW2], boobeamtrapWeaknesses = data[(int)StageIndex.BoobeamTrapW4];
+        byte[] picopicokunWeaknesses = newWeaknessesSets[(int)StageIndex.PicopicokunW2], boobeamtrapWeaknesses = newWeaknessesSets[(int)StageIndex.BoobeamTrapW4];
         if (shuffleBusterInvulnerability)
         {
             spoiler += "\nInvulnerable to Mega Buster: ";
@@ -750,16 +687,16 @@ public static class MM2
                 int n = r.Next(robots.Length);
                 int robot = (int)robots[n];
                 spoiler += i < 3 ? bossNames[robot] + ", " : bossNames[robot];
-                if (data[robot][0] != 0xFF) data[robot][0] = 0;
+                if (newWeaknessesSets[robot][0] != 0xFF) newWeaknessesSets[robot][0] = 0;
                 robots.RemoveAt(n);
             }
 
-            if (data[(int)StageIndex.MechaDragonW1][0] != 0xFF)    data[(int)StageIndex.MechaDragonW1][0] = 0;
-            if (picopicokunWeaknesses[0] != 0xFF)                  picopicokunWeaknesses[0] = 0;
-            if (data[(int)StageIndex.GutsTankW3][0] != 0xFF)       data[(int)StageIndex.GutsTankW3][0] = 0;
-            if (boobeamtrapWeaknesses[0] != 0xFF)                  boobeamtrapWeaknesses[0] = 0;
-            if (data[(int)StageIndex.TeleporterRoomW5][0] != 0xFF) data[(int)StageIndex.TeleporterRoomW5][0] = 0;
-            if (data[(int)StageIndex.WilyAlienW6][0] != 0xFF)      data[(int)StageIndex.WilyAlienW6][0] = 0;
+            if (newWeaknessesSets[(int)StageIndex.MechaDragonW1][0] != 0xFF)    newWeaknessesSets[(int)StageIndex.MechaDragonW1][0] = 0;
+            if (picopicokunWeaknesses[0] != 0xFF)                               picopicokunWeaknesses[0] = 0;
+            if (newWeaknessesSets[(int)StageIndex.GutsTankW3][0] != 0xFF)       newWeaknessesSets[(int)StageIndex.GutsTankW3][0] = 0;
+            if (boobeamtrapWeaknesses[0] != 0xFF)                               boobeamtrapWeaknesses[0] = 0;
+            if (newWeaknessesSets[(int)StageIndex.TeleporterRoomW5][0] != 0xFF) newWeaknessesSets[(int)StageIndex.TeleporterRoomW5][0] = 0;
+            if (newWeaknessesSets[(int)StageIndex.WilyAlienW6][0] != 0xFF)      newWeaknessesSets[(int)StageIndex.WilyAlienW6][0] = 0;
         }
 
         for (int i = 0; i < WeaponCount; i++)
@@ -781,11 +718,11 @@ public static class MM2
             }
         }
 
-        byte[] rearrangedData = Util.Rearrange(data);
+        byte[] rearrangedWeaknessSets = Util.Rearrange(newWeaknessesSets);
 
-        jp.Add(new Patch((int)Address.MegaBusterBossDamage, rearrangedData), MergeMode.None);
-        na.Add(new Patch(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedData), MergeMode.None);
-        snes.Add(new Patch(ConvertAddressToSNES(Address.MegaBusterBossDamage)[0], rearrangedData), MergeMode.None);
+        jp.Add(new Patch((int)Address.MegaBusterBossDamage, rearrangedWeaknessSets), MergeMode.None);
+        na.Add(new Patch(ConvertAddressToNA(Address.MegaBusterBossDamage), rearrangedWeaknessSets), MergeMode.None);
+        snes.Add(new Patch(ConvertAddressToSNES(Address.MegaBusterBossDamage)[0], rearrangedWeaknessSets), MergeMode.None);
     }
 
 #if DEBUG

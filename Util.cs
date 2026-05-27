@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjectFox.CoreEngine.Collections;
 
 namespace MM2Randomizer;
 
@@ -59,6 +60,122 @@ public static class Util
         0x06_0000 + address,
         0x07_0000 + address, 0x07_8000 + address,
     };
+
+    public static byte[][] ShuffleWeaknesses(out string spoiler, Random r = null, int shuffleMode = 0, int shuffleCount = 8, byte[][] weaknessSets = null)
+    {
+        if (weaknessSets == null || weaknessSets.Length == 0)
+        {
+            spoiler = null;
+            return null;
+        }
+
+        r ??= new(GetSeed());
+
+        shuffleCount = Math.Clamp(shuffleCount, 0, weaknessSets.Length);
+
+        byte[][] newWeaknessSets = new byte[weaknessSets.Length][];
+        switch (shuffleMode)
+        {
+            default:
+                {
+                    spoiler = "- \"Vanilla\" Weaknesses -";
+                    for (int i = 0; i < shuffleCount; i++)
+                    {
+                        byte[] weaknessSet = weaknessSets[i], newWeaknessSet = newWeaknessSets[i] = new byte[weaknessSet.Length];
+                        weaknessSet.CopyTo(newWeaknessSet, 0);
+                    }
+                    break;
+                }
+            case 1:
+                {
+                    spoiler = "- Boss Sets Weakness Shuffle -";
+                    AutoSizedArray<byte[]> weaknessSetsPool = new(weaknessSets[..shuffleCount], shuffleCount);
+                    for (int i = 0; weaknessSetsPool.Length > 0; i++)
+                    {
+                        int n = r.Next(weaknessSetsPool.Length);
+                        byte[] weaknessSet = weaknessSetsPool[n];
+
+                        newWeaknessSets[i] = new byte[weaknessSet.Length];
+                        weaknessSet.CopyTo(newWeaknessSets[i], 0);
+
+                        weaknessSetsPool.RemoveAt(n);
+                    }
+                    break;
+                }
+            case 2:
+                {
+                    spoiler = "- Per Boss Weakness Shuffle -";
+                    for (int i = 0; i < shuffleCount; i++)
+                    {
+                        byte[] weaknessSet = weaknessSets[i], newWeaknessSet = newWeaknessSets[i] = new byte[weaknessSet.Length];
+                        AutoSizedArray<byte> weaknessPool = new(weaknessSet, weaknessSet.Length);
+                        for (int j = 0; weaknessPool.Length > 0; j++)
+                        {
+                            int n = r.Next(weaknessPool.Length);
+                            byte weakness = weaknessPool[n];
+
+                            newWeaknessSet[j] = weakness;
+                            weaknessPool.RemoveAt(n);
+                        }
+                    }
+                    break;
+                }
+            case 3:
+                {
+                    spoiler = "- Random Balanced Weaknesses -";
+                    for (int i = 0; i < shuffleCount; i++)
+                    {
+                        byte[] newWeaknessSet = newWeaknessSets[i] = new byte[weaknessSets[i].Length];
+                        for (int j = 0; j < newWeaknessSet.Length; j++)
+                            newWeaknessSet[j] = randomWeaknessPool[r.Next(randomWeaknessPool.Length)];
+                    }
+                    break;
+                }
+            case 4:
+                {
+                    spoiler = "- Random Random Weaknesses -";
+                    for (int i = 0; i < shuffleCount; i++)
+                    {
+                        byte[] newWeaknessSet = newWeaknessSets[i] = new byte[weaknessSets[i].Length];
+                        for (int j = 0; j < newWeaknessSet.Length; j++)
+                            newWeaknessSet[j] = (byte)(sbyte)(r.Next(0x1E) - 1);
+                    }
+                    break;
+                }
+        }
+
+        for (int i = shuffleCount; i < weaknessSets.Length; i++)
+        {
+            byte[] weaknessSet = weaknessSets[i], newWeaknessSet = newWeaknessSets[i] = new byte[weaknessSet.Length];
+            weaknessSet.CopyTo(newWeaknessSet, 0);
+        }
+
+        foreach (byte[] newWeaknessSet in newWeaknessSets)
+        {
+            bool immuneToAllWeapons = true;
+            foreach (byte newWeakness in newWeaknessSet)
+                if (newWeakness != 0x00 && newWeakness != 0xFF)
+                {
+                    immuneToAllWeapons = false;
+                    break;
+                }
+            if (immuneToAllWeapons) newWeaknessSet[0] = 4;
+        }
+
+        bool allImmuneToBuster = true;
+        for (int i = 0; i < shuffleCount; i++)
+        {
+            byte newWeakness = newWeaknessSets[i][0];
+            if (newWeakness != 0x00 && newWeakness != 0xFF)
+            {
+                allImmuneToBuster = false;
+                break;
+            }
+        }
+        if (allImmuneToBuster) newWeaknessSets[r.Next(shuffleCount)][0] = 4;
+
+        return newWeaknessSets;
+    }
 
     public static string[] TableToStrings<T>(T[][] arrays)
     {
